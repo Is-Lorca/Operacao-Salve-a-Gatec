@@ -1,0 +1,111 @@
+{
+  "titulo": "Proposição",
+  "personagem": "plutonio",
+  "inicio": "inicio",
+  "dialogos": {
+    "inicio": {
+      "texto": "Bom dia, nobres colegas! Eu sou o Mr. Plutônio, e sim, antes que perguntem, aquele Plutônio, das Indústrias Plutônio. Vim pessoalmente, o que já demonstra a seriedade desta proposta.",
+      "opcao1": "Próximo",
+      "proximo1": "conceito1",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "conceito1": {
+      "texto": "Antes de falarmos de privatização, preciso que dominem um conceito básico: proposição, do contrário, nossa negociação vai por água abaixo. Prestem atenção, porque não repito duas vezes, ou melhor, repito, mas cobro juros.",
+      "opcao1": "Próximo",
+      "proximo1": "conceito2",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "conceito2": {
+      "texto": "Proposição é toda frase que se consegue classificar como verdadeira ou falsa. Nada de ambiguidade, nada de \"depende do ponto de vista\".",
+      "opcao1": "Próximo",
+      "proximo1": "conceito3",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "conceito3": {
+      "texto": "O que não pode ser julgado como verdadeiro ou falso não é proposição: perguntas, ordens, desejos e opiniões ficam de fora. Uma proposta vaga, sem números fechados, é exatamente isso: inútil tanto na lógica quanto nos negócios. ",
+      "opcao1": "Entendi!",
+      "proximo1": "resposta1a",
+      "opcao2": "Se negócio com números é difícil, então negócio com escola pública é impossível",
+      "proximo2": "resposta1b"
+    },
+
+    "resposta1a": {
+      "texto": "Será? Continuando...",
+      "opcao1": "Próximo",
+      "proximo1": "pergunta1",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "resposta1b": {
+      "texto": "Sua afirmativa é falsa, mas o raciocínio é surpreendentemente lógico para quem não usa terno. Vamos adiante.",
+      "opcao1": "Próximo",
+      "proximo1": "pergunta1",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "pergunta1": {
+      "texto": "Com base no que expliquei, a frase \"A privatização é vantajosa se e somente se não houver prejuízo à comunidade.\" é uma proposição?",
+      "opcao1": "Sim",
+      "proximo1": "pergunta1Certo",
+      "opcao2": "Não",
+      "proximo2": "pergunta1Errado"
+    },
+
+    "pergunta1Certo": {
+      "texto": "Correto! É proposição porque é declarativa e tem valor de verdade determinável, apesar de ser uma afirmativa falsa. Afinal, não nos importamos com prejuízos à comunidade.",
+      "opcao1": "Próximo",
+      "proximo1": "pergunta2",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "pergunta1Errado": {
+      "texto": "Errado... é proposição porque conseguimos julgar se é verdadeira ou falsa. Prestem mais atenção da próxima vez, o tempo de um empresário é precioso.",
+      "opcao1": "Próximo",
+      "proximo1": "pergunta2",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "pergunta2": {
+      "texto": "Agora, \"A escola é pública e isso será vendido\", é uma proposição?",
+      "opcao1": "Com certeza! É proposição",
+      "proximo1": "pergunta2Errado",
+      "opcao2": "A frase não é proposição e a escola é pública!",
+      "proximo2": "pergunta2Certo"
+    },
+
+    "pergunta2Certo": {
+      "texto": "Isso mesmo! E fizeram uma ótima observação: a escola é pública, porém a frase não é proposição, pois \"isso\" não diz a que se refere, não dá para julgar se \"isso será vendido\" é verdade ou mentira. Ambiguidade, a inimiga de todo bom contrato.",
+      "opcao1": "Próximo",
+      "proximo1": "final",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "pergunta2Errado": {
+      "texto": "Errado!!! Não é proposição, pois \"isso\" não diz a que se refere, não dá para julgar se \"isso será vendido\" é verdade ou mentira.",
+      "opcao1": "Próximo",
+      "proximo1": "final",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "final": {
+      "texto": "Muito bem, nobres colegas, por hoje encerro por aqui, inclusive porque meu motorista está esperando.",
+      "opcao1": "RETURN",
+      "proximo1": null,
+      "acao1": "voltarMaterias",
+      "opcao2": null,
+      "proximo2": null
+    }
+  }
+}

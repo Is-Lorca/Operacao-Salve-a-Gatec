@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Seleção de Personagem</title>
+  <link rel="stylesheet" href="src/styles/reset.css" />
+  <link rel="stylesheet" href="src/styles/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bitcount:wght@100..900&family=Tiny5&display=swap"
+    rel="stylesheet" />
+</head>
+
+<body>
+  <div>
+    <audio id="audio" preload="metadata" loop="true">
+      <source src="./src/music/HallofProofs.mp3" type="audio/mp3" />
+      <source src="./src/music/HallofProofs.ogg" type="audio/ogg" />
+      <source src="./src/music/HallofProofs.wav" type="audio/wav" />
+      <p>Seu navegador não suporta audio :/</p>
+    </audio>
+    <button id="botaoAudio"> <img id=iconMute src="./src/img/opcoes audio/AudioMute3.png" alt="Ligar audio"></button>
+  </div>
+
+  <header id="headerescolha">
+    <h1 id="tituloSelectPers">Selecione seu Professor:</h1>
+  </header>
+
+  <main id="selecPersonas">
+    <button data-personagem="peixoto" class="escolhaPersona">
+      <div class="formatPersona">
+        <img class="imagemSelec" src="src/img/DraPeixoto.jpeg" alt="Ilustração da Doutora Peixoto" />
+        <div class="dadosPersona tituloInfo">
+          <p><span class="tituloInfo">Nome: </span>(Dra.) Marília Curie Peixoto
+          </p>
+
+          <p><span class="tituloInfo">Sobre: </span>Professora de Catemática na
+            Gatec
+          </p>
+
+          <p><span class="tituloInfo">Tom: </span>Amigável e prestativa, mas
+            rígida
+          </p>
+
+          <p><span class="tituloInfo">Comida favorita: </span>Churu de peixe
+          </p>
+
+          <p><span class="tituloInfo">Odeia: </span>Água
+          </p>
+        </div>
+      </div>
+    </button>
+
+    <button data-personagem="plutonio" id="botaoComLinha" class="escolhaPersona">
+      <div class="formatPersona">
+        <img class="imagemSelec" src="src/img/MrPlutonio.jpeg" alt="Ilustração do Mister Plutonio" />
+        <div class="dadosPersona tituloInfo">
+          <p><span>Nome: </span>(Mister) Stuart Smith Bueno
+            Plutônio
+          </p>
+
+          <p><span>Sobre: </span>Magnata herdeiro das
+            Industrias Plutônio
+          </p>
+
+          <p><span>Tom: </span>Esnobe, sério e ganancioso
+          </p>
+
+          <p><span>Comida favorita: </span>Queijo azul
+            Cabrales e Whiskey The Macallan
+          </p>
+          <p><span class="tituloInfo">Odeia: </span>Ratatouille
+          </p>
+        </div>
+      </div>
+    </button>
+  </main>
+
+  <script src="src/javascript/musica.js">
+  </script>
+  <script src="src/javascript/escolhaPersonagem.js">
+  </script>
+</body>
+
+</html>

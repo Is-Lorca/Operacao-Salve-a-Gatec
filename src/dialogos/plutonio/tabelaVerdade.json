@@ -1,0 +1,191 @@
+{
+  "titulo": "Tabela Verdade",
+  "personagem": "plutonio",
+  "inicio": "inicio",
+  "dialogos": {
+    "inicio": {
+      "texto": "Bom dia, nobres colegas! Voltei para discutirmos melhor nossos planos e para lhes ensinar algo novo: lógica booleana.",
+      "opcao1": "Próximo",
+      "proximo1": "conjuncaoIntro",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "conjuncaoIntro": {
+      "texto": "Proposições isoladas são úteis, mas o verdadeiro poder está em conectá-las, assim como se controlam contratos e pessoas. O primeiro conectivo que o senhor precisa dominar é a conjunção, representada pelo símbolo ∧, que significa \"e\".",
+      "opcao1": "Próximo",
+      "proximo1": "conjuncaoIntro2",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "conjuncaoIntro2": {
+      "texto": "Quando escrevemos A ∧ B, lemos “A e B”. A conjunção será verdadeira quando A é verdadeira e B também é verdadeira.",
+      "opcao1": "Dê um exemplo",
+      "proximo1": "conjuncaoExemplo",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "conjuncaoExemplo": {
+      "texto": "O projeto foi aprovado e o investimento não foi liberado. De acordo com isso, a conjunção é:",
+      "opcao1": "Verdadeira",
+      "proximo1": "conjuncaoErrado",
+      "opcao2": "Falsa",
+      "proximo2": "conjuncaoCerto"
+    },
+
+    "conjuncaoErrado": {
+      "texto": "Errado, se uma proposição é falsa, a conjunção inteira também será. Vejo que o senhor não é um investidor muito competente…",
+      "opcao1": "Próximo",
+      "proximo1": "disjuncaoIntro",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "conjuncaoCerto": {
+      "texto": "Acertou. Fico satisfeito em ver que consegue acompanhar um raciocínio tão simples.",
+      "opcao1": "Próximo",
+      "proximo1": "disjuncaoIntro",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "disjuncaoIntro": {
+      "texto": "Mas existe outro conectivo muito usado em negociações: a disjunção. Ela é representada pelo símbolo V e corresponde à palavra \"ou\". Quando escrevemos A V B, lemos \"A ou B\".",
+      "opcao1": "Próximo",
+      "proximo1": "disjuncaoIntro2",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "disjuncaoIntro2": {
+      "texto": "Nela, basta que uma das proposições seja verdadeira para que a expressão inteira seja verdadeira.",
+      "opcao1": "Me explique melhor",
+      "proximo1": "disjuncaoExemplo",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "disjuncaoExemplo": {
+      "texto": "O governo OU a iniciativa privada financiará o projeto. Imagine que apenas a iniciativa privada financie o projeto. Essa disjunção seria:",
+      "opcao1": "Verdadeira",
+      "proximo1": "disjuncaoCerto",
+      "opcao2": "Falsa",
+      "proximo2": "disjuncaoErrado"
+    },
+
+    "disjuncaoCerto": {
+      "texto": "Correto, só é necessário que uma proposição ser verdadeira.",
+      "opcao1": "E se o governo e a iniciativa privada financiassem o projeto?",
+      "proximo1": "disjuncaoAmbos",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "disjuncaoErrado": {
+      "texto": "Errado, apenas uma proposição seja verdadeira para que a disjunção também seja verdadeira.",
+      "opcao1": "E se o governo e a iniciativa privada financiassem o projeto?",
+      "proximo1": "disjuncaoAmbos",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "disjuncaoAmbos": {
+      "texto": "Se as duas forem verdadeiras ao mesmo tempo, a disjunção continua sendo verdadeira. Mas seria meio irrealista pensar que dessa vez o governo ficaria do nosso lado…",
+      "opcao1": "Próximo",
+      "proximo1": "condicionalIntro",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "condicionalIntro": {
+      "texto": "Agora vamos falar de outro conectivo muito útil para quem faz acordos: a condicional. Ela é representada por → e significa \"se... então...\". Quando escrevemos A → B, lemos: \"Se A, então B.\"",
+      "opcao1": "Próximo",
+      "proximo1": "condicionalIntro2",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "condicionalIntro2": {
+      "texto": "Sempre que a primeira proposição for verdadeira, a segunda também deve ser verdadeira. Se a promessa foi feita, ela precisa ser cumprida.",
+      "opcao1": "Me explique melhor",
+      "proximo1": "condicionalExemplo",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "condicionalExemplo": {
+      "texto": "Se o contrato for assinado, então o investimento será liberado. Imagine que o contrato foi assinado, mas o investimento não foi liberado. Essa proposição seria:",
+      "opcao1": "Verdadeira",
+      "proximo1": "condicionalErrado",
+      "opcao2": "Falsa",
+      "proximo2": "condicionalCerto"
+    },
+
+    "condicionalCerto": {
+      "texto": "Correto. O contrato foi assinado, mas o investimento não foi liberado. A promessa falhou, e isso torna a condicional falsa.",
+      "opcao1": "Próximo",
+      "proximo1": "bicondicionalIntro",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "condicionalErrado": {
+      "texto": "Errado. Quando a condição acontece e a consequência não acontece, a condicional é falsa. Em negociações, esse é o tipo de cláusula que costuma acabar nos tribunais.",
+      "opcao1": "Próximo",
+      "proximo1": "bicondicionalIntro",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "bicondicionalIntro": {
+      "texto": "Agora o último conectivo: a bicondição. Ela é representada por ↔ e é lida como \"A se e somente se B\".",
+      "opcao1": "O que ela tem de diferente?",
+      "proximo1": "bicondicionalExplicacao",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "bicondicionalExplicacao": {
+      "texto": "Ela exige compromisso dos dois lados. A condição vale na ida e na volta. Se A acontece, B também deve acontecer; e se B acontece, A também deve acontecer.",
+      "opcao1": "Me dê um exemplo",
+      "proximo1": "bicondicionalExemplo",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "bicondicionalExemplo": {
+      "texto": "A empresa receberá exclusividade se e somente se investir no projeto. Imagine que a empresa investiu no projeto e recebeu exclusividade. Essa bicondição seria:",
+      "opcao1": "Verdadeira",
+      "proximo1": "bicondicionalCerto",
+      "opcao2": "Falsa",
+      "proximo2": "bicondicionalErrado"
+    },
+
+    "bicondicionalCerto": {
+      "texto": "Correto. As duas condições foram satisfeitas, então a bicondição é verdadeira.",
+      "opcao1": "Próximo",
+      "proximo1": "despedida",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "bicondicionalErrado": {
+      "texto": "Errado. Quando as duas proposições têm o mesmo valor lógico, a bicondição é verdadeira.",
+      "opcao1": "Próximo",
+      "proximo1": "despedida",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "despedida": {
+      "texto": "Finalizamos por aqui. Me agradeçam pela pílula de conhecimento votando a favor da minha empresa, colegas. Nos vemos na próxima sessão. Até mais!",
+      "opcao1": "RETURN",
+      "proximo1": null,
+      "acao1": "voltarMaterias",
+      "opcao2": null,
+      "proximo2": null
+    }
+  }
+}

@@ -1,0 +1,239 @@
+{
+  "titulo": "Tabela Verdade",
+  "personagem": "peixoto",
+  "inicio": "inicio",
+  "dialogos": {
+    "inicio": {
+      "texto": "Bom dia, alunos! Vamos começar a aula de hoje.",
+      "opcao1": "Próximo",
+      "proximo1": "tiposRelacao",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "tiposRelacao": {
+      "texto": "Agora que você já sabe o que é uma proposição, vamos ver como podemos relacioná-las. Temos quatro casos principais: conjunção, disjunção, condicional e bicondicional.",
+      "opcao1": "Próximo",
+      "proximo1": "conjuncaoIntro",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "conjuncaoIntro": {
+      "texto": "Na conjunção, usamos “E”. Para ela ser verdadeira, as duas proposições precisam ser verdadeiras.",
+      "opcao1": "Próximo",
+      "proximo1": "conjuncaoExemplo",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "conjuncaoExemplo": {
+      "texto": "Vamos testar: “A Gatec possui bons professores E possui muito investimento.”",
+      "opcao1": "Próximo",
+      "proximo1": "conjuncaoPergunta",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "conjuncaoPergunta": {
+      "texto": "Sabendo que a Gatec possui bons professores, mas não tem muito investimento, essa proposição é:",
+      "opcao1": "Verdadeira",
+      "proximo1": "conjuncaoErrado",
+      "opcao2": "Falsa",
+      "proximo2": "conjuncaoCorreto"
+    },
+
+    "conjuncaoErrado": {
+      "texto": "Errado, como uma das partes é falsa, a conjunção inteira também vai ser falsa. Mas não desanime, vamos para a próxima.",
+      "opcao1": "Próximo",
+      "proximo1": "disjuncaoIntro",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "conjuncaoCorreto": {
+      "texto": "Muito bem, você acertou. Como uma das proposições é falsa, a conjunção inteira também é falsa. Está começando a pegar o jeito!",
+      "opcao1": "Próximo",
+      "proximo1": "disjuncaoIntro",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "disjuncaoIntro": {
+      "texto": "Agora temos a disjunção, que utiliza o “OU”. Aqui, basta uma das proposições ser verdadeira.",
+      "opcao1": "Próximo",
+      "proximo1": "disjuncaoExemplo",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "disjuncaoExemplo": {
+      "texto": "Tente responder: “A Gatec continuará sendo pública OU receberá novos investimentos.”",
+      "opcao1": "Próximo",
+      "proximo1": "disjuncaoPergunta",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "disjuncaoPergunta": {
+      "texto": "Imagine que a Gatec não será mais pública, mas receberá novos investimentos. A proposição é:",
+      "opcao1": "Verdadeira",
+      "proximo1": "disjuncaoCorreto",
+      "opcao2": "Falso",
+      "proximo2": "disjuncaoErrado"
+    },
+
+    "disjuncaoCorreto": {
+      "texto": "Muito bem! Você entendeu. Uma das proposições é verdadeira, então a disjunção também é verdadeira. Embora... se dependesse de mim, as duas seriam verdadeiras, mas isso é assunto para outra hora.",
+      "opcao1": "Próximo",
+      "proximo1": "condicionalIntro",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "disjuncaoErrado": {
+      "texto": "Hmm... não exatamente. A resposta é verdadeira, lembre-se: no “OU”, basta uma das proposições ser verdadeira. E, sinceramente, eu preferiria que as duas fossem verdadeiras. Mas esqueça o que eu disse.",
+      "opcao1": "Próximo",
+      "proximo1": "condicionalIntro",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "condicionalIntro": {
+      "texto": "Agora temos a condicional. Ela relaciona uma condição com uma consequência através de “SE... ENTÃO”.",
+      "opcao1": "Próximo",
+      "proximo1": "condicionalExplicacao1",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "condicionalExplicacao1": {
+      "texto": "É como dizer que, se uma determinada situação acontecer, esperamos que outra aconteça como consequência.",
+      "opcao1": "Próximo",
+      "proximo1": "condicionalExemplo",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "condicionalExemplo": {
+      "texto": "Por exemplo: “Se os alunos conseguirem resolver os desafios, então a GATEC continuará funcionando normalmente.”",
+      "opcao1": "Próximo",
+      "proximo1": "condicionalExplicacao2",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "condicionalExplicacao2": {
+      "texto": "Nesse caso, resolver os desafios é a condição, e a GATEC continuar funcionando é o resultado.",
+      "opcao1": "Próximo",
+      "proximo1": "condicionalRegra",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "condicionalRegra": {
+      "texto": "A condicional só é falsa quando a condição acontece, mas o resultado não acontece.",
+      "opcao1": "Próximo",
+      "proximo1": "condicionalExemplo2",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "condicionalExemplo2": {
+      "texto": "Agora tente: “Se uma nova proposta for apresentada, então a GATEC receberá novos recursos”.",
+      "opcao1": "Próximo",
+      "proximo1": "condicionalPergunta",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "condicionalPergunta": {
+      "texto": "Imagine que uma nova proposta foi apresentada, mas a GATEC não recebeu novos recursos. A proposição é:",
+      "opcao1": "Verdadeira",
+      "proximo1": "condicionalErrado",
+      "opcao2": "Falsa",
+      "proximo2": "condicionalCorreto"
+    },
+
+    "condicionalErrado": {
+      "texto": "Hmm... dessa vez não. A resposta é falsa, pois a condição aconteceu, mas o resultado esperado não.",
+      "opcao1": "Próximo",
+      "proximo1": "bicondicionalIntro",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "condicionalCorreto": {
+      "texto": "Muito bem, você acertou! Viu como um pequeno detalhe pode mudar tudo?",
+      "opcao1": "Próximo",
+      "proximo1": "bicondicionalIntro",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "bicondicionalIntro": {
+      "texto": "Agora chegamos à bicondicional. Ela utiliza a expressão “SE E SOMENTE SE”.",
+      "opcao1": "Próximo",
+      "proximo1": "bicondicionalExplicacao1",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "bicondicionalExplicacao1": {
+      "texto": "Diferente da condicional, aqui existe uma relação nos dois sentidos. As duas proposições precisam ter o mesmo valor lógico.",
+      "opcao1": "Próximo",
+      "proximo1": "bicondicionalExplicacao2",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "bicondicionalExplicacao2": {
+      "texto": "Isso significa que as duas partes precisam concordar: as duas devem ser verdadeiras ou as duas devem ser falsas.",
+      "opcao1": "Próximo",
+      "proximo1": "bicondicionalExemplo",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "bicondicionalExemplo": {
+      "texto": "Agora tente responder: “O laboratório será aberto se e somente se o professor estiver presente.”",
+      "opcao1": "Próximo",
+      "proximo1": "bicondicionalPergunta",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "bicondicionalPergunta": {
+      "texto": "Imagine que o laboratório será aberto e o professor estará presente; a proposição é:",
+      "opcao1": "Verdadeira",
+      "proximo1": "bicondicionalCorreto",
+      "opcao2": "Falsa",
+      "proximo2": "bicondicionalErrado"
+    },
+
+    "bicondicionalCorreto": {
+      "texto": "Isso mesmo! As duas proposições são verdadeiras, então a bicondicional também é verdadeira.",
+      "opcao1": "Próximo",
+      "proximo1": "encerramento",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "bicondicionalErrado": {
+      "texto": "Ah, não, preste um pouquinho mais de atenção: as duas proposições são verdadeiras, então a bicondicional também é verdadeira.",
+      "opcao1": "Próximo",
+      "proximo1": "encerramento",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "encerramento": {
+      "texto": "Bom alunos, isso é tudo! Nos vemos na próxima semana. Até mais!",
+      "opcao1": "RETURN",
+      "proximo1": null,
+      "acao1": "voltarMaterias",
+      "opcao2": null,
+      "proximo2": null
+    }
+  }
+}

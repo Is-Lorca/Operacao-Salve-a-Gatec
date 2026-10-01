@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Início</title>
+    <link rel="stylesheet" href="src/styles/reset.css" />
+    <link rel="stylesheet" href="src/styles/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bitcount:wght@100..900&family=Jersey+10&family=Tiny5&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <section id="home">
+      <div>
+        <audio id="audio" preload="metadata" autoplay loop="true">
+          <source src="./src/music/Boomin.music.mp3" type="audio/mp3" />
+          <source src="./src/music/Boomin.music.ogg" type="audio/ogg" />
+          <source src="./src/music/Boomin.music.wav" type="audio/wav" />
+          <p>Seu navegador não suporta audio :/</p>
+        </audio>
+        <button id="botaoAudio"> <img id=iconMute src="./src/img/opcoes audio/AudioMute3.png" alt="Ligar audio"></button>
+      </div>
+      <h1 id="nomeJogo">Matemática em jogo</h1>
+      <picture>
+        <source media="(max-width:767px)" srcset="src/imagens/homecel.png" />
+        <img src="src/img/home.png" alt="Tela inicial" />
+      </picture>
+      <a href="selecaoMateria.html">
+        <button id="botaoHome">Começar</button>
+      </a>
+    </section>
+    <script src="src/javascript/musica.js"></script>
+  </body>
+</html>
