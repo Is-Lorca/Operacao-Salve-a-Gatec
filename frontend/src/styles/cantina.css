@@ -111,13 +111,19 @@ header {
     margin: 0;
 }
 
-.item{
+.item {
     width: 450px;
     height: 225px;
     background-color: #c8d1d9;
     padding: auto;
     border: solid 1px rgb(68, 0, 255);
     border-radius: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.item:hover {
+    transform: scale(1.05); 
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
 }
 
 .infoItem {
@@ -147,6 +153,12 @@ header {
     border-radius: 20px;
     color: white;
     height: 30px;
+    transition: background-color 0.2s ease;
+}
+
+.info button:hover {
+    background-color: #fbcc4d;
+    border-color: #fbcc4d;
 }
 
 .info span {
