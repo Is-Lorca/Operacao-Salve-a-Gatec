@@ -323,16 +323,6 @@ picture img {
     object-fit: contain;
 }
 
-#drapeixoto img {
-    width: 30%;
-    max-width: 250px;
-    min-width: 120px;
-    position: absolute;
-    left: 50%;
-    bottom: 0;
-    transform: translate(-46%, -18%);
-}
-
 #caixadialogo {
     font-size: 1.2rem;
 }
