@@ -96,7 +96,7 @@ header {
     align-items: center;
 }
 
-#nomeJogo{
+#nomeJogo {
     position: absolute;
     top: 2.3rem;
     font-family: "Bitcount", system-ui;
@@ -113,10 +113,11 @@ picture {
     transition: opacity 0.8s ease;
 }
 
-#botaoHome {
+#botoesHome {
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    flex-direction: column;
     position: absolute;
 
     width: 20%;
@@ -125,10 +126,15 @@ picture {
     padding: 12px 30px;
     transform: translateX(-50%);
     z-index: 10;
+    gap: 10px;
+}
 
+.botaoHome {
     font-family: "Tiny5", sans-serif;
     font-size: 1.4rem;
-
+    
+    width: 15rem;
+    height: 3.5rem;
     background-color: transparent;
     border-radius: 10px;
     border-color: rgb(240, 248, 255);
@@ -141,12 +147,19 @@ picture {
     transition: 0.3s;
 }
 
+#botaoContinuar {
+    align-items: center;
+    justify-content: center;
+    border-color: rgba(240, 248, 255, 0.438);
+    color: rgba(240, 248, 255, 0.438);
+    cursor: default;
+}
 
-#home:has(#botaoHome:hover) picture {
+#home:has(#botaoInicio:hover) picture {
     opacity: 1;
 }
 
-#home:has(#botaoHome:hover) #nomeJogo{
+#home:has(#botaoInicio:hover) #nomeJogo{
     filter: opacity(0);
 }
 
@@ -157,7 +170,7 @@ picture img {
     max-width: 1600px;
 }
 
-#botaoHome:active {
+.botaoHome:active {
     background-color: rgb(240, 248, 255);
     color: rgb(0, 2, 26);
     border-color: rgb(252, 252, 252);
