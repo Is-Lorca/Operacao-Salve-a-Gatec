@@ -1,9 +1,9 @@
 const BASE_URL = 'http://localhost:3000/api'
 
 export const savesApi = {
-    async carregarSaves(){
+    async carregarSaves(idUser){
         try{
-            const resposta = await fetch(`${BASE_URL}/saves`)
+            const resposta = await fetch(`${BASE_URL}/saves/${idUser}`)
 
             if(!resposta.ok){
                 throw new Error(`Erro ao carregar os saves: ${resposta.status}`);
@@ -18,14 +18,14 @@ export const savesApi = {
             throw error;
         }
     },
-    async criarNovoJogo(nomeSave){
+    async criarNovoJogo(nomeSave, idUser){
         try{
-            const resposta = await fetch(`${BASE_URL}/saves/criarsave`, {
+            const resposta = await fetch(`${BASE_URL}/saves`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ nome_save: nomeSave })
+                body: JSON.stringify({ nome_save: nomeSave, id_usuario: idUser})
             });
 
             if(!resposta.ok){
@@ -41,9 +41,9 @@ export const savesApi = {
             throw error;
         }
     },
-    async carregarJogo(id){
+    async carregarJogo(idUser, idSave){
         try{
-            const resposta = await fetch(`${BASE_URL}/saves/carregarjogo/${id}`);
+            const resposta = await fetch(`${BASE_URL}/saves/${idUser}/${idSave}`);
 
             if(!resposta.ok){
                 throw new Error(`Erro ao carregar jogo: ${resposta.status}`);
@@ -54,13 +54,13 @@ export const savesApi = {
             return json.data; 
         }
         catch(error){
-            console.error(`Erro na API carregarJogo para o ID ${id}:`, error);
+            console.error(`Erro na API carregarJogo para o ID ${idSave}:`, error);
             throw error;
         }
     },
-    async atualizarSave(id, novosDados){
+    async atualizarSave(idUser, idSave, novosDados){
         try{
-            const resposta = await fetch(`${BASE_URL}/saves/updtsave/${id}`, {
+            const resposta = await fetch(`${BASE_URL}/saves/${idUser}/${idSave}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -69,7 +69,7 @@ export const savesApi = {
             });
 
             if(!resposta.ok){
-                throw new Error(`Erro ao atualizar save ${id}: ${resposta.status}`);
+                throw new Error(`Erro ao atualizar save ${idSave}: ${resposta.status}`);
             }
 
             const json = await resposta.json();
@@ -77,18 +77,18 @@ export const savesApi = {
             return json.data; 
         }
         catch(error){
-            console.error(`Erro na API atualizarSave para o ID ${id}:`, error);
+            console.error(`Erro na API atualizarSave para o ID ${idSave}:`, error);
             throw error;
         }
     },
-    async deletarSave(id){
+    async deletarSave(idUser, idSave){
         try{
-            const resposta = await fetch(`${BASE_URL}/saves/delsave/${id}`, {
+            const resposta = await fetch(`${BASE_URL}/saves/${idUser}/${idSave}`, {
                 method: 'DELETE'
             });
 
             if(!resposta.ok){
-                throw new Error(`Erro ao deletar save ${id}: ${resposta.status}`);
+                throw new Error(`Erro ao deletar save ${idSave}: ${resposta.status}`);
             }
 
             const json = await resposta.json();
@@ -96,7 +96,7 @@ export const savesApi = {
             return json.data; 
         }
         catch(error){
-            console.error(`Erro na API deletarSave para o ID ${id}:`, error);
+            console.error(`Erro na API deletarSave para o ID ${idSave}:`, error);
             throw error;
         }
     }

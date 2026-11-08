@@ -8,9 +8,9 @@ class SaveController {
             // objeto, transformando-os em variáveis independentes
             // do lado esquerdo o objeto é desestruturado
             // do lado direito um novo objeto é criado
-            const {nome_save} = req.body;
+            const {nome_save, id_usuario} = req.body;
 
-            const novoSave = await savesService.criarNovoJogo(nome_save);
+            const novoSave = await savesService.criarNovoJogo(nome_save, id_usuario);
 
             return res.status(201).json(
                 respostaApi(true, "Save criado", novoSave)
@@ -26,7 +26,9 @@ class SaveController {
     }
     async carregarTodos(req, res){
         try{
-            const saves = await savesService.carregarTodos();
+            const {idUser} = req.params;
+
+            const saves = await savesService.carregarTodos(idUser);
             
             return res.status(200).json(
                 respostaApi(true, "Saves encontrados", saves)
@@ -41,9 +43,9 @@ class SaveController {
     }
     async carregarSave(req, res){
         try{
-            const {id} = req.params;
+            const {idUser, idSave} = req.params;
 
-            const save = await savesService.carregarJogo(id);
+            const save = await savesService.carregarSaves(idUser, idSave);
 
             return res.status(200).json(
                 respostaApi(true, "Save encontrado", save)
@@ -58,10 +60,10 @@ class SaveController {
     }
     async atualizarSave(req, res){
         try{
-            const {id} = req.params;
+            const {idUser, idSave} = req.params;
             const novosDados = req.body;
 
-            const saveAtualizado = await savesService.atualizarSave(id, novosDados);
+            const saveAtualizado = await savesService.atualizarSave(idUser, idSave, novosDados);
             
             return res.status(200).json(
                 respostaApi(true, "Save encontrado e atualizado", saveAtualizado)
@@ -76,9 +78,9 @@ class SaveController {
     }
     async deletarSave(req, res){
         try{
-            const {id} = req.params;
+            const {idUser, idSave} = req.params;
 
-            const saveDeletado = await savesService.excluindoSave(id);
+            const saveDeletado = await savesService.excluindoSave(idUser, idSave);
 
             return res.status(200).json(
                 respostaApi(true, "Save deletado com sucesso", saveDeletado)

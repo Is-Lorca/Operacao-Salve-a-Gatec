@@ -3,12 +3,12 @@ const router = express.Router();
 
 const savesController = require('../controllers/savesController');
 
-router.get('/', savesController.carregarTodos);
+router.get('/:idUser', savesController.carregarTodos);
 router.post('/', savesController.criarNovoJogo);
-router.get('/:id', savesController.carregarSave);
+router.get('/:idUser/:idSave', savesController.carregarSave);
 // método usado para atualizar ou substituir um recurso existente
-router.put('/:id', savesController.atualizarSave);
+router.put('/:idUser/:idSave', savesController.atualizarSave);
 // método para deletar algo específico do servidor
-router.delete('/:id', savesController.deletarSave);
+router.delete('/:idUser/:idSave', savesController.deletarSave);
 
 module.exports = router;
