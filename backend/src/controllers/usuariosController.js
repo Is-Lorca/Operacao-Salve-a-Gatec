@@ -2,23 +2,12 @@ const respostaApi = require("../utils/respostaApi");
 const userService = require("../services/usuariosService");
 
 class UsuarioController {
-  async criar(req, res) {
-    try {
-      const usuario = await userService.criar(req.body);
-
-      return res.status(201).json(respostaApi(true, "Usuário criado com sucesso.", usuario));
-    } 
-    catch (error) {
-      return res.status(400).json(respostaApi(false, error.message));
-    }
-  }
-
   async buscarPorId(req, res) {
     try {
       const usuario = await userService.buscarPorId(req.params.id);
 
       return res.status(200).json(respostaApi(true, "Usuário encontrado.", usuario));
-    } 
+    }
     catch (error) {
       return res.status(404).json(respostaApi(false, error.message));
     }
@@ -29,7 +18,7 @@ class UsuarioController {
       const usuario = await userService.buscarPorEmail(req.params.email);
 
       return res.status(200).json(respostaApi(true, "Usuário encontrado.", usuario));
-    } 
+    }
     catch (error) {
       return res.status(404).json(respostaApi(false, error.message));
     }
@@ -39,10 +28,10 @@ class UsuarioController {
     try {
       const usuarios = await userService.buscarTodos();
 
-      return res.status(200).json(respostaApi(true, "Usuários carregados.", usuarios, 
-        {quantidade: usuarios.length}),
+      return res.status(200).json(respostaApi(true, "Usuários carregados.", usuarios,
+        { quantidade: usuarios.length }),
       );
-    } 
+    }
     catch (error) {
       return res.status(404).json(respostaApi(false, error.message));
     }
@@ -53,7 +42,7 @@ class UsuarioController {
       const usuario = await userService.atualizar(req.params.id, req.body);
 
       return res.status(200).json(respostaApi(true, "Usuário atualizado com sucesso.", usuario));
-    } 
+    }
     catch (error) {
       return res.status(400).json(respostaApi(false, error.message));
     }
@@ -64,7 +53,7 @@ class UsuarioController {
       await userService.deletar(req.params.id);
 
       return res.status(200).json(respostaApi(true, "Usuário removido com sucesso."));
-    } 
+    }
     catch (error) {
       return res.status(400).json(respostaApi(false, error.message));
     }
@@ -75,7 +64,7 @@ class UsuarioController {
       const usuario = await userService.atualizarLogin(req.params.id);
 
       return res.status(200).json(respostaApi(true, "Último login atualizado.", usuario));
-    } 
+    }
     catch (error) {
       return res.status(400).json(respostaApi(false, error.message));
     }

@@ -21,9 +21,11 @@ app.use(express.json());
 const materiaRoutes = require('./src/routes/materiasRoutes');
 const savesRoutes = require('./src/routes/savesRoutes');
 const usuarioRoutes = require('./src/routes/usuariosRoutes');
+const authRoutes = require('./src/routes/authRoutes');
 app.use('/api/materias', materiaRoutes);
 app.use('/api/saves', savesRoutes);
 app.use('/api/usuarios', usuarioRoutes);
+app.use('/api/auth', authRoutes);
 
 // app.get() apenas registra que uma rota existe, não faz a requisição, so quando alguem acessa
 app.get('/api', (req, res) => {

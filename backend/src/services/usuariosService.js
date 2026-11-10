@@ -2,36 +2,6 @@ const validacoes = require('../utils/validacoes');
 const userModel = require('../models/usuariosModel');
 
 class UsuariosService {
-    consultaEmail(email){
-        const partes = email.split("@");
-
-        if(partes.length !== 2){
-            return false;
-        }
-
-        const dominio = partes[1];
-
-        return dominio.includes(".");
-    }
-    async criar(novosDados){
-        const nomeValido = validacoes.validarNome(novosDados.nome);
-        const email = validacoes.validarEmail(novosDados.email);
-        
-        // Busca o usuário completo pelo e-mail
-        const usuarioExistente = await userModel.buscarPorEmailCompleto(email);
-
-        // Se o usuário existir E estiver ativo, erro
-        if (usuarioExistente && usuarioExistente.ativo) {
-            throw new Error("E-mail já pertence a um usuário.");
-        }
-
-        validacoes.validarSenha(novosDados.senha_hash);
-        novosDados.email = email;
-
-        // Se ele existir mas estiver inativo, o Model vai cuidar de reativar
-        return await userModel.criar(novosDados);
-    }
-
     async buscarPorId(idUser){
         const idValido = validacoes.validarId(idUser);
 
