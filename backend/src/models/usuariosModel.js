@@ -22,7 +22,7 @@ class UsuarioModel {
             if(error){
                 console.error('Erro ao inserir registro: ', error.message);
                 throw error;
-            }
+            }   
     
             return data;
         }

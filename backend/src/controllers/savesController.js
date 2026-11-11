@@ -4,32 +4,25 @@ const savesService = require('../services/savesService');
 class SaveController {
     async criarNovoJogo(req, res){
         try{
-            const { nome_save } = req.body;
+            const {nome_save} = req.body;
 
             const idUsuario = req.usuarioLogado.id_usuario;
 
-            const novoSave =
-                await savesService.criarNovoJogo(
-                    nome_save,
-                    idUsuario
-                );
+            const novoSave = await savesService.criarNovoJogo(nome_save, idUsuario);
 
-            return res.status(201).json(respostaApi(true,"Save criado.", novoSave));
+            return res.status(201).json(respostaApi(true,"Save criado.", novoSave));    
         }
         catch(error){
             console.error(error);
 
-            return res.status(400).json(
-                respostaApi(false, error.message)
-            );
+            return res.status(400).json(respostaApi(false, error.message));
         }
     }
     async carregarTodos(req,res){
         try{
             const idUsuario = req.usuarioLogado.id_usuario;
 
-            const saves =
-                await savesService.carregarTodos(idUsuario);
+            const saves = await savesService.carregarTodos(idUsuario);
 
             return res.json(respostaApi(true,"Saves encontrados.", saves));
         }
