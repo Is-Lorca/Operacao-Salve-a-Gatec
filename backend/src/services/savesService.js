@@ -4,10 +4,10 @@ const savesModel = require('../models/savesModel');
 class SaveService {
     // criar
     async criarNovoJogo(nome, idUser){
-        const nomeValido = validacao.validarNome(nome);
+        validacao.validarNome(nome);
         const idValido = validacao.validarId(idUser);
 
-        return await savesModel.criar({nome_save: nome, id_usuario: idUser});
+        return await savesModel.criar({nome_save: nome, id_usuario: idValido});
     }
     // buscar
     async carregarTodos(idUser){
@@ -30,7 +30,6 @@ class SaveService {
 
         return save;
     }
-    async 
     // atualizar
     async atualizarSave(idUser, idSave, novosDados){
         const idUValido = validacao.validarId(idUser);
