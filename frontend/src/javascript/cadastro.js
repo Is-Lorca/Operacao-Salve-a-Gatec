@@ -25,7 +25,6 @@ btnCadastrar.addEventListener("click", async () => {
 
         resultado.innerText = "Cadastro realizado com sucesso!";
 
-        console.log(usuario);
     } 
     catch(error){
         resultado.innerText = "Erro: " + error.message;

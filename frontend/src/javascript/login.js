@@ -13,11 +13,9 @@ formLogin.addEventListener("submit", async(event) =>{
     resultado.innerText = "Entrando...";
 
     try{
-        const usuario = await authApi.login(email, senha);
+        const resposta = await authApi.login(email, senha);
 
-        resultado.innerText = `Bem Vindo(a) ${usuario.nome}`;
-
-        console.log(usuario);
+        resultado.innerText = `Bem-vindo(a) ${resposta.data.usuario.nome}`;
 
         setTimeout(()=>{
             window.location.href = "./index.html";

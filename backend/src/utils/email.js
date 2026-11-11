@@ -9,7 +9,7 @@ const transporter = nodemailer.createTransport({
 });
 
 async function enviarEmailRec(emailDest, token){
-    const linkRec = `http://localhost:3000/api/{token}`;
+    const linkRec = `http://localhost:3000/api/trocar-senha.html?token=${token}`;
 
     const mailOptions = {
         from: `"Suporte Operação Salve a Gatec" <${process.env.EMAIL_USER}>`,
