@@ -1,0 +1,88 @@
+
+:root {
+  --fundo: #1a0b3a;
+  --painel: #050308;
+  --borda: #7b2fe0;
+  --titulo: #b44cff;
+  --botao: #6a21c9;
+  --botao-borda: #e3b8ff;
+  --texto: #f1e4ff;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  min-height: 100vh;
+  background: var(--fundo);
+  font-family: "Pixelify Sans", monospace;
+
+}
+
+.TelaPause {
+  position: relative;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+}
+
+.FundoPause {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  image-rendering: pixelated;
+}
+
+/* painel (tipo a mooldura) */
+.menu {
+  width: min(480px, 92vw);
+  padding: 28px 40px 36px;
+  background: var(--painel);
+  border: 4px solid var(--borda);
+  border-radius: 16px;
+  box-shadow: 0 0 0 4px #2a0f5c, 0 0 40px rgba(123, 47, 224, .45);
+  text-align: center;
+  position: relative; 
+  z-index: 1;
+}
+
+.menu h1 {
+  font-size: clamp(2rem, 8vw, 3rem);
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--titulo);
+  text-shadow: 4px 4px 0 #3a1170;
+  margin-bottom: 28px;
+}
+
+/* estilo em que vai ficar os botoes */
+.botoes {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* Os botões */
+.botao {
+  font: inherit;
+  font-size: 1.25rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  color: var(--texto);
+  background: transparent;
+  border: 3px solid var(--borda);
+  border-radius: 12px;
+  padding: 14px 0;
+  cursor: pointer;
+  transition: transform .08s, background .15s;
+}
+
+.botao:hover,
+.botao:focus-visible {
+  background: #2a0f5c;
+  outline: none;
+}
+
+.botao:active { transform: translateY(2px); }
+
