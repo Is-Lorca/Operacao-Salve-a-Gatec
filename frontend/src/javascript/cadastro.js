@@ -25,6 +25,10 @@ btnCadastrar.addEventListener("click", async () => {
 
         resultado.innerText = "Cadastro realizado com sucesso!";
 
+        setTimeout(()=>{
+            window.location.href = "./index.html";
+        }, 1000);
+
     } 
     catch(error){
         resultado.innerText = "Erro: " + error.message;

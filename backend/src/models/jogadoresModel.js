@@ -11,7 +11,7 @@ class JogadoresModel {
             .from('jogador')
             .insert(novoJogador)
             .select()
-            .single()
+            .single();
 
         if(error){
             console.error('Erro ao inserir jogador: ', error.message);
@@ -39,7 +39,7 @@ class JogadoresModel {
         const {data, error} = await supabase
             .from('jogador')
             .select(`id_save, nome, dinheiro, id_materia_atual, 
-                id_checkpoint, primeira_run, tempo_jogado`)
+                id_checkpoint, primeira_run, tempo_jogado, capacidade_inventario`)
             .eq('id_jogador', idJogador)
             .maybeSingle();
 
@@ -70,6 +70,9 @@ class JogadoresModel {
         }
         if(novosDados.tempo_jogado){
             dadosAtualizar.tempo_jogado = novosDados.tempo_jogado;
+        }
+        if(novosDados.capacidade_inventario !== undefined){
+            dadosAtualizar.capacidade_inventario = novosDados.capacidade_inventario;
         }
 
         if(Object.keys(dadosAtualizar).length === 0){

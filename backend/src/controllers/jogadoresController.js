@@ -24,7 +24,7 @@ class JogadoresController{
             
             const jogadores = await jogadorService.buscarPorSave(idSave);
 
-            return res.status(200).json(respostaApi(true,"Jogadores encontrados.", jogadores));
+            return res.status(200).json(respostaApi(true,"Jogador encontrados.", jogadores));
         }
         catch(error){
             return res.status(404).json(respostaApi(false, error.message));
