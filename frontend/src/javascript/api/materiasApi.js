@@ -6,14 +6,14 @@
 // o cors na parte do Node.js, depois, no server.js, importar e ativar o cors antes de todas as rotas
 
 // salvamos em uma variável a base do nosso url a ser consumido pelo Fetch()
-const BASE_URL = 'http://localhost:3000/api';
+import API_URL from "../config/api.js";
 
 export const materiasApi = {
     // busca as materias da rota /api/materias
     // da retorno da lista de materias, vindas do BD
     async listarMaterias(){
         try{
-            const resposta = await fetch(`${BASE_URL}/materias`);
+            const resposta = await fetch(`${API_URL}/materias`);
 
             // O fetch() não considera erro HTTP como erro de Promise -> resultado de operação assíncrona
             // ele está basicamente dizendo: 

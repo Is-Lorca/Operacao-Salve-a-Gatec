@@ -1,10 +1,10 @@
 import { fetchComAuth } from "./helper/fetchComAuth";
 
-const BASE_URL = "http://localhost:3000/api";
+import API_URL from "../config/api.js";
 
 export const inventarioApi = {
     async buscarPorJogador(idJogador) {
-        const resposta = await fetchComAuth(`${BASE_URL}/inventario/jogador/${idJogador}`,);
+        const resposta = await fetchComAuth(`${API_URL}/inventario/jogador/${idJogador}`,);
 
         const json = await resposta.json();
 
@@ -15,7 +15,7 @@ export const inventarioApi = {
         return json.data;
     },
     async buscarPorId(idInventario) {
-        const resposta = await fetchComAuth(`${BASE_URL}/inventario/${idInventario}`);
+        const resposta = await fetchComAuth(`${API_URL}/inventario/${idInventario}`);
 
         const json = await resposta.json();
 
@@ -26,7 +26,7 @@ export const inventarioApi = {
         return json.data;
     },
     async adicionarItem(idJogador, idItem) {
-        const resposta = await fetchComAuth(`${BASE_URL}/inventario/jogador/${idJogador}/item/${idItem}`,
+        const resposta = await fetchComAuth(`${API_URL}/inventario/jogador/${idJogador}/item/${idItem}`,
             {
                 method: "POST",
             });
@@ -40,7 +40,7 @@ export const inventarioApi = {
         return json.data;
     },
     async usarItem(idJogador, idItem) {
-        const resposta = await fetchComAuth(`${BASE_URL}/inventario/jogador/${idJogador}/item/${idItem}/usar`,
+        const resposta = await fetchComAuth(`${API_URL}/inventario/jogador/${idJogador}/item/${idItem}/usar`,
             {
                 method: "POST",
             });
@@ -54,7 +54,7 @@ export const inventarioApi = {
         return json.data;
     },
     async removerItem(idInventario) {
-        const resposta = await fetchComAuth(`${BASE_URL}/inventario/${idInventario}`,
+        const resposta = await fetchComAuth(`${API_URL}/inventario/${idInventario}`,
             {
                 method: "DELETE",
             });

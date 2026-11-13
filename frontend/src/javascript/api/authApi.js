@@ -1,8 +1,8 @@
-const BASE_URL = "http://localhost:3000/api";
+import API_URL from "../config/api.js";
 
 export const authApi = {
     async login(email, senha){
-        const resposta = await fetch(`${BASE_URL}/auth/login`,{
+        const resposta = await fetch(`${API_URL}/auth/login`,{
             method:"POST",
 
             headers:{
@@ -28,7 +28,7 @@ export const authApi = {
         return json;
     },
     async cadastro(nome,email,senha){
-        const resposta = await fetch(`${BASE_URL}/auth/cadastro`,{
+        const resposta = await fetch(`${API_URL}/auth/cadastro`,{
             method:"POST",
 
             headers:{
