@@ -64,7 +64,7 @@ class InventarioService {
             throw new Error("Jogador não possui esse item.");
         }
         
-        // Contexto padrão enviado para os efeitos. Aqui colocamos somente IDs e informações
+        // Contexto padrão enviado para os efeitos. Colocamos somente IDs e informações
         // necessárias para aquele efeito. -> MUITO IMPORTANTE
         const contexto = {
             id_jogador: jogadorValido,
@@ -84,6 +84,10 @@ class InventarioService {
         // Executa efeito do item
         const resultado = await efeitosService.executar(itemInventario.item.efeito, contexto);
 
+        if(!resultado.sucesso){
+            return erro;
+        }
+
         let novosUsos = itemInventario.usos_restantes - 1;
         if(novosUsos <= 0){
             await inventarioModel.excluir(itemInventario.id_inventario);
@@ -93,6 +97,7 @@ class InventarioService {
                 efeito: resultado
             };
         }
+
         await inventarioModel.atualizar(itemInventario.id_inventario,
             {
                 usos_restantes: novosUsos
@@ -119,6 +124,29 @@ class InventarioService {
         const idValido = validacoes.validarId(idInventario);
 
         return await inventarioModel.excluir(idValido);
+    }
+    async adicionarItemComprado(idJogador, idItem, preco){
+        const jogadorValido = validacoes.validarId(idJogador);
+        const itemValido = validacoes.validarId(idItem);
+
+        const jogador = await jogadorService.buscarPorId(jogadorValido);
+
+        if(jogador.dinheiro < preco){
+            throw new Error("Jogador não possui dinheiro suficiente.");
+        }
+
+        await this.adicionarItem(jogadorValido, itemValido);
+
+        await jogadorService.atualizar(jogadorValido,
+            {
+                dinheiro: jogador.dinheiro - preco
+            }
+        );
+
+        return {
+            mensagem:"Item comprado com sucesso.",
+            dinheiroRestante: jogador.dinheiro - preco
+        };
     }
 }
 

@@ -1,6 +1,6 @@
 import { fetchComAuth } from "./helper/fetchComAuth";
 
-import API_URL from "../config/api.js";
+import API_URL from "./api.js";
 
 export const inventarioApi = {
     async buscarPorJogador(idJogador) {

@@ -24,12 +24,14 @@ const usuarioRoutes = require('./src/routes/usuariosRoutes');
 const authRoutes = require('./src/routes/authRoutes');
 const jogadorRoutes = require('./src/routes/jogadoresRoutes');
 const inventarioRoutes = require('./src/routes/inventariosRoutes');
+const lojaRoutes = require('./src/routes/lojasRoutes');
 app.use('/api/materias', materiaRoutes);
 app.use('/api/saves', savesRoutes);
 app.use('/api/usuarios', usuarioRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/jogador', jogadorRoutes);
 app.use('/api/inventario', inventarioRoutes);
+app.use('/api/loja', lojaRoutes);
 
 // app.get() apenas registra que uma rota existe, não faz a requisição, so quando alguem acessa
 app.get('/api', (req, res) => {

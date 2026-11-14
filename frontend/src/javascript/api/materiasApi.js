@@ -6,7 +6,7 @@
 // o cors na parte do Node.js, depois, no server.js, importar e ativar o cors antes de todas as rotas
 
 // salvamos em uma variável a base do nosso url a ser consumido pelo Fetch()
-import API_URL from "../config/api.js";
+import API_URL from "./api.js";
 
 export const materiasApi = {
     // busca as materias da rota /api/materias

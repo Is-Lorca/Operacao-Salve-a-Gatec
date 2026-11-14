@@ -1,6 +1,6 @@
 import { fetchComAuth } from "./helper/fetchComAuth";
 
-import API_URL from "../config/api.js";
+import API_URL from "./api.js";
 
 export const usuarioApi = {
   async buscarUsuario(idUser){
@@ -14,7 +14,6 @@ export const usuarioApi = {
 
       return json.data;
   },
-
   async buscarTodos(){
       const resposta = await fetchComAuth(`${API_URL}/usuarios`);
 

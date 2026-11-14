@@ -84,6 +84,44 @@ class ItensService{
 
         return item;
     }
+    async sortearItens(quantidade = 4){
+        // medo de ser uma copia original do banco, entao..
+        const todosItens = [...await itemModel.buscarTodos()];
+
+        if(!todosItens || todosItens.length < quantidade){
+            throw new Error("Não há itens suficientes para realizar o sorteio.");
+        }
+        // criamos uma array para armazenar os itens sorteados
+        const itensSorteados = [];
+        // armazenamos o peso total dos itens, baseado nos pesos que cada um deles possui
+        // essa linha soma todos os pesos dos itens na lista todosItens (item), começando do 0,
+        // reduce esta aqui para transformar a lista completa em um unico numero (total) 
+        // é como se fosse um for e estivesse contando (somando) os pesos de itens.
+        
+        while(itensSorteados.length < quantidade){
+            const pesoTotal = todosItens.reduce((total, item) => total + item.peso, 0)
+            const sorteio = Math.random() * pesoTotal;
+
+            let acumulado = 0;
+
+            for(let i = 0; i < todosItens.length; i++){
+                // armazena o peso do a ser comparado na variavel acumulado
+                acumulado += todosItens[i].peso;
+
+                // se o numero sorteado for MENOR OU IGUAL a acumulado...
+                if(sorteio <= acumulado){
+                    // coloca o item dentro da array ItensSorteados
+                    itensSorteados.push(todosItens[i]);
+                    // retira da array de todosItens o item adicionado no ItensSorteados, 
+                    // assim, não tem como o mesmo item aparecer 2 vezes na mesma geração de loja
+                    todosItens.splice(i, 1);
+
+                    break;
+                }
+            }
+        }
+        return itensSorteados;
+    }
 }
 
 module.exports = new ItensService();

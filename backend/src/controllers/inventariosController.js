@@ -11,7 +11,7 @@ class InventariosController {
             return res.status(200).json(respostaApi(true, "Inventário encontrado.", inventario));
         } 
         catch (error) {
-            return res.status(400).json(respostaApi(false, error.message));
+            return res.status(404).json(respostaApi(false, error.message));
         }
     }
     async buscarPorJogador(req, res) {
@@ -23,7 +23,7 @@ class InventariosController {
             return res.status(200).json(respostaApi(true, "Inventário encontrado.", inventario));
         } 
         catch (error) {
-            return res.status(400).json(respostaApi(false, error.message));
+            return res.status(404).json(respostaApi(false, error.message));
         }
     }
     async adicionarItem(req, res) {

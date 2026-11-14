@@ -1,4 +1,4 @@
-import API_URL from "../config/api.js";
+import API_URL from "./api.js";
 
 export const authApi = {
     async login(email, senha){
