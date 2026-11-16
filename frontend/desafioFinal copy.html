@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desafio Final</title>
+    <link rel="stylesheet" href="src/styles/reset.css">
+    <link rel="stylesheet" href="src/styles/desafioFinal.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bitcount:wght@100..900&family=Jersey+10&family=Tiny5&display=swap"
+        rel="stylesheet"
+    >
+</head>
+
+<body id="bodyPersona">
+    
+    <header>
+        <h1 id="tituloMateria">Desafio Final</h1>
+    </header>
+
+    <section id="telaPrincipal">
+
+        <div id="janelaPersona">
+
+            <figure id="imagemfundo">
+                <img
+                    src="./src/img/cenário mister plutonio.gif"
+                    alt="Cenário do Mr. Plutônio"
+                >
+            </figure>
+
+            <figure id="mrplutonio">
+                <img
+                    src="./src/img/mrplutonio.gif"
+                    alt="Mr. Plutônio"
+                >
+            </figure>
+
+        </div>
+
+    </section>
+
+    
+    <section id="telaInicial">
+        <div id="caixadialogo">
+            <p id="falaPersona"></p>
+            <div id="espaçoBotao">
+                <button id="bt1" class="botaousuario">(Começar)</button>
+                <button id="bt2" class="botaousuario"></button>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="telaPerguntas" hidden>
+
+        <header id="cabecalhoProva">
+
+            <span id="progresso">Questão 1 de 10</span>
+
+            <span id="pontuacao">Pontos: 0</span>
+
+        </header>
+
+        <div id="barraProgresso">
+
+            <div id="preenchimentoProgresso"></div>
+
+        </div>
+
+        <div id="areaQuestao">
+
+            <h2 id="enunciado"></h2>
+
+            <div id="alternativas"></div>
+
+            <p id="feedback"></p>
+
+            <button id="botaoConfirmar" disabled>
+                Confirmar resposta
+            </button>
+
+            <button id="botaoProxima" hidden>
+                Próxima questão
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <section id="telaResultado" hidden>
+
+    <h1 id="tituloResultado">Resultado Final</h1>
+
+    <p id="quantidadeAcertos"></p>
+
+    <p id="pontuacaoFinal"></p>
+
+    <h2 id="classificacao"></h2>
+
+    <button id="botaoReiniciar">
+        Jogar novamente
+    </button>
+
+</section>
+
+    <script src="src/javascript/desafioFinal.js"></script>
+    <script src="src/javascript/musica.js"></script>
+    <script src="src/javascript/dialogo.js"></script>
+</body>
+
+</html>

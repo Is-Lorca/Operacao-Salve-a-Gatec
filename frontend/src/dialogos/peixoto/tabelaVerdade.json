@@ -4,7 +4,7 @@
   "inicio": "inicio",
   "dialogos": {
     "inicio": {
-      "texto": "Bom dia, alunos! Vamos começar a aula de hoje.",
+      "texto": "Bom dia, alunos!  Agora que vocês já sabem o que é uma proposição, vamos ver como podemos relacioná-las.",
       "opcao1": "Próximo",
       "proximo1": "tiposRelacao",
       "opcao2": null,
@@ -12,7 +12,7 @@
     },
 
     "tiposRelacao": {
-      "texto": "Agora que você já sabe o que é uma proposição, vamos ver como podemos relacioná-las. Temos quatro casos principais: conjunção, disjunção, condicional e bicondicional.",
+      "texto": "Temos cinco casos principais: conjunção, disjunção, condicional, bicondicional e negação.",
       "opcao1": "Próximo",
       "proximo1": "conjuncaoIntro",
       "opcao2": null,

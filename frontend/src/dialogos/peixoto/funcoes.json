@@ -1,0 +1,303 @@
+{
+    "titulo": "Funções",
+    "personagem": "peixoto",
+    "inicio": "inicio",
+    "dialogos": {
+        "inicio": {
+            "texto": "Bom dia, alunos, hoje vamos começar um novo conteúdo: funções.",
+            "opcao1": "Próximo",
+            "proximo1": "funcaoConstante",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "funcaoConstante": {
+            "texto": "Primeiro, vamos conhecer a função constante.",
+            "opcao1": "Próximo",
+            "proximo1": "definicaoConstante",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "definicaoConstante": {
+            "texto": "Uma função é chamada de constante quando, para qualquer valor de x, ela sempre produz o mesmo resultado. Por isso, podemos representá-la assim: f(x) = c.",
+            "opcao1": "Próximo",
+            "proximo1": "exemploConstante",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "exemploConstante": {
+            "texto": "Por exemplo: f(x) = 5. Não importa qual valor de x você escolha: o resultado será sempre 5; mesmo se colocarmos x = 10, continuamos tendo 5.",
+            "opcao1": "Próximo",
+            "proximo1": "graficoConstante",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "graficoConstante": {
+            "texto": "No gráfico, uma função constante forma uma reta paralela ao eixo x.",
+            "opcao1": "Próximo",
+            "proximo1": "perguntaConstante",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "perguntaConstante": {
+            "texto": "Agora responda: qual destas funções é constante?",
+            "opcao1": "f(x) = 3x",
+            "proximo1": "constanteErrado",
+            "opcao2": "f(x) = 3",
+            "proximo2": "constanteCorreto"
+        },
+
+        "constanteErrado": {
+            "texto": "Não dessa vez: em 3x, o resultado muda conforme o valor de x.",
+            "opcao1": "Próximo",
+            "proximo1": "caracteristicaConstante",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "constanteCorreto": {
+            "texto": "Muito bem, querido! O resultado permanece sempre igual a 3, independentemente do valor de x.",
+            "opcao1": "Próximo",
+            "proximo1": "caracteristicaConstante",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "caracteristicaConstante": {
+            "texto": "Existe mais uma característica importante da função constante.",
+            "opcao1": "Próximo",
+            "proximo1": "imagemConstante",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "imagemConstante": {
+            "texto": "Como ela sempre produz o mesmo resultado, sua imagem possui apenas esse valor.",
+            "opcao1": "Próximo",
+            "proximo1": "exemploImagemConstante",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "exemploImagemConstante": {
+            "texto": "Por exemplo, se f(x) = 7, então Im = {7}.",
+            "opcao1": "Próximo",
+            "proximo1": "perguntaImagemConstante",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "perguntaImagemConstante": {
+            "texto": "Agora tente: se f(x) = -2, sua imagem é Im = {-2}?",
+            "opcao1": "Verdadeira",
+            "proximo1": "imagemConstanteCorreto",
+            "opcao2": "Falsa",
+            "proximo2": "imagemConstanteErrado"
+        },
+
+        "imagemConstanteCorreto": {
+            "texto": "Exatamente! Como a função sempre produz -2, sua imagem possui somente esse elemento.",
+            "opcao1": "Próximo",
+            "proximo1": "funcaoIdentidade",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "imagemConstanteErrado": {
+            "texto": "Cuidado: a função constante sempre produz -2, então sua imagem é justamente {-2}.",
+            "opcao1": "Próximo",
+            "proximo1": "funcaoIdentidade",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "funcaoIdentidade": {
+            "texto": "Agora vamos conhecer outro tipo: a função identidade.",
+            "opcao1": "Próximo",
+            "proximo1": "definicaoIdentidade",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "definicaoIdentidade": {
+            "texto": "Na função identidade, cada valor de x está associado ao próprio x. Sua fórmula é: f(x) = x.",
+            "opcao1": "Próximo",
+            "proximo1": "exemploIdentidade",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "exemploIdentidade": {
+            "texto": "Por exemplo, se x = 4, o resultado será 4; se x = -2, o resultado será -2. Ou seja, a função simplesmente mantém o valor que recebeu.",
+            "opcao1": "Próximo",
+            "proximo1": "graficoIdentidade",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "graficoIdentidade": {
+            "texto": "Seu gráfico é uma reta que passa pela origem e contém as bissetrizes do primeiro e do terceiro quadrantes.",
+            "opcao1": "Próximo",
+            "proximo1": "perguntaIdentidade",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "perguntaIdentidade": {
+            "texto": "Agora responda: qual dessas é uma função identidade?",
+            "opcao1": "f(x) = x",
+            "proximo1": "identidadeCorreto",
+            "opcao2": "f(x) = 2x",
+            "proximo2": "identidadeErrado"
+        },
+
+        "identidadeCorreto": {
+            "texto": "Muito bem! Na função identidade, o resultado é exatamente o próprio x.",
+            "opcao1": "Próximo",
+            "proximo1": "funcaoLinear",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "identidadeErrado": {
+            "texto": "Não, querido: 2x modifica o valor de x, então essa não é a função identidade.",
+            "opcao1": "Próximo",
+            "proximo1": "funcaoLinear",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "funcaoLinear": {
+            "texto": "Agora vamos avançar um pouquinho: temos a função linear.",
+            "opcao1": "Próximo",
+            "proximo1": "formaLinear",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "formaLinear": {
+            "texto": "Ela possui a forma: f(x) = ax, com a ≠ 0.",
+            "opcao1": "Próximo",
+            "proximo1": "exemploLinear",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "exemploLinear": {
+            "texto": "Por exemplo: f(x) = 2x. Se x = 3, o resultado é 6.",
+            "opcao1": "Próximo",
+            "proximo1": "graficoLinear",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "graficoLinear": {
+            "texto": "O gráfico de uma função linear é uma reta que passa pela origem.",
+            "opcao1": "Próximo",
+            "proximo1": "imagemLinear",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "imagemLinear": {
+            "texto": "Sua imagem é o conjunto dos números reais, Im = R.",
+            "opcao1": "Próximo",
+            "proximo1": "perguntaLinear",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "perguntaLinear": {
+            "texto": "Agora tente: a função f(x) = 5x é uma função linear?",
+            "opcao1": "Verdadeira",
+            "proximo1": "linearCorreto",
+            "opcao2": "Falsa",
+            "proximo2": "linearErrado"
+        },
+
+        "linearCorreto": {
+            "texto": "Muito bem! Ela possui exatamente a forma f(x) = ax, com a = 5.",
+            "opcao1": "Próximo",
+            "proximo1": "funcaoAfim",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "linearErrado": {
+            "texto": "Não, querido: 5x se encaixa perfeitamente na forma f(x) = ax.",
+            "opcao1": "Próximo",
+            "proximo1": "funcaoAfim",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "funcaoAfim": {
+            "texto": "Agora chegamos à função afim.",
+            "opcao1": "Próximo",
+            "proximo1": "formaAfim",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "formaAfim": {
+            "texto": "Ela possui a forma: f(x) = ax + b, em que a ≠ 0.",
+            "opcao1": "Próximo",
+            "proximo1": "exemploAfim",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "exemploAfim": {
+            "texto": "Por exemplo: f(x) = -2x + 1. Aqui, a = -2 e b = 1.",
+            "opcao1": "Próximo",
+            "proximo1": "afimLinear",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "afimLinear": {
+            "texto": "Até mesmo f(x) = 4x pode ser considerada uma função afim, pois nesse caso b = 0.",
+            "opcao1": "Próximo",
+            "proximo1": "perguntaAfim",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "perguntaAfim": {
+            "texto": "Agora escolha a alternativa que representa uma função afim:",
+            "opcao1": "f(x) = 4",
+            "proximo1": "afimErrado",
+            "opcao2": "f(x) = 2x - 5",
+            "proximo2": "afimCorreto"
+        },
+
+        "afimErrado": {
+            "texto": "Cuidado, querido: f(x) = 4 é uma função constante, não uma função afim.",
+            "opcao1": "Próximo",
+            "proximo1": "encerramento",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "afimCorreto": {
+            "texto": "Muito bem! Ela possui a forma f(x) = ax + b, com a = 2 e b = -5.",
+            "opcao1": "Próximo",
+            "proximo1": "encerramento",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "encerramento": {
+            "texto": "Bom, alunos, por hoje é só! Nos vemos na próxima semana ou nos corredores. Até mais!",
+            "opcao1": "RETURN",
+            "proximo1": null,
+            "acao1": "voltarMaterias",
+            "opcao2": null,
+            "proximo2": null
+        }
+    }
+}

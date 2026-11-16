@@ -1,0 +1,175 @@
+{
+    "titulo": "Equação de uma Reta",
+    "personagem": "peixoto",
+    "inicio": "inicio",
+    "dialogos": {
+        "inicio": {
+            "texto": "Bom dia, alunos! Hoje vamos começar um novo tópico: equação de uma reta.",
+            "opcao1": "Próximo",
+            "proximo1": "formaReta",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "formaReta": {
+            "texto": "Uma reta pode ser representada pela equação: y = mx + b. Nessa equação, o m é o coeficiente angular, que representa a inclinação da reta, já o b é o coeficiente linear, que indica onde a reta corta o eixo y.",
+            "opcao1": "Próximo",
+            "proximo1": "exemploReta",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "exemploReta": {
+            "texto": "Por exemplo, na equação y = 3x + 2, temos m = 3 e b = 2.",
+            "opcao1": "Próximo",
+            "proximo1": "perguntaCoeficiente",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "perguntaCoeficiente": {
+            "texto": "Agora tente: na equação y = -2x + 5, qual é o coeficiente angular?",
+            "opcao1": "5",
+            "proximo1": "coeficienteErrado",
+            "opcao2": "-2",
+            "proximo2": "coeficienteCorreto"
+        },
+
+        "coeficienteErrado": {
+            "texto": "Não, querido: 5 é o coeficiente linear; o coeficiente angular é -2.",
+            "opcao1": "Próximo",
+            "proximo1": "doisPontos",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "coeficienteCorreto": {
+            "texto": "Muito bem! O -2 é o coeficiente angular e indica a inclinação da reta.",
+            "opcao1": "Próximo",
+            "proximo1": "doisPontos",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "doisPontos": {
+            "texto": "Agora vamos aprender o que fazer quando conhecemos dois pontos da reta.",
+            "opcao1": "Próximo",
+            "proximo1": "pontosAB",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "pontosAB": {
+            "texto": "Imagine que temos dois pontos A(x₁, y₁) e B(x₂, y₂). Primeiro, precisamos descobrir o coeficiente angular m.",
+            "opcao1": "Próximo",
+            "proximo1": "formulaAngular",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "formulaAngular": {
+            "texto": "Para isso, pegamos a diferença entre os valores de y e dividimos pela diferença entre os valores de x, usando esta fórmula: m = (y₂ − y₁) / (x₂ − x₁).",
+            "opcao1": "Próximo",
+            "proximo1": "formulaRetaPonto",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "formulaRetaPonto": {
+            "texto": "Depois de encontrar o m, podemos descobrir a equação da reta usando um dos pontos. Para isso, usamos: y − y₁ = m(x − x₁).",
+            "opcao1": "Próximo",
+            "proximo1": "exemploCompleto",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "exemploCompleto": {
+            "texto": "Vamos ver um exemplo para entender melhor.",
+            "opcao1": "Próximo",
+            "proximo1": "pontosExemplo",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "pontosExemplo": {
+            "texto": "Queremos encontrar a equação da reta que passa pelos pontos A(1, 2) e B(3, 6).",
+            "opcao1": "Próximo",
+            "proximo1": "calculoAngular",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "calculoAngular": {
+            "texto": "Primeiro, calculamos o coeficiente angular: m = (6 − 2) / (3 − 1). m = 4 / 2 = 2.",
+            "opcao1": "Próximo",
+            "proximo1": "substituicaoPonto",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "substituicaoPonto": {
+            "texto": "Agora que sabemos que m = 2, usamos um dos pontos na fórmula.",
+            "opcao1": "Próximo",
+            "proximo1": "pontoUm",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "pontoUm": {
+            "texto": "Vamos usar o ponto (1, 2): y − 2 = 2(x − 1). y − 2 = 2x − 2. y = 2x.",
+            "opcao1": "Próximo",
+            "proximo1": "resultadoReta",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "resultadoReta": {
+            "texto": "Portanto, a equação da reta que passa pelos pontos (1, 2) e (3, 6) é y = 2x.",
+            "opcao1": "Próximo",
+            "proximo1": "testeEntendimento",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "testeEntendimento": {
+            "texto": "Agora vamos testar se você entendeu.",
+            "opcao1": "Próximo",
+            "proximo1": "perguntaAngular",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "perguntaAngular": {
+            "texto": "Temos os pontos A(1, 2) e B(3, 6). Qual é o coeficiente angular dessa reta?",
+            "opcao1": "2",
+            "proximo1": "angularCorreto",
+            "opcao2": "4",
+            "proximo2": "angularErrado"
+        },
+
+        "angularCorreto": {
+            "texto": "Muito bem! O coeficiente angular é 2, pois fazemos (6 − 2) ÷ (3 − 1).",
+            "opcao1": "Próximo",
+            "proximo1": "encerramento",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "angularErrado": {
+            "texto": "Não dessa vez, querido: 4 aparece na diferença entre os valores de y, mas ainda precisamos dividir pela diferença entre os valores de x.",
+            "opcao1": "Próximo",
+            "proximo1": "encerramento",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "encerramento": {
+            "texto": "Bom, alunos, por hoje é só! Nos vemos na próxima semana ou nos corredores. Até mais!",
+            "opcao1": "RETURN",
+            "proximo1": null,
+            "acao1": "voltarMaterias",
+            "opcao2": null,
+            "proximo2": null
+        }
+    }
+}

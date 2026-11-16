@@ -1,0 +1,273 @@
+{
+    "titulo": "Conjuntos",
+    "personagem": "peixoto",
+    "inicio": "inicio",
+    "dialogos": {
+        "inicio": {
+            "texto": "Bom dia alunos! Como já trabalhamos bastante com proposições, agora vamos mudar um pouco de assunto e falar sobre conjuntos.",
+            "opcao1": "Próximo",
+            "proximo1": "conceito",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "conceito": {
+            "texto": "Um conjunto nada mais é do que uma coleção de elementos, sem repetições e sem uma ordem específica.",
+            "opcao1": "Próximo",
+            "proximo1": "representacao",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "representacao": {
+            "texto": "Podemos representar um conjunto colocando seus elementos entre chaves, como neste exemplo: A = {a, e, i, o, u}. Aqui, a, e, i, o e u são os elementos do conjunto A.",
+            "opcao1": "Próximo",
+            "proximo1": "pertinencia",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "pertinencia": {
+            "texto": "E podemos descobrir se algo faz parte de um conjunto usando a ideia de pertinência.",
+            "opcao1": "Próximo",
+            "proximo1": "simbolos",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "simbolos": {
+            "texto": "Quando um elemento pertence a um conjunto, usamos ∈. E quando não pertence, usamos ∉.",
+            "opcao1": "Próximo",
+            "proximo1": "exemploPertinencia",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "exemploPertinencia": {
+            "texto": "Por exemplo, se A = {a, e, i, o, u}, podemos dizer que a ∈ A, mas b ∉ A.",
+            "opcao1": "Próximo",
+            "proximo1": "perguntaPertinencia",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "perguntaPertinencia": {
+            "texto": "E podemos descobrir se algo faz parte de um conjunto usando a ideia de pertinência.",
+            "opcao1": "Verdadeira",
+            "proximo1": "pertinenciaCorreto",
+            "opcao2": "Falsa",
+            "proximo2": "pertinenciaErrado"
+        },
+
+        "pertinenciaCorreto": {
+            "texto": "Muito bem, querido! A letra “o” realmente pertence ao conjunto A.",
+            "opcao1": "Próximo",
+            "proximo1": "conjuntoVazio",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "pertinenciaErrado": {
+            "texto": "Não, não, preste atenção: a letra “o” está dentro do conjunto A, então ela pertence a ele.",
+            "opcao1": "Próximo",
+            "proximo1": "conjuntoVazio",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "conjuntoVazio": {
+            "texto": "Agora que você já entendeu o que é um conjunto e como verificar se um elemento pertence a ele, vamos conhecer o conjunto vazio.",
+            "opcao1": "Próximo",
+            "proximo1": "definicaoVazio",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "definicaoVazio": {
+            "texto": "Como o próprio nome sugere, ele é um conjunto que não possui nenhum elemento.",
+            "opcao1": "Próximo",
+            "proximo1": "simboloVazio",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "simboloVazio": {
+            "texto": "Podemos representá-lo por { } ou pelo símbolo ∅.",
+            "opcao1": "Próximo",
+            "proximo1": "exemploVazio",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "exemploVazio": {
+            "texto": "Por exemplo, podemos pensar no conjunto formado pelos números que são ao mesmo tempo pares e ímpares.",
+            "opcao1": "Próximo",
+            "proximo1": "explicacaoVazio",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "explicacaoVazio": {
+            "texto": "Como não existe um número que seja simultaneamente par e ímpar, esse conjunto é vazio.",
+            "opcao1": "Próximo",
+            "proximo1": "perguntaVazio",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "perguntaVazio": {
+            "texto": "Agora tente: “O conjunto dos números que são simultaneamente pares e ímpares é um conjunto vazio.” A afirmação é:",
+            "opcao1": "Verdadeira",
+            "proximo1": "vazioCorreto",
+            "opcao2": "Falsa",
+            "proximo2": "vazioErrado"
+        },
+
+        "vazioCorreto": {
+            "texto": "Muito bem! Não existe nenhum número que seja par e ímpar ao mesmo tempo, então esse conjunto realmente é vazio.",
+            "opcao1": "Próximo",
+            "proximo1": "contido",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "vazioErrado": {
+            "texto": "Hmm, não exatamente: como não existe nenhum número com essas duas características ao mesmo tempo, o conjunto é realmente vazio.",
+            "opcao1": "Próximo",
+            "proximo1": "contido",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "contido": {
+            "texto": "Agora vamos dar mais um passo: podemos comparar dois conjuntos para descobrir se um está contido no outro.",
+            "opcao1": "Próximo",
+            "proximo1": "definicaoContido",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "definicaoContido": {
+            "texto": "Dizemos que A está contido em B quando todos os elementos de A também pertencem a B.",
+            "opcao1": "Próximo",
+            "proximo1": "simboloContido",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "simboloContido": {
+            "texto": "Usamos o símbolo ⊆ para representar essa relação.",
+            "opcao1": "Próximo",
+            "proximo1": "exemploContido",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "exemploContido": {
+            "texto": "Por exemplo, se temos: A = {a, e} e B = {a, e, i, o, u}. Todos os elementos de A também estão em B, então podemos dizer que A ⊆ B.",
+            "opcao1": "Próximo",
+            "proximo1": "perguntaContido",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "perguntaContido": {
+            "texto": "Agora tente: considerando os conjuntos A = {i, u} e B = {a, e, i, o, u}, podemos afirmar que A ⊆ B é:",
+            "opcao1": "Verdadeira",
+            "proximo1": "contidoCorreto",
+            "opcao2": "Falsa",
+            "proximo2": "contidoErrado"
+        },
+
+        "contidoCorreto": {
+            "texto": "Está correto! Todos os elementos de A estão em B, então A realmente está contido em B.",
+            "opcao1": "Próximo",
+            "proximo1": "numeros",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "contidoErrado": {
+            "texto": "Preste atenção: os elementos de A também aparecem em B, então A está, sim, contido em B.",
+            "opcao1": "Próximo",
+            "proximo1": "numeros",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "numeros": {
+            "texto": "E antes de continuarmos, precisamos lembrar que os números também podem ser organizados em diferentes conjuntos numéricos.",
+            "opcao1": "Próximo",
+            "proximo1": "conjuntosNumericos",
+            "opcao2": null,
+            "proximo2": null
+    },
+
+        "conjuntosNumericos": {
+            "texto": "Temos os naturais (N), os inteiros (Z), os racionais (Q), os irracionais (I) e os reais (R).",
+            "opcao1": "Próximo",
+            "proximo1": "naturaisInteiros",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "naturaisInteiros": {
+            "texto": "Os naturais incluem números como 0, 1, 2, 3…, já os inteiros também incluem os números negativos.",
+            "opcao1": "Próximo",
+            "proximo1": "racionaisIrracionais",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "racionaisIrracionais": {
+            "texto": "Por outro lado, os racionais são aqueles que podem ser escritos como uma fração, enquanto os irracionais possuem representação decimal infinita e não periódica.",
+            "opcao1": "Próximo",
+            "proximo1": "reais",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "reais": {
+            "texto": "E por fim, os reais reúnem os conjuntos naturais, inteiros, racionais e irracionais.",
+            "opcao1": "Próximo",
+            "proximo1": "perguntaNaturais",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "perguntaNaturais": {
+            "texto": "Agora vamos testar: o número -3 pertence ao conjunto dos números naturais?",
+            "opcao1": "Verdadeira",
+            "proximo1": "naturaisErrado",
+            "opcao2": "Falsa",
+            "proximo2": "naturaisCorreto"
+        },
+
+        "naturaisErrado": {
+            "texto": "Não, querido: o -3 não pertence aos naturais, pois eles começam em 0 e seguem pelos números positivos.",
+            "opcao1": "Próximo",
+            "proximo1": "encerramento",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "naturaisCorreto": {
+            "texto": "Isso mesmo! O -3 não pertence aos naturais, mas pertence ao conjunto dos números inteiros.",
+            "opcao1": "Próximo",
+            "proximo1": "encerramento",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+
+
+        "encerramento": {
+            "texto": "Bom alunos, por hoje é só! Nos vemos na próxima semana ou nos corredores. Até mais!",
+            "opcao1": "RETURN",
+            "proximo1": null,
+            "acao1": "voltarMaterias",
+            "opcao2": null,
+            "proximo2": null
+        }
+    }
+}
