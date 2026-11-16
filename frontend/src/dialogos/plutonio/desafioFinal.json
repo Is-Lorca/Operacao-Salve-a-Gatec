@@ -1,0 +1,21 @@
+{
+"titulo": "Desafio Final",
+  "personagem": "plutonio",
+  "inicio": "inicio",
+  "dialogos": {
+    "inicio": {
+        "texto": "Caramba! Nunca pensei que você fosse chegar tão longe...",
+        "opcao1": "Próximo",
+        "proximo1": "fim",
+        "opcao2": null,
+        "proximo2": null
+        },
+    "fim":{
+        "texto": "Mas não se anime demais! Você realmente acha que pode salvar a Gatec? Eu nunca perco um bom investimento!",
+        "opcao1": "Começar",
+        "proximo1": null,
+        "opcao2": null,
+        "proximo2": null
+        }
+    }
+}
