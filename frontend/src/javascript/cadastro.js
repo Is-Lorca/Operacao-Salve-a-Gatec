@@ -1,10 +1,12 @@
 import { authApi } from './api/authApi.js';
 
-const btnCadastrar = document.getElementById("btnCadastrar");
+const formCadastro = document.getElementById("formCadastro");
 
 const resultado = document.getElementById("resultado");
 
-btnCadastrar.addEventListener("click", async () => {
+formCadastro.addEventListener("submit", async(event) => {
+    event.preventDefault();
+
     const nome = document.getElementById("nome").value;
     const email = document.getElementById("email").value;
     const senha = document.getElementById("senha").value;
@@ -17,17 +19,12 @@ btnCadastrar.addEventListener("click", async () => {
             throw new Error("As senhas não coincidem.");
         }
 
-        const usuario = await authApi.cadastro(
-            nome,
-            email,
-            senha
-        );
+        const resposta = await authApi.cadastro(nome, email, senha);
 
-        resultado.innerText = "Cadastro realizado com sucesso!";
+        resultado.innerText = `Cadastro realizado com sucesso!\nSeja bem-vindo(a) 
+        ${resposta.nome}`;
 
-        setTimeout(()=>{
-            window.location.href = "./index.html";
-        }, 1000);
+        setTimeout(()=>{window.location.href = "./index.html";}, 2000);
 
     } 
     catch(error){

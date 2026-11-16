@@ -1,7 +1,6 @@
 import { authApi } from './api/authApi.js';
 
 const formLogin = document.getElementById("formLogin");
-
 const resultado = document.getElementById("resultado");
 
 formLogin.addEventListener("submit", async(event) =>{
@@ -17,9 +16,7 @@ formLogin.addEventListener("submit", async(event) =>{
 
         resultado.innerText = `Bem-vindo(a) ${resposta.data.usuario.nome}`;
 
-        setTimeout(()=>{
-            window.location.href = "./index.html";
-        }, 1000);
+        setTimeout(()=>{window.location.href = "./index.html";}, 2000);
     }
     catch(error){
         resultado.innerText = "Erro: " + error.message;
