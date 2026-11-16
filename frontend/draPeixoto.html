@@ -15,9 +15,22 @@
     />
   </head>
   <body id="bodyPersona">
+    <div>
+      <audio id="audio" preload="metadata" loop>
+          <source src="src/music/Chalk_and_Starlight.mp3" type="audio/mp3">
+      </audio>
+  
+      <button id="botaoAudio">
+          <img 
+          id="iconMute"
+          src="src/img/opcoes audio/Audio3.png">
+      </button>
+    </div>
+
     <header>
       <h1 id="tituloMateria"></h1>
     </header>
+    
     <section id="telaPrincipal">
       <div id="janelaPersona">
         <figure id="imagemfundo">
@@ -36,6 +49,7 @@
         </div>
       </div>
     </section>
+    <script src="src/javascript/musica.js"></script>
     <script src="src/javascript/dialogo.js"></script>
   </body>
 </html>
