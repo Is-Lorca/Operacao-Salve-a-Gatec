@@ -12,7 +12,7 @@ module.exports = async (req, res, next) => {
 
         const token = parts[1];
         const usuario = await authService.verificarSessao(token);
-        
+
         req.usuarioLogado = {
             id_usuario: usuario.id_usuario,
             email: usuario.email,

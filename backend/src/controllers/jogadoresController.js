@@ -6,7 +6,7 @@ class JogadoresController{
         try{
             const {nome} = req.body;
 
-            const {idSave} = req.params;
+            const idSave = req.save.id_save;
 
             const novoJogador = await jogadorService.criar(idSave, nome);
 
@@ -20,7 +20,7 @@ class JogadoresController{
     }
     async buscarPorSave(req, res){
         try{
-            const {idSave} = req.params;
+            const idSave = req.save.id_save;
             
             const jogadores = await jogadorService.buscarPorSave(idSave);
 
@@ -32,7 +32,7 @@ class JogadoresController{
     }
     async buscarPorId(req, res){
         try{
-            const {idJogador} = req.params;
+            const idJogador = req.jogador.id_jogador;
             
             const jogador = await jogadorService.buscarPorId(idJogador);
 
@@ -44,7 +44,7 @@ class JogadoresController{
     }
     async atualizar(req, res){
         try{
-            const {idJogador} = req.params;
+            const idJogador = req.jogador.id_jogador;
 
             const novosDados = req.body;
 
@@ -58,7 +58,7 @@ class JogadoresController{
     }
     async excluir(req, res){
         try{
-            const {idJogador} = req.params;
+            const idJogador = req.jogador.id_jogador;
              
             await jogadorService.excluir(idJogador);
 

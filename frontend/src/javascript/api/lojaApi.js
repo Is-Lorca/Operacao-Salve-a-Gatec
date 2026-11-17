@@ -3,15 +3,15 @@ import { fetchComAuth } from "./fetchAuth.js";
 import API_URL from "./api.js";
 
 export const lojaApi = {
-    async criar(idSave){
-        return await fetchComAuth(`${API_URL}/loja/save/${idSave}`,
+    async criar(){
+        return await fetchComAuth(`${API_URL}/loja`,
             {
                 method:"POST"
             }
         );
     },
-    async buscarPorSave(idSave){
-        return await fetchComAuth(`${API_URL}/loja/save/${idSave}`,
+    async buscarPorSave(){
+        return await fetchComAuth(`${API_URL}/loja`,
             {
                 method:"GET"
             }

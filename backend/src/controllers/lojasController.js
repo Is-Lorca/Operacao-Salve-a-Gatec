@@ -4,7 +4,7 @@ const lojaService = require('../services/lojasService');
 class LojaController{
     async criar(req, res){
         try{
-            const {idSave} = req.params;
+            const idSave = req.save.id_save;
     
             const loja = await lojaService.criar(idSave);
     
@@ -16,7 +16,7 @@ class LojaController{
     }   
     async buscarPorSave(req, res){
         try{
-            const {idSave} = req.params;
+            const idSave = req.save.id_save;
     
             const loja = await lojaService.buscarPorSave(idSave);
     
@@ -82,9 +82,9 @@ class LojaController{
     async comprarItem(req,res){
         try{
             const {idLoja, idItem} = req.params;
-            const {idJogador} = req.body;
+            const idSave = req.save.id_save;
 
-            const compra = await lojaService.comprarItem(idLoja, idItem, idJogador);
+            const compra = await lojaService.comprarItem(idLoja, idItem, idSave);
 
             return res.status(200).json(respostaApi(true, "Item comprado com sucesso.", compra));
         }

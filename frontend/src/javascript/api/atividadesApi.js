@@ -3,8 +3,8 @@ import API_URL from "./api.js";
 
 export const atividadesApi = {
     // Gerar uma nova atividade
-    async gerar(idSave, idMateria) {
-        return await fetchComAuth(`${API_URL}/atividades/${idSave}/${idMateria}`, {
+    async gerar(idMateria) {
+        return await fetchComAuth(`${API_URL}/atividades/${idMateria}`, {
             method: "POST",
         });
     },
@@ -34,34 +34,34 @@ export const atividadesApi = {
         });
     },
     // Refazer atividade
-    async refazer(idSave, idMateria) {
-        return await fetchComAuth(`${API_URL}/atividades/${idSave}/${idMateria}/refazer`,
+    async refazer(idMateria) {
+        return await fetchComAuth(`${API_URL}/atividades/${idMateria}/refazer`,
         {
             method: "POST",
         });
     },
     // Buscar média das atividades
-    async calcularMedia(idSave) {
-        return await fetchComAuth(`${API_URL}/atividades/${idSave}/media`, {
+    async calcularMedia() {
+        return await fetchComAuth(`${API_URL}/atividades/media`, {
             method: "GET",
         });
     },
     // Verificar se matéria foi concluída
-    async verificarMateria(idSave, idMateria) {
-        return await fetchComAuth(`${API_URL}/atividades/${idSave}/${idMateria}/concluida`,
+    async verificarMateria(idMateria) {
+        return await fetchComAuth(`${API_URL}/atividades/${idMateria}/concluida`,
         {
             method: "GET",
         });
     },
     // Buscar progresso das matérias
-    async buscarProgresso(idSave) {
-        return await fetchComAuth(`${API_URL}/atividades/${idSave}/progresso`, {
+    async buscarProgresso() {
+        return await fetchComAuth(`${API_URL}/atividades/progresso`, {
             method: "POST",
         });
     },
     // Verificar liberação da prova final
-    async verificarLiberacaoProva(idSave) {
-        return await fetchComAuth(`${API_URL}/atividades/${idSave}/liberacao-prova`,
+    async verificarLiberacaoProva() {
+        return await fetchComAuth(`${API_URL}/atividades/liberacao-prova`,
         {
             method: "POST",
         });

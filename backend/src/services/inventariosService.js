@@ -12,9 +12,20 @@ class InventarioService {
         const inventario = await inventarioModel.buscarPorJogador(idValido);
 
         if (!inventario) {
-        throw new Error("Inventário não encontrado.");
+            throw new Error("Inventário não encontrado.");
         }
 
+        return inventario;
+    }
+    async buscarPorId(idInventario){
+        const idValido = validacoes.validarId(idInventario);
+
+        const inventario = await inventarioModel.buscarPorId(idValido);
+
+        if (!inventario) {
+            throw new Error(`Inventário de ID ${idValido} não encontrado.`);
+        }
+        
         return inventario;
     }
     async adicionarItem(idJogador, idItem) {

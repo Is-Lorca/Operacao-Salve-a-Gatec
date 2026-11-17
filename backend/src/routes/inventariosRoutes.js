@@ -3,13 +3,15 @@ const router = express.Router();
 
 const inventarioController = require('../controllers/inventariosController');
 const authMiddleware = require("../middlewares/authMiddleware");
+const saveMiddleware = require('../middlewares/saveMiddleware');
 
 router.use(authMiddleware);
+router.use(saveMiddleware);
 
-router.get("/jogador/:idJogador", inventarioController.buscarPorJogador);
+router.get("/", inventarioController.buscarPorJogador);
 router.get("/:idInventario", inventarioController.buscarPorId);
-router.post("/jogador/:idJogador/item/:idItem", inventarioController.adicionarItem);
-router.post("/jogador/:idJogador/item/:idItem/usar", inventarioController.usarItem);
+router.post("/item/:idItem", inventarioController.adicionarItem);
+router.post("/item/:idItem/usar", inventarioController.usarItem);
 router.delete("/:idInventario", inventarioController.removerItem);
 
 module.exports = router;

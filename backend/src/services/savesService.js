@@ -12,7 +12,7 @@ class SaveService {
     // buscar
     async carregarTodos(idUser){
         const idValido = validacao.validarId(idUser);
-        const saves = await savesModel.buscarSaves(idUser);
+        const saves = await savesModel.buscarSaves(idValido);
 
         if(!saves || saves.length === 0){
             throw new Error("Não há saves a serem carregados.");
@@ -24,7 +24,7 @@ class SaveService {
     async carregarSaves(idUser, idSave){
         const idUValido = validacao.validarId(idUser);
         const idSValido = validacao.validarId(idSave);
-        const save = await savesModel.buscarSavesId(idUser, idSave);
+        const save = await savesModel.buscarSavesId(idUValido, idSValido);
 
         if(!save) throw new Error("Save não encontrado.");
 
@@ -34,7 +34,7 @@ class SaveService {
     async atualizarSave(idUser, idSave, novosDados){
         const idUValido = validacao.validarId(idUser);
         const idSValido = validacao.validarId(idSave);
-        const saveAtualizado = await savesModel.atualizarSave(idUser, idSave, novosDados);
+        const saveAtualizado = await savesModel.atualizarSave(idUValido, idSValido, novosDados);
 
         if(saveAtualizado === null){
             throw new Error("Save não existe, não há o que atualizar");
@@ -46,7 +46,7 @@ class SaveService {
     async excluindoSave(idUser, idSave){
         const idUValido = validacao.validarId(idUser);
         const idSValido = validacao.validarId(idSave);
-        const excluindoSave = await savesModel.excluirSave(idUser, idSave);
+        const excluindoSave = await savesModel.excluirSave(idUValido, idSValido);
 
         if(!excluindoSave) throw new Error("Save não existe, não há o que apagar");
 

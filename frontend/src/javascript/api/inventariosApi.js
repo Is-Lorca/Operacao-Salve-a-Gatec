@@ -3,8 +3,8 @@ import { fetchComAuth } from "./helper/fetchComAuth";
 import API_URL from "./api.js";
 
 export const inventarioApi = {
-    async buscarPorJogador(idJogador) {
-        const resposta = await fetchComAuth(`${API_URL}/inventario/jogador/${idJogador}`,);
+    async buscarPorJogador() {
+        const resposta = await fetchComAuth(`${API_URL}/inventario`,);
 
         const json = await resposta.json();
 
@@ -25,8 +25,8 @@ export const inventarioApi = {
 
         return json.data;
     },
-    async adicionarItem(idJogador, idItem) {
-        const resposta = await fetchComAuth(`${API_URL}/inventario/jogador/${idJogador}/item/${idItem}`,
+    async adicionarItem(idItem) {
+        const resposta = await fetchComAuth(`${API_URL}/inventario/item/${idItem}`,
             {
                 method: "POST",
             });
@@ -39,8 +39,8 @@ export const inventarioApi = {
 
         return json.data;
     },
-    async usarItem(idJogador, idItem) {
-        const resposta = await fetchComAuth(`${API_URL}/inventario/jogador/${idJogador}/item/${idItem}/usar`,
+    async usarItem(idItem) {
+        const resposta = await fetchComAuth(`${API_URL}/inventario/item/${idItem}/usar`,
             {
                 method: "POST",
             });

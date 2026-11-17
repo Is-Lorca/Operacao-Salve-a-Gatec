@@ -4,7 +4,8 @@ const atividadesService = require("../services/atividadesService");
 class AtividadesController {
     async gerar(req, res) {
         try {
-            const { idSave, idMateria } = req.params;
+            const idSave = req.save.id_save;
+            const { idMateria } = req.params;
 
             const atividade = await atividadesService.gerarAtividade(idSave, idMateria);
 
@@ -76,7 +77,9 @@ class AtividadesController {
     }
     async refazer(req, res) {
         try {
-            const { idSave, idMateria } = req.params;
+            const idSave = req.save.id_save;
+
+            const { idMateria } = req.params;
 
             const atividade = await atividadesService.refazerAtividade(idSave, idMateria);
 
@@ -90,7 +93,7 @@ class AtividadesController {
     }
     async calcularMedia(req, res) {
         try {
-            const { idSave } = req.params;
+            const idSave = req.save.id_save;
 
             const media = await atividadesService.calcularMediaAtividades(idSave);
 
@@ -106,7 +109,9 @@ class AtividadesController {
     }
     async verificarMateria(req, res) {
         try {
-            const { idSave, idMateria } = req.params;
+            const idSave = req.save.id_save;
+
+            const { idMateria } = req.params;
 
             const concluida = await atividadesService.verificarMateriaConcluida(idSave, idMateria);
 
@@ -122,7 +127,7 @@ class AtividadesController {
     }
     async buscarProgresso(req, res) {
         try {
-            const { idSave } = req.params;
+            const idSave = req.save.id_save;
 
             const { materias } = req.body;
 
@@ -138,7 +143,7 @@ class AtividadesController {
     }
     async verificarLiberacaoProva(req, res) {
         try {
-            const { idSave } = req.params;
+            const idSave = req.save.id_save;
 
             const { materias } = req.body;
 

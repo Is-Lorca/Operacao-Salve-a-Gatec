@@ -16,7 +16,7 @@ class InventariosController {
     }
     async buscarPorJogador(req, res) {
         try {
-            const {idJogador} = req.params;
+            const idJogador = req.jogador.id_jogador;
 
             const inventario = await inventarioService.buscarPorJogador(idJogador);
 
@@ -28,7 +28,9 @@ class InventariosController {
     }
     async adicionarItem(req, res) {
         try {
-            const { idJogador, idItem } = req.params;
+            const idJogador = req.jogador.id_jogador;
+
+            const { idItem } = req.params;
 
             const item = await inventarioService.adicionarItem(idJogador, idItem);
 
@@ -40,7 +42,9 @@ class InventariosController {
     }
     async usarItem(req, res) {
         try {
-            const {idJogador, idItem} = req.params;
+            const idJogador = req.jogador.id_jogador;
+            
+            const {idItem} = req.params;
 
             const resultado = await inventarioService.usarItem(idJogador, idItem);
 

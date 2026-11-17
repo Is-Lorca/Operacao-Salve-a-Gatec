@@ -4,7 +4,7 @@ const respostaApi = require("../utils/respostaApi");
 class ProvasController {
     async gerarProva(req, res) {
         try {
-            const { idSave } = req.params;
+            const idSave = req.save.id_save;
 
             const materias = req.body.materias;
 
@@ -18,7 +18,7 @@ class ProvasController {
     }
     async buscarProva(req, res) {
         try {
-            const { idSave } = req.params;
+            const idSave = req.save.id_save;
 
             const prova = await provasService.buscarProvaPorSave(idSave);
 

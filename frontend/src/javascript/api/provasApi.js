@@ -3,14 +3,14 @@ import API_URL from "./api.js";
 
 export const provasApi = {
     // Gerar ou continuar prova
-    async gerarProva(idSave) {
-        return await fetchComAuth(`${API_URL}/provas/${idSave}`, {
+    async gerarProva() {
+        return await fetchComAuth(`${API_URL}/provas`, {
             method: "POST",
         });
     },
     // Buscar prova pelo save
-    async buscarProva(idSave) {
-        return await fetchComAuth(`${API_URL}/provas/save/${idSave}`, {
+    async buscarProva() {
+        return await fetchComAuth(`${API_URL}/provas`, {
             method: "GET",
         });
     },
