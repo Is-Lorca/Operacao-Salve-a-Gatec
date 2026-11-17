@@ -53,18 +53,19 @@ class ItensService{
     }
     async buscarPorEfeito(efeito){
         const EFEITOS_ITEM = {
-            NOVA_TENTATIVA:"NOVA_TENTATIVA",
-            AUMENTA_INVENTARIO:"AUMENTA_INVENTARIO",
-            PULA_QUESTAO:"PULA_QUESTAO",
-            MOSTRA_RESUMO_MATERIA:"MOSTRA_RESUMO_MATERIA",
-            RESOLVE_QUESTAO:"RESOLVE_QUESTAO",
-            APAGA_RESPOSTA:"APAGA_RESPOSTA",
-            REMOVER_TEMPO:"REMOVER_TEMPO",
-            REMOVE_TEMPO_PROXIMA_QUESTAO:"REMOVE_TEMPO_PROXIMA_QUESTAO",
             MOSTRA_DICA:"MOSTRA_DICA",
-            REVELA_RESPOSTA:"REVELA_RESPOSTA"
+            PULA_QUESTAO:"PULA_QUESTAO",
+            APAGA_RESPOSTA:"APAGA_RESPOSTA",
+            REMOVE_TEMPO_PROXIMA_QUESTAO:"REMOVE_TEMPO_PROXIMA_QUESTAO",
+            AUMENTA_INVENTARIO:"AUMENTA_INVENTARIO",
+            NOVA_TENTATIVA:"NOVA_TENTATIVA",
+            MOSTRA_RESUMO_MATERIA:"MOSTRA_RESUMO_MATERIA",
+            REVELA_RESPOSTA:"REVELA_RESPOSTA",
+            RESOLVE_QUESTAO:"RESOLVE_QUESTAO",
+            RESOLVE_QUESTAO_FACIL: "RESOLVE_QUESTAO_FACIL",
+            REMOVER_TEMPO:"REMOVER_TEMPO" // por enquanto não nenhum com esse efeito no BD 
         };
-
+        
         const efeitoValido = efeito.replace(/ /g, "_").toUpperCase();
 
         if(!Object.values(EFEITOS_ITEM).includes(efeitoValido)){
