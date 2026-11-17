@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Atividade - Fase 1</title>
+
+  <!-- Fonte pixelada -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="src/styles/atividade.css">
+</head>
+<body>
+
+  <!-- Área principal da atividade -->
+  <main id="palco">
+
+    <!-- Cenário de fundo -->
+    <img id="cenario" src="src/img/Estudos.png"" draggable="false">
+
+    <!-- Cabeçalho -->
+    <header id="barra-topo">
+      <button id="botao-inicio" type="button" aria-label="Voltar ao início">
+        <svg viewBox="0 0 16 16" aria-hidden="true" shape-rendering="crispEdges">
+          <path d="M8 1 L1 8 H3 V15 H6 V10 H10 V15 H13 V8 H15 Z" fill="currentColor"/>
+        </svg>
+      </button>
+
+      <div id="info-fase">
+        <span id="rotulo-fase">Fase 1</span>
+        <span class="separador-fase">-</span>
+        <span id="contador-questao">Questão 1/7</span>
+      
+      </div>
+    </header>
+
+    <!-- Enunciado da questão -->
+    <section id="caixa-enunciado" aria-live="polite">
+      <p id="texto-enunciado">
+        Qual das alternativas representa uma proposição <span class="destaque">verdadeira</span>?
+      </p>
+    </section>
+
+    <!-- Dica -->
+    <aside id="area-dica" class="oculto">
+      <p id="texto-dica"></p>
+    </aside>
+
+    <!-- Área das alternativas -->
+    <section id="area-respostas" role="radiogroup" aria-label="Alternativas">
+
+      <button id="alternativa-a" class="alternativa" type="button" role="radio" aria-checked="false" data-letra="A">
+        <span class="letra-alternativa">A</span>
+        <span class="texto-alternativa">2 + 2 = 5</span>
+      </button>
+
+      <button id="alternativa-b" class="alternativa" type="button" role="radio" aria-checked="false" data-letra="B">
+        <span class="letra-alternativa">B</span>
+        <span class="texto-alternativa">2 + 2 = 4</span>
+      </button>
+
+      <button id="alternativa-c" class="alternativa" type="button" role="radio" aria-checked="false" data-letra="C">
+        <span class="letra-alternativa">C</span>
+        <span class="texto-alternativa">3 + 1 = 8</span>
+      </button>
+
+      <button id="alternativa-d" class="alternativa" type="button" role="radio" aria-checked="false" data-letra="D">
+        <span class="letra-alternativa">D</span>
+        <span class="texto-alternativa">5 - 2 = 1</span>
+      </button>
+
+    </section>
+
+    <!-- Botão para enviar a resposta -->
+    <button id="botao-responder" type="button">
+
+      <span id="rotulo-botao-responder">Dica</span>
+    </button>
+
+    <!-- Progresso da atividade -->
+    <footer id="area-progresso">
+    
+      <span id="texto-progresso">Progresso: 0%</span>
+      <div id="barra-progresso" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <div id="preenchimento-progresso"></div>
+      </div>
+    </footer>
+   <script type="module" src="src/javascript/atividade.js"></script>
+   </body>
+  </main>
+ </html>
