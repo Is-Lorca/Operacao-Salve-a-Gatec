@@ -3,7 +3,7 @@ const validacoes = require('../utils/validacoes');
 const lojaModel = require('../models/lojasModel');
 const itemService = require('../services/itensService');
 const inventarioService = require('../services/inventariosService');
-const jogadoresModel = require('../models/jogadoresModel');
+const jogadorModel = require('../models/jogadoresModel');
 
 class LojasService{
     async criar(idSave){
@@ -102,7 +102,7 @@ class LojasService{
         const idItemValido = validacoes.validarId(idItem);
         const idSaveValido = validacoes.validarId(idSave);
 
-        const jogador = await jogadoresModel.buscarPorSave(idSaveValido);
+        const jogador = await jogadorModel.buscarPorSave(idSaveValido);
 
         if(!jogador){
             throw new Error("Jogador deste save não foi encontrado.");
@@ -115,13 +115,13 @@ class LojasService{
         if(!itemExiste){
             throw new Error("Este item não está disponível na loja.");
         }
+
+        // Primeiro remove da loja
+        await lojaModel.removerItem(idLojaValido, idItemValido);
         
         // Primeiro compra no inventário (ele sabe se o usuario tem dinheiro ou não)
         const compra = await inventarioService.adicionarItemComprado(jogador.id_jogador, 
             idItemValido, itemExiste.preco);
-            
-        // Depois remove da loja
-        await lojaModel.removerItem(idLojaValido, idItemValido);
 
         return {
             item:itemExiste,

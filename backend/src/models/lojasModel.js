@@ -161,14 +161,17 @@ class LojasModel{
             .eq("id_loja", idLoja)
             .eq("id_item", idItem)
             .select()
-            .maybeSingle();
 
         if(error){
             console.error(`Erro ao remover item ${idItem} da loja ${idLoja}: `, error.message);
             throw error;
         }
 
-        return data;
+        if(!data || data.length === 0){
+            throw new Error("Item não encontrado na loja.");
+        }
+
+        return data[0];
     }
 }
 

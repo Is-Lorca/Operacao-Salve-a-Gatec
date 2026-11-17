@@ -27,6 +27,7 @@ class JogadoresController{
             return res.status(200).json(respostaApi(true,"Jogador encontrados.", jogadores));
         }
         catch(error){
+            console.error(error.stack);
             return res.status(404).json(respostaApi(false, error.message));
         }
     }

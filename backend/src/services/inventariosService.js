@@ -96,7 +96,7 @@ class InventarioService {
         const resultado = await efeitosService.executar(itemInventario.item.efeito, contexto);
 
         if(!resultado.sucesso){
-            return erro;
+            throw new Error(resultado.mensagem || "Não foi possível usar o item.");
         }
 
         let novosUsos = itemInventario.usos_restantes - 1;

@@ -15,7 +15,7 @@ class AuthService {
             email: usuario.email
         };
 
-        const tokenAcesso = jwt.sign(payload, JWT_SECRET, {expiresIn: "15m"});
+        const tokenAcesso = jwt.sign(payload, JWT_SECRET, {expiresIn: "7d"});
         const tokenRefresh = jwt.sign(payload, JWT_REFRESH_SECRET, {expiresIn: "7d"});
 
         return {tokenAcesso, tokenRefresh};

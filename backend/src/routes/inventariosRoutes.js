@@ -8,7 +8,9 @@ const saveMiddleware = require('../middlewares/saveMiddleware');
 router.use(authMiddleware);
 router.use(saveMiddleware);
 
+// mostra todos os itens presentes no inventario do jogador
 router.get("/", inventarioController.buscarPorJogador);
+// procura um id especifico de inventario, com um item especifico dentro
 router.get("/:idInventario", inventarioController.buscarPorId);
 router.post("/item/:idItem", inventarioController.adicionarItem);
 router.post("/item/:idItem/usar", inventarioController.usarItem);

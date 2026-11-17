@@ -1,4 +1,5 @@
 const saveModel = require("../models/savesModel");
+const jogadorModel = require('../models/jogadoresModel');
 
 module.exports = async (req, res, next) => {
     try {
@@ -26,7 +27,7 @@ module.exports = async (req, res, next) => {
 
         req.save = save;
 
-        req.jogador = await jogadoresModel.buscarPorSave(save.id_save);
+        req.jogador = await jogadorModel.buscarPorSave(save.id_save);
 
         return next();
     } 

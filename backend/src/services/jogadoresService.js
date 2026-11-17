@@ -4,7 +4,14 @@ const jogadorModel = require('../models/jogadoresModel');
 class JogadorService{
     async criar(id_save, nome){
         validacoes.validarNome(nome);
+        
         const idValido = validacoes.validarId(id_save);
+
+        const jogadorExiste = await jogadorModel.buscarPorSave(idValido);
+
+        if(jogadorExiste){
+            throw new Error("Este save já possui um jogador.");
+        }
 
         const jogador = await jogadorModel.criar({nome: nome, id_save: idValido});
 
@@ -49,7 +56,6 @@ class JogadorService{
         }
 
         const jogadorDeletado = await jogadorModel.excluir(idValido);
-
         if(!jogadorDeletado){
             throw new Error('Erro ao deletar jogador.')
         }

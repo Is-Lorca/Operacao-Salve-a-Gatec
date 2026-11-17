@@ -1,6 +1,6 @@
 const supabase = require('../config/supabase');
 
-class JogadoresModel {
+class JogadorModel {
     async criar(dados){
         const novoJogador ={
             id_save: dados.id_save,
@@ -110,4 +110,4 @@ class JogadoresModel {
     }
 }
 
-module.exports = new JogadoresModel();
+module.exports = new JogadorModel();
