@@ -1,6 +1,6 @@
-
 import { lojaApi } from "./api/lojaApi.js";
 import { fetchComAuth } from "./api/helper/fetchComAuth.js";
+
 import API_URL from "./api/api.js";
 
 // Elementos do HTML

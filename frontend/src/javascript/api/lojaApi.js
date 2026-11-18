@@ -33,7 +33,7 @@ export const lojaApi = {
     },
     async verificarGeracao(idLoja){
 
-        return await fetchComAuth(`${API_URL}/loja/verificar/${idLoja}`,
+        return await fetchComAuth(`${API_URL}/loja/${idLoja}/verificar`,
             {
                 method:"GET"
             }
