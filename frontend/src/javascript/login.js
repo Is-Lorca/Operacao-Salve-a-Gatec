@@ -16,7 +16,7 @@ formLogin.addEventListener("submit", async(event) =>{
 
         resultado.innerText = `Bem-vindo(a) ${resposta.data.usuario.nome}`;
 
-        setTimeout(()=>{window.location.href = "./index.html";}, 2000);
+        setTimeout(()=>{window.location.href = "./inicio.html";}, 2000);
     }
     catch(error){
         resultado.innerText = "Erro: " + error.message;

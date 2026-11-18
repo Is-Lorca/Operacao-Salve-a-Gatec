@@ -1,41 +1,43 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Início</title>
-    <link rel="stylesheet" href="src/styles/reset.css" />
-    <link rel="stylesheet" href="src/styles/style.css" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acessando</title>
+    <link rel="stylesheet" href="src/styles/reset.css"/>
+    <link rel="stylesheet" href="src/styles/style.css"/>
+    <link rel="stylesheet" href="src/styles/estilo.css"/>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Bitcount:wght@100..900&family=Jersey+10&family=Tiny5&display=swap"
-      rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Bitcount:wght@100..900&family=Jersey+10&family=Tiny5&display=swap"
+        rel="stylesheet"
     />
-  </head>
-  <body>
-    <section id="home">
-      <div>
-        <audio id="audio" preload="metadata" autoplay loop="true">
-          <source src="./src/music/Boomin.music.mp3" type="audio/mp3" />
-          <source src="./src/music/Boomin.music.ogg" type="audio/ogg" />
-          <source src="./src/music/Boomin.music.wav" type="audio/wav" />
-          <p>Seu navegador não suporta audio :/</p>
-        </audio>
-        <button id="botaoAudio"> <img id=iconMute src="./src/img/opcoes audio/AudioMute3.png" alt="Ligar audio"></button>
-      </div>
-      <h1 id="nomeJogo">Operação Salve a Gatec</h1>
-      <picture>
-        <source media="(max-width:767px)" srcset="src/imagens/homecel.png" />
-        <img src="src/img/home.png" alt="Tela inicial" />
-      </picture>
-      <div id="botoesHome">
-          <a class="linkBotaoHome" href="selecaoMateria.html">
-            <button class="botaoHome" id="botaoInicio">INICIAR</button>
-          </a>
-            <button class="botaoHome" id="botaoContinuar">CONTINUAR</button>
-      </div>
-    </section>
-    <script src="src/javascript/musica.js"></script>
-  </body>
+    <style>
+        #nomeAcesso{
+            display: flex;
+            text-align: center;
+            line-height: 2.3rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="card">
+        <header>
+            <h1 id="nomeAcesso">Operação Salve a Gatec</h1>
+        </header>
+        <main>
+            <div id="card2">
+                <div>
+                    <button class="btnAcessando" id="btnCadastro">Cadastro</button>
+                </div>
+                <div>
+                    <button class="btnAcessando" id="btnLogin">Login</button>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script type="module" src="./src/javascript/acessando.js"></script>
+</body>
 </html>
