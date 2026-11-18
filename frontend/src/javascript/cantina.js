@@ -1,122 +1,98 @@
 
-const API_TESTE = "http://localhost:3000/api/cantina-teste/itens";
-
-// Novas chaves para começar a apresentação com saldo de 100.
-const CHAVE_MOEDAS = "cantinaTesteMoedas_apresentacao_v1";
-const CHAVE_ITENS = "cantinaTesteItens_apresentacao_v1";
-
-const MOEDAS_INICIAIS = 100;
-const QUANTIDADE_ITENS = 4;
+import { lojaApi } from "./api/lojaApi.js";
+import { jogadorApi } from "./api/jogadoresApi.js";
 
 const areaItens = document.getElementById("itens");
 const campoMoedas = document.querySelector("#campoMoeda h2");
 
-let saldoSalvo = localStorage.getItem(CHAVE_MOEDAS);
-
-let moedas = saldoSalvo === null
-    ? MOEDAS_INICIAIS
-    : Number(saldoSalvo);
-
+let idLojaAtual = null;
+let saldoAtual = 0;
 let itensDisponiveis = [];
 
-if (!Number.isFinite(moedas) || moedas < 0) {
-    moedas = MOEDAS_INICIAIS;
+function mostrarMensagem(mensagem) {
+    areaItens.replaceChildren();
+
+    const texto = document.createElement("p");
+    texto.className = "mensagem-vazia";
+    texto.textContent = mensagem;
+
+    areaItens.appendChild(texto);
 }
 
-function atualizarMoedas() {
-    // Mostra somente o número.
-    campoMoedas.textContent = String(moedas);
+function atualizarMoedas(valor) {
+    const saldo = Number(valor);
 
-    localStorage.setItem(CHAVE_MOEDAS, String(moedas));
+    if (!Number.isFinite(saldo) || saldo < 0) {
+        throw new Error("O servidor retornou um saldo inválido.");
+    }
+
+    saldoAtual = saldo;
+    campoMoedas.textContent = String(saldoAtual);
 }
 
-// Sorteio dos produtos usando o peso cadastrado no banco.
-function sortearItens(lista, quantidade) {
-    const restantes = [...lista];
-    const sorteados = [];
+function extrairMensagemErro(erro) {
+    const mensagem = erro?.message || "Ocorreu um erro inesperado.";
+    const inicioJson = mensagem.indexOf("{");
 
-    while (sorteados.length < quantidade && restantes.length > 0) {
-        const pesoTotal = restantes.reduce(
-            (total, item) =>
-                total + Math.max(0, Number(item.peso) || 0),
-            0
-        );
-
-        let escolhido = 0;
-
-        if (pesoTotal > 0) {
-            let sorteio = Math.random() * pesoTotal;
-
-            for (let i = 0; i < restantes.length; i++) {
-                sorteio -= Math.max(
-                    0,
-                    Number(restantes[i].peso) || 0
-                );
-
-                if (sorteio < 0) {
-                    escolhido = i;
-                    break;
-                }
-            }
-        } else {
-            escolhido = Math.floor(
-                Math.random() * restantes.length
-            );
+    if (inicioJson !== -1) {
+        try {
+            const resposta = JSON.parse(mensagem.slice(inicioJson));
+            return resposta.mensagem || mensagem;
+        } catch {
+            // Mantém a mensagem original.
         }
-
-        sorteados.push(restantes.splice(escolhido, 1)[0]);
     }
 
-    return sorteados;
+    return mensagem;
 }
 
-// Busca os produtos reais no banco.
+async function carregarJogador() {
+    const jogador = await jogadorApi.buscarPorSave();
 
-async function buscarProdutos() {
-    const resposta = await fetch(API_TESTE);
-    const json = await resposta.json();
-
-    if (!resposta.ok || !json.sucesso) {
-        throw new Error(
-            json.mensagem || `Erro HTTP ${resposta.status}`
-        );
+    if (!jogador) {
+        throw new Error("Jogador deste save não foi encontrado.");
     }
 
-    if (!Array.isArray(json.data) || json.data.length === 0) {
-        throw new Error("Nenhum produto encontrado no banco.");
+    atualizarMoedas(jogador.dinheiro);
+}
+
+async function carregarLoja() {
+    const resposta = await lojaApi.buscarPorSave();
+    const loja = resposta.data;
+
+    if (!loja) {
+        throw new Error("Loja não encontrada.");
     }
 
-    // Remove produtos duplicados.
-    const todosProdutos = json.data.filter(
-        (item, index, lista) =>
-            lista.findIndex(
-                outro => Number(outro.id_item) === Number(item.id_item)
-            ) === index
-    );
+    idLojaAtual = loja.id_loja;
 
-    // Sorteia novamente os produtos.
-    itensDisponiveis = sortearItens(
-        todosProdutos,
-        QUANTIDADE_ITENS
-    );
+    if (!loja.aberta) {
+        mostrarMensagem("A cantina está fechada no momento. Volte depois!");
+        return;
+    }
 
-    salvarItens();
-    atualizarMoedas();
+    await carregarItens();
+}
+
+async function carregarItens() {
+    const resposta = await lojaApi.buscarItensLoja(idLojaAtual);
+    const itens = resposta.data;
+
+    if (!Array.isArray(itens)) {
+        throw new Error("A lista de produtos recebida é inválida.");
+    }
+
+    itensDisponiveis = itens;
     mostrarItens();
 }
 
+function criarCard(registro) {
+    const item = registro.item;
 
-function salvarItens() {
-    localStorage.setItem(
-        CHAVE_ITENS,
-        JSON.stringify(
-            itensDisponiveis.map(item => item.id_item)
-        )
-    );
-}
+    if (!item) {
+        return null;
+    }
 
-// Criação dos cards.
-function criarCard(item) {
     const card = document.createElement("div");
     card.className = "item";
 
@@ -132,7 +108,6 @@ function criarCard(item) {
     informacoes.className = "infoItem";
 
     const imagem = document.createElement("img");
-
     imagem.alt = item.nome || "Imagem do produto";
 
     if (item.imagem) {
@@ -152,14 +127,14 @@ function criarCard(item) {
     descricao.textContent = item.descricao || "Sem descrição.";
 
     const preco = document.createElement("span");
-    preco.textContent = `${item.preco} moedas`;
+    preco.textContent = `${registro.preco} moedas`;
 
     const botao = document.createElement("button");
     botao.type = "button";
     botao.textContent = "Comprar";
 
     botao.addEventListener("click", () => {
-        comprar(item);
+        comprarItem(registro, botao);
     });
 
     detalhes.append(descricao, preco, botao);
@@ -170,84 +145,113 @@ function criarCard(item) {
     return card;
 }
 
-// Exibição dos produtos.
 function mostrarItens() {
     areaItens.replaceChildren();
 
     if (itensDisponiveis.length === 0) {
-        const vazio = document.createElement("p");
-        vazio.className = "mensagem-vazia";
-        vazio.textContent = "Todos os produtos foram comprados!";
-
-        areaItens.appendChild(vazio);
+        mostrarMensagem("Todos os produtos foram comprados!");
         return;
     }
 
-    itensDisponiveis.forEach(item => {
-        areaItens.appendChild(criarCard(item));
+    itensDisponiveis.forEach(registro => {
+        const card = criarCard(registro);
+
+        if (card) {
+            areaItens.appendChild(card);
+        }
     });
 }
 
-// Compra com moedas fictícias.
-function comprar(item) {
-    const preco = Number(item.preco);
+async function comprarItem(registro, botao) {
+    const item = registro.item;
+    const preco = Number(registro.preco);
 
-    if (!Number.isFinite(preco) || preco < 0) {
-        alert("Preço inválido para este produto.");
+    if (!item || !item.id_item) {
+        alert("Não foi possível identificar este produto.");
         return;
     }
 
-    if (moedas < preco) {
+    if (!Number.isFinite(preco) || preco < 0) {
+        alert("O preço deste produto é inválido.");
+        return;
+    }
+
+    if (saldoAtual < preco) {
         alert("Você não possui moedas suficientes!");
         return;
     }
 
-    moedas -= preco;
+    botao.disabled = true;
+    botao.textContent = "Comprando...";
 
-    itensDisponiveis = itensDisponiveis.filter(
-        produto =>
-            Number(produto.id_item) !== Number(item.id_item)
-    );
+    try {
+        const resposta = await lojaApi.comprarItem(
+            idLojaAtual,
+            item.id_item
+        );
 
-    atualizarMoedas();
-    salvarItens();
-    mostrarItens();
+        if (!resposta.sucesso) {
+            throw new Error(
+                resposta.mensagem || "Não foi possível concluir a compra."
+            );
+        }
+
+        const compra = resposta.data?.compra;
+        const dinheiroRestante = compra?.dinheiroRestante;
+
+        if (dinheiroRestante !== undefined) {
+            atualizarMoedas(dinheiroRestante);
+        } else {
+            await carregarJogador();
+        }
+
+        itensDisponiveis = itensDisponiveis.filter(
+            produto =>
+                Number(produto.item?.id_item) !== Number(item.id_item)
+        );
+
+        mostrarItens();
+
+    } catch (erro) {
+        console.error("Erro ao comprar produto:", erro);
+        alert(extrairMensagemErro(erro));
+
+        botao.disabled = false;
+        botao.textContent = "Comprar";
+    }
 }
 
-// Inicialização.
 async function iniciarCantina() {
     if (!areaItens || !campoMoedas) {
         console.error("Elementos da cantina não encontrados.");
         return;
     }
 
-    atualizarMoedas();
+    mostrarMensagem("Carregando cantina...");
 
     try {
-        await buscarProdutos();
+        await carregarJogador();
+        await carregarLoja();
+
     } catch (erro) {
-        console.error("Erro na cantina:", erro);
+        console.error("Erro ao iniciar a cantina:", erro);
 
-        areaItens.replaceChildren();
+        const mensagem = extrairMensagemErro(erro);
+        const mensagemMinuscula = mensagem.toLowerCase();
 
-        const mensagemErro = document.createElement("p");
-        mensagemErro.className = "mensagem-vazia";
-        mensagemErro.textContent = erro.message;
+        if (
+            mensagemMinuscula.includes("loja não encontrada") ||
+            mensagemMinuscula.includes("loja nao encontrada")
+        ) {
+            mostrarMensagem(
+                "A cantina ainda não foi gerada para este save. " +
+                "Ela poderá aparecer após a conclusão de uma fase."
+            );
+            return;
+        }
 
-        areaItens.appendChild(mensagemErro);
+        mostrarMensagem(mensagem);
     }
-}
-
-function resetarCantina() {
-    moedas = 100;
-
-    localStorage.removeItem(CHAVE_ITENS);
-    localStorage.setItem(CHAVE_MOEDAS, "100");
-
-    itensDisponiveis = [];
-
-    atualizarMoedas();
-    buscarProdutos();
 }
 
 iniciarCantina();

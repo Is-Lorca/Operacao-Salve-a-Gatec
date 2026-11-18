@@ -97,34 +97,56 @@ class LojasService{
 
         return itens;
     }
-    async comprarItem(idLoja, idItem, idSave){
+    
+    async comprarItem(idLoja, idItem, idSave) {
         const idLojaValido = validacoes.validarId(idLoja);
         const idItemValido = validacoes.validarId(idItem);
         const idSaveValido = validacoes.validarId(idSave);
 
+        // Confere se a loja pertence ao save que está fazendo a compra.
+        const lojaDoSave = await lojaModel.buscarPorSave(idSaveValido);
+
+        if (!lojaDoSave) {
+            throw new Error("Loja não encontrada para este save.");
+        }
+
+        if (Number(lojaDoSave.id_loja) !== Number(idLojaValido)) {
+            throw new Error("Esta loja não pertence ao save atual.");
+        }
+
+        if (!lojaDoSave.aberta) {
+            throw new Error("A cantina está fechada.");
+        }
+
         const jogador = await jogadorModel.buscarPorSave(idSaveValido);
 
-        if(!jogador){
+        if (!jogador) {
             throw new Error("Jogador deste save não foi encontrado.");
         }
 
         const itens = await lojaModel.buscarItensLoja(idLojaValido);
 
-        const itemExiste = itens.find(item => item.item.id_item === idItemValido);
+        const itemExiste = itens.find(
+            registro =>
+                Number(registro.item?.id_item) === Number(idItemValido)
+        );
 
-        if(!itemExiste){
+        if (!itemExiste) {
             throw new Error("Este item não está disponível na loja.");
         }
 
-        // Primeiro remove da loja
+        // Primeiro realiza e confirma a compra no inventário.
+        const compra = await inventarioService.adicionarItemComprado(
+            jogador.id_jogador,
+            idItemValido,
+            itemExiste.preco
+        );
+
+        // Só remove o produto da loja depois da compra bem-sucedida.
         await lojaModel.removerItem(idLojaValido, idItemValido);
-        
-        // Primeiro compra no inventário (ele sabe se o usuario tem dinheiro ou não)
-        const compra = await inventarioService.adicionarItemComprado(jogador.id_jogador, 
-            idItemValido, itemExiste.preco);
 
         return {
-            item:itemExiste,
+            item: itemExiste,
             compra
         };
     }

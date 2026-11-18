@@ -136,27 +136,77 @@ class InventarioService {
 
         return await inventarioModel.excluir(idValido);
     }
-    async adicionarItemComprado(idJogador, idItem, preco){
+    
+    
+    async adicionarItemComprado(idJogador, idItem, preco) {
         const jogadorValido = validacoes.validarId(idJogador);
         const itemValido = validacoes.validarId(idItem);
+        const precoValido = Number(preco);
+
+        if (!Number.isFinite(precoValido) || precoValido < 0) {
+            throw new Error("Preço inválido.");
+        }
 
         const jogador = await jogadorService.buscarPorId(jogadorValido);
 
-        if(jogador.dinheiro < preco){
+        if (!jogador) {
+            throw new Error("Jogador não encontrado.");
+        }
+
+        if (Number(jogador.dinheiro) < precoValido) {
             throw new Error("Jogador não possui dinheiro suficiente.");
         }
 
-        await jogadorService.atualizar(jogadorValido,
-            {
-                dinheiro: jogador.dinheiro - preco
-            }
+        // Verifica se o item existe e se pode ser acumulado.
+        const item = await itemService.buscarDetalhesItem(itemValido);
+
+        const itemInventario = await inventarioModel.buscarItem(
+            jogadorValido,
+            itemValido
         );
 
-        await this.adicionarItem(jogadorValido, itemValido);
+        if (itemInventario) {
+            if (!item.acumulativo) {
+                throw new Error(
+                    "Este item não é acumulativo e o jogador já possui."
+                );
+            }
+        } else {
+            // Só verifica espaço quando será criado um novo registro.
+            await this.verificarEspacoInventario(jogadorValido);
+        }
+
+        const dinheiroAnterior = Number(jogador.dinheiro);
+        const dinheiroNovo = dinheiroAnterior - precoValido;
+
+        // Desconta o dinheiro somente depois das verificações.
+        await jogadorService.atualizar(jogadorValido, {
+            dinheiro: dinheiroNovo
+        });
+
+        try {
+            // Adiciona o item depois de confirmar o desconto.
+            await this.adicionarItem(jogadorValido, itemValido);
+
+        } catch (erro) {
+            // Se a inclusão falhar, tenta devolver o dinheiro.
+            try {
+                await jogadorService.atualizar(jogadorValido, {
+                    dinheiro: dinheiroAnterior
+                });
+            } catch (erroEstorno) {
+                console.error(
+                    "ERRO: não foi possível estornar o dinheiro da compra:",
+                    erroEstorno
+                );
+            }
+
+            throw erro;
+        }
 
         return {
-            mensagem:"Item comprado com sucesso.",
-            dinheiroRestante: jogador.dinheiro - preco
+            mensagem: "Item comprado com sucesso.",
+            dinheiroRestante: dinheiroNovo
         };
     }
 }
