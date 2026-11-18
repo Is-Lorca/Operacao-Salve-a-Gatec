@@ -3,6 +3,7 @@ export async function fetchComAuth(url, options = {}) {
     const idSave = localStorage.getItem("idSave");
 
     const headers = {
+        "Content-Type": "application/json",
         ...options.headers
     };
 

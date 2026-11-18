@@ -146,7 +146,8 @@ document.getElementById("criarNovo").addEventListener("click", async () => {
     try {
         // O SaveService retorna { save, jogador }
         const resposta = await savesApi.criarNovoJogo(nomeSave, nomeJogador, idUsuario);
-        
+        console.log("RESPOSTA DO BACK-END:", resposta);
+
         // Pegamos o id_save de dentro de resposta.save (com fallback caso mude)
         const idSaveCriado = resposta.save?.id_save || resposta.id_save;
 

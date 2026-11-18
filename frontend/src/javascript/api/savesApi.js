@@ -9,6 +9,7 @@ export const savesApi = {
     async criarNovoJogo(nomeSave, nomeJogador){
         const json = await fetchComAuth(`${API_URL}/saves`,{
             method:"POST",
+            
             body:JSON.stringify({
                 nome_save: nomeSave,
                 nome_jogador: nomeJogador
