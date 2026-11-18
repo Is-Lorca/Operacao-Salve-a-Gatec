@@ -129,9 +129,7 @@ class AtividadesController {
         try {
             const idSave = req.save.id_save;
 
-            const { materias } = req.body;
-
-            const progresso = await atividadesService.buscarProgressoMaterias(idSave, materias);
+            const progresso = await atividadesService.buscarProgressoMaterias(idSave);
 
             return res.status(200).json(respostaApi(true, "Progresso retornado.", progresso));
         } 
@@ -145,9 +143,7 @@ class AtividadesController {
         try {
             const idSave = req.save.id_save;
 
-            const { materias } = req.body;
-
-            const liberacao = await atividadesService.verificarLiberacaoProva(idSave, materias);
+            const liberacao = await atividadesService.verificarLiberacaoProva(idSave);
 
             return res.status(200).json(respostaApi(true, "Liberação verificada.", liberacao));
         } 
@@ -156,7 +152,7 @@ class AtividadesController {
             
             return res.status(400).json(respostaApi(false, error.message));
         }
-    }
+    }   
 }
 
 module.exports = new AtividadesController();

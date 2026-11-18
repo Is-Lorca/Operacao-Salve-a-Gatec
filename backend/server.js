@@ -14,8 +14,8 @@ const PORT = 3000;
 
 // configurações do Express:
 // ativando o cors em todas as origens (para facilitar)
-app.use(cors());
 app.use(express.json());
+app.use(cors());
 
 // chamamos as rotas para o server
 const materiaRoutes = require('./src/routes/materiasRoutes');
