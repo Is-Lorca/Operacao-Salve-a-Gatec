@@ -1,16 +1,14 @@
+
 @font-face {
     font-family: "PixelOper";
     src: url('../fonts/pixel_operator/PixelOperator8.ttf') format('truetype');
     font-weight: 400;
-    font-style: normal;
 }
-
 
 @font-face {
     font-family: "PixelOper";
     src: url('../fonts/pixel_operator/PixelOperator8-Bold.ttf') format('truetype');
     font-weight: 700;
-    font-style: normal;
 }
 
 * {
@@ -18,63 +16,76 @@
 }
 
 body {
-    overflow: hidden;
-    width: 100vw;
-    height: 100vh;
-    max-height: 100vh;
-    
-    
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    padding: 10px 24px 24px;
+
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
 
-    
+    overflow-x: hidden;
+    overflow-y: auto;
+
     background-color: rgb(0, 2, 26);
     font-family: "PixelOper", sans-serif;
     color: rgb(240, 248, 255);
-    padding: 1.5vh 20px;
 }
+
+/* CABEÇALHO */
 
 header {
     position: relative;
+
     width: 100%;
-    max-width: 1100px; 
-    height: 10vh;    
+    max-width: 1100px;
+    height: 65px;
+    flex-shrink: 0;
+
     display: flex;
     align-items: center;
-    margin-top: 2%;
+    justify-content: space-between;
+
+    margin: 0 auto;
 }
 
 #campoMoeda {
     position: relative;
-    width: 200px;
-    height: auto;
+    width: 165px;
+    margin: 0;
 }
-
 
 #campoMoeda img {
     display: block;
     width: 100%;
 }
 
-
 #campoMoeda h2 {
     position: absolute;
-    top: 45%;
-    left: 50%;
+    top: 50%;
+    left: 57%;
+
+    transform: translate(-50%, -50%);
+
+    width: 60%;
+    margin: 0;
+
     color: #832dff;
+    font-size: 19px;
     font-weight: bold;
+    text-align: center;
 }
 
 #botaoSair {
     display: flex;
     align-items: center;
-    margin-left: 67%;
+    margin: 0;
 }
 
-#botaoSair img{
-    width: 100px;
+#botaoSair img {
+    width: 75px;
     height: auto;
     transition: transform 0.2s ease;
 }
@@ -83,150 +94,327 @@ header {
     transform: scale(1.1);
 }
 
+/* CENÁRIO DA CANTINA */
 
 #telaPersona {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
-    max-width: 460px;
-    height: 32vh;
-    position: relative;
-}
 
+    width: min(410px, 90vw);
+    height: auto;
+
+    position: relative;
+    margin: 0 auto;
+}
 
 #telaPersonagem {
     position: relative;
     width: 100%;
-    height: 100%;
+    aspect-ratio: 1672 / 941;
 }
 
+#cenarioCantina {
+    margin: 0;
+}
 
 #cenarioCantina img {
     display: block;
     width: 100%;
+    height: auto;
+
     object-fit: contain;
+
     border-radius: 0.4rem;
-    border-style: dashed;
-    border-width: 0.25rem;
-    border-color: rgba(240, 248, 255, 0.6);
+    border: 0.25rem dashed rgba(240, 248, 255, 0.6);
 }
 
+#donaOdete {
+    margin: 0;
+}
 
 #donaOdete img {
     width: 30%;
     max-width: 250px;
-    min-width: 120px;
+    min-width: 90px;
+
     position: absolute;
     left: 30%;
     bottom: 8%;
+
     transform: translate(-46%, -18%);
 }
 
+#balcao {
+    margin: 0;
+}
 
 #balcao img {
     width: 55%;
     max-width: 330px;
     min-width: 120px;
+
     position: absolute;
     left: 27%;
     top: 69%;
+
     transform: translate(-46%, -18%);
 }
 
+/* ÁREA DOS PRODUTOS */
 
 #itens {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 25px;
+    display: grid;
+
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    align-content: start;
+    align-items: stretch;
+
+    gap: 16px;
+
     width: 100%;
-    max-width: 1350px;
-    height: 52vh;
-    margin: 20px auto;
-    margin-top: 3%;
-    justify-content: center;
+    max-width: 1100px;
+
+    height: auto;
+    min-height: 180px;
+
+    margin: 18px auto 0;
+    padding: 14px;
+
     background-color: #372354;
     border-radius: 20px;
-    padding: 15px;
 }
 
+/* CARD */
 
 .item {
-    width: 100%;
-    max-width: 410px;
-    height: 100%;
-    max-height: 200px;
-    overflow: hidden;
-    background-color: #c8d1d9;
-    padding: auto;
-    border: solid 1px rgb(68, 0, 255);
-    border-radius: 20px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
+    display: flex;
+    flex-direction: column;
 
+    width: 100%;
+    min-width: 0;
+    min-height: 175px;
+    height: auto;
+
+    overflow: hidden;
+
+    background-color: #c8d1d9;
+
+    border: solid 1px rgb(68, 0, 255);
+    border-radius: 16px;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
 
 .item:hover {
-    transform: scale(1.05);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 8px 18px rgba(0, 0, 0, 0.2);
 }
+
+/* NOME DO PRODUTO */
 
 .nomeItem {
     width: 100%;
-    height: 33px;
-    background-color: #9573c6;
-    padding: auto;
-    border: solid 1px rgb(68, 0, 255);
+    min-height: 30px;
+
     display: flex;
-    flex-direction: row;
     align-items: center;
-    justify-content: space-around;
-    padding: 10px;
-    margin: 0;
+    justify-content: center;
+
+    padding: 5px 8px;
+
+    background-color: #9573c6;
+    border-bottom: solid 1px rgb(68, 0, 255);
 }
+
+.nomeItem h2 {
+    width: 100%;
+    margin: 0;
+
+    font-size: clamp(11px, 1vw, 15px);
+    line-height: 1.15;
+
+    text-align: center;
+    overflow-wrap: anywhere;
+}
+
+/* IMAGEM E DESCRIÇÃO */
 
 .infoItem {
     display: flex;
-    flex-direction: row;
+    flex: 1;
+
     align-items: center;
-    justify-content: space-around;
-    margin: 10px;
+    gap: 9px;
+
+    min-width: 0;
+    padding: 8px;
+    margin: 0;
+
     color: black;
 }
 
-
 .infoItem img {
-    background-color: #fbcc4d;
-    width: 150px;
-    height: 150px;
-    border-radius: 20px;
-}
+    display: block;
 
+    width: 100px;
+    height: 100px;
+
+    flex: 0 0 100px;
+
+    object-fit: contain;
+
+    background-color: #fbcc4d;
+    border-radius: 16px;
+}
 
 .info {
     display: flex;
+    flex: 1;
+
     flex-direction: column;
+    justify-content: center;
+
+    min-width: 0;
+    gap: 5px;
+}
+
+.info p {
+    margin: 0;
+
+    color: black;
+
+    font-size: clamp(11px, 0.95vw, 14px);
+    line-height: 1.2;
+
+    overflow-wrap: anywhere;
+    word-break: normal;
 }
 
 .info span {
+    display: block;
+
     color: #832dff;
-    margin-top: 15px;
-    margin-bottom: 10px;
+
+    font-size: 13px;
+
+    margin: 3px 0;
 }
+
+/* BOTÃO COMPRAR */
 
 .info button {
-    background-color: #832dff;
-    border-color: #832dff;
-    border-radius: 20px;
-    color: white;
-    height: 30px;
-    transition: background-color 0.2s ease;
-}
+    width: 100%;
+    min-height: 26px;
 
+    padding: 4px 8px;
+
+    background-color: #832dff;
+    border: 1px solid #832dff;
+    border-radius: 20px;
+
+    color: white;
+    font-family: inherit;
+    font-size: 11px;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease;
+}
 
 .info button:hover {
     background-color: #fbcc4d;
     border-color: #fbcc4d;
+    color: #24133d;
 }
 
+.info button:active {
+    transform: scale(0.97);
+}
 
+/* MENSAGENS DE ERRO E CANTINA VAZIA */
+
+.mensagem-vazia {
+    grid-column: 1 / -1;
+
+    margin: 20px;
+    text-align: center;
+    color: aliceblue;
+    font-size: 15px;
+}
+
+/* ESCONDE A MENSAGEM ANTIGA, CASO EXISTA */
+
+#mensagemCantina {
+    display: none !important;
+}
+
+/* TELAS MÉDIAS */
+
+@media (max-width: 950px) {
+    #itens {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .infoItem img {
+        width: 90px;
+        height: 90px;
+        flex-basis: 90px;
+    }
+}
+
+/* CELULARES */
+
+@media (max-width: 600px) {
+    body {
+        padding: 8px 12px 20px;
+    }
+
+    header {
+        height: 58px;
+    }
+
+    #campoMoeda {
+        width: 140px;
+    }
+
+    #campoMoeda h2 {
+        font-size: 16px;
+    }
+
+    #botaoSair img {
+        width: 60px;
+    }
+
+    #telaPersona {
+        width: min(350px, 95vw);
+    }
+
+    #itens {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 12px;
+        padding: 10px;
+        margin-top: 15px;
+    }
+
+    .item {
+        min-height: 160px;
+    }
+
+    .infoItem img {
+        width: 105px;
+        height: 105px;
+        flex-basis: 105px;
+    }
+
+    .info p {
+        font-size: 13px;
+    }
+}

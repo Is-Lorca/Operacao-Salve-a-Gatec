@@ -1,118 +1,122 @@
-import { lojaApi } from "./api/lojaApi.js";
-import { fetchComAuth } from "./api/helper/fetchComAuth.js";
 
-import API_URL from "./api/api.js";
+const API_TESTE = "http://localhost:3000/api/cantina-teste/itens";
 
-// Elementos do HTML
+// Novas chaves para começar a apresentação com saldo de 100.
+const CHAVE_MOEDAS = "cantinaTesteMoedas_apresentacao_v1";
+const CHAVE_ITENS = "cantinaTesteItens_apresentacao_v1";
+
+const MOEDAS_INICIAIS = 100;
+const QUANTIDADE_ITENS = 4;
+
 const areaItens = document.getElementById("itens");
 const campoMoedas = document.querySelector("#campoMoeda h2");
 
-let mensagem = document.getElementById("mensagemCantina");
-let lojaAtual = null;
+let saldoSalvo = localStorage.getItem(CHAVE_MOEDAS);
 
-// Cria uma área para mensagens sem modificar o HTML
-if (!mensagem && areaItens) {
-    mensagem = document.createElement("p");
-    mensagem.id = "mensagemCantina";
-    mensagem.setAttribute("role", "status");
-    areaItens.parentElement.insertBefore(mensagem, areaItens);
+let moedas = saldoSalvo === null
+    ? MOEDAS_INICIAIS
+    : Number(saldoSalvo);
+
+let itensDisponiveis = [];
+
+if (!Number.isFinite(moedas) || moedas < 0) {
+    moedas = MOEDAS_INICIAIS;
 }
 
-function mostrarMensagem(texto) {
-    if (mensagem) {
-        mensagem.textContent = texto;
-    }
+function atualizarMoedas() {
+    // Mostra somente o número.
+    campoMoedas.textContent = String(moedas);
+
+    localStorage.setItem(CHAVE_MOEDAS, String(moedas));
 }
 
-// Recupera o token que o login já salvou
-function prepararToken() {
-    let token = localStorage.getItem("token");
+// Sorteio dos produtos usando o peso cadastrado no banco.
+function sortearItens(lista, quantidade) {
+    const restantes = [...lista];
+    const sorteados = [];
 
-    if (!token || token === "undefined" || token === "null") {
-        try {
-            const usuario = JSON.parse(
-                localStorage.getItem("usuario")
-            );
+    while (sorteados.length < quantidade && restantes.length > 0) {
+        const pesoTotal = restantes.reduce(
+            (total, item) =>
+                total + Math.max(0, Number(item.peso) || 0),
+            0
+        );
 
-            token = usuario?.tokenAcesso;
+        let escolhido = 0;
 
-            if (token) {
-                localStorage.setItem("token", token);
+        if (pesoTotal > 0) {
+            let sorteio = Math.random() * pesoTotal;
+
+            for (let i = 0; i < restantes.length; i++) {
+                sorteio -= Math.max(
+                    0,
+                    Number(restantes[i].peso) || 0
+                );
+
+                if (sorteio < 0) {
+                    escolhido = i;
+                    break;
+                }
             }
-        } catch (erro) {
-            console.error("Erro ao recuperar token:", erro);
+        } else {
+            escolhido = Math.floor(
+                Math.random() * restantes.length
+            );
         }
+
+        sorteados.push(restantes.splice(escolhido, 1)[0]);
     }
 
-    if (!token) {
-        throw new Error("Token não encontrado. Faça login novamente.");
-    }
+    return sorteados;
 }
 
-// Trata o formato de resposta utilizado pelo backend
-function obterDados(resposta) {
-    if (!resposta || resposta.sucesso === false) {
+// Busca os produtos reais no banco.
+
+async function buscarProdutos() {
+    const resposta = await fetch(API_TESTE);
+    const json = await resposta.json();
+
+    if (!resposta.ok || !json.sucesso) {
         throw new Error(
-            resposta?.mensagem ||
-            resposta?.error ||
-            "Não foi possível consultar o servidor."
+            json.mensagem || `Erro HTTP ${resposta.status}`
         );
     }
 
-    return resposta.data ?? resposta;
-}
+    if (!Array.isArray(json.data) || json.data.length === 0) {
+        throw new Error("Nenhum produto encontrado no banco.");
+    }
 
-// Busca o saldo do jogador
-async function carregarMoedas() {
-    const resposta = await fetchComAuth(
-        `${API_URL}/jogador`
+    // Remove produtos duplicados.
+    const todosProdutos = json.data.filter(
+        (item, index, lista) =>
+            lista.findIndex(
+                outro => Number(outro.id_item) === Number(item.id_item)
+            ) === index
     );
 
-    const jogador = obterDados(resposta);
-
-    if (!jogador) {
-        throw new Error("Jogador não encontrado.");
-    }
-
-    campoMoedas.textContent =
-        `${Number(jogador.dinheiro ?? 0)} moedas`;
-}
-
-// Busca a loja do save
-async function carregarLoja() {
-    const resposta = await lojaApi.buscarPorSave();
-
-    lojaAtual = obterDados(resposta);
-
-    if (!lojaAtual || !lojaAtual.id_loja) {
-        throw new Error("Não foi possível encontrar a loja.");
-    }
-
-    // Respeita a abertura controlada pelo backend
-    if (!lojaAtual.aberta) {
-        areaItens.replaceChildren();
-        mostrarMensagem("A cantina está fechada no momento.");
-        return;
-    }
-
-    await carregarItens();
-}
-
-// Busca os produtos da loja
-async function carregarItens() {
-    const resposta = await lojaApi.buscarItensLoja(
-        lojaAtual.id_loja
+    // Sorteia novamente os produtos.
+    itensDisponiveis = sortearItens(
+        todosProdutos,
+        QUANTIDADE_ITENS
     );
 
-    const itens = obterDados(resposta);
-
-    mostrarItens(itens);
+    salvarItens();
+    atualizarMoedas();
+    mostrarItens();
 }
 
-// Cria os cards com os dados recebidos do banco
-function criarCard(registro) {
-    const item = registro.item || registro;
 
+function salvarItens() {
+    localStorage.setItem(
+        CHAVE_ITENS,
+        JSON.stringify(
+            itensDisponiveis.map(item => item.id_item)
+        )
+    );
+}
+
+// Criação dos cards.
+function criarCard(item) {
     const card = document.createElement("div");
     card.className = "item";
 
@@ -128,100 +132,122 @@ function criarCard(registro) {
     informacoes.className = "infoItem";
 
     const imagem = document.createElement("img");
-    imagem.alt = `Imagem de ${item.nome || "item"}`;
+
+    imagem.alt = item.nome || "Imagem do produto";
 
     if (item.imagem) {
         imagem.src = item.imagem;
+    } else {
+        imagem.style.display = "none";
     }
+
+    imagem.onerror = () => {
+        imagem.style.display = "none";
+    };
 
     const detalhes = document.createElement("div");
     detalhes.className = "info";
 
     const descricao = document.createElement("p");
-    descricao.textContent =
-        item.descricao || "Sem descrição.";
+    descricao.textContent = item.descricao || "Sem descrição.";
 
     const preco = document.createElement("span");
-    preco.textContent = `${registro.preco} moedas`;
+    preco.textContent = `${item.preco} moedas`;
 
     const botao = document.createElement("button");
     botao.type = "button";
     botao.textContent = "Comprar";
 
     botao.addEventListener("click", () => {
-        comprarItem(item.id_item, botao);
+        comprar(item);
     });
 
     detalhes.append(descricao, preco, botao);
     informacoes.append(imagem, detalhes);
+
     card.append(topo, informacoes);
 
     return card;
 }
 
-// Coloca os produtos na tela
-function mostrarItens(itens) {
+// Exibição dos produtos.
+function mostrarItens() {
     areaItens.replaceChildren();
 
-    if (!Array.isArray(itens) || itens.length === 0) {
-        mostrarMensagem("Não existem itens disponíveis.");
+    if (itensDisponiveis.length === 0) {
+        const vazio = document.createElement("p");
+        vazio.className = "mensagem-vazia";
+        vazio.textContent = "Todos os produtos foram comprados!";
+
+        areaItens.appendChild(vazio);
         return;
     }
 
-    itens.forEach(registro => {
-        areaItens.appendChild(criarCard(registro));
+    itensDisponiveis.forEach(item => {
+        areaItens.appendChild(criarCard(item));
     });
-
-    mostrarMensagem("Bem-vindo(a) à cantina!");
 }
 
-// Compra utilizando a lojaApi
-async function comprarItem(idItem, botao) {
-    botao.disabled = true;
-    botao.textContent = "Comprando...";
+// Compra com moedas fictícias.
+function comprar(item) {
+    const preco = Number(item.preco);
 
-    try {
-        const resposta = await lojaApi.comprarItem(
-            lojaAtual.id_loja,
-            idItem
-        );
-
-        obterDados(resposta);
-
-        mostrarMensagem("Compra realizada com sucesso!");
-
-        // Atualiza o saldo e os produtos consultando o backend
-        await carregarMoedas();
-        await carregarItens();
-
-    } catch (erro) {
-        console.error("Erro na compra:", erro);
-
-        mostrarMensagem(erro.message);
-
-        botao.disabled = false;
-        botao.textContent = "Comprar";
+    if (!Number.isFinite(preco) || preco < 0) {
+        alert("Preço inválido para este produto.");
+        return;
     }
+
+    if (moedas < preco) {
+        alert("Você não possui moedas suficientes!");
+        return;
+    }
+
+    moedas -= preco;
+
+    itensDisponiveis = itensDisponiveis.filter(
+        produto =>
+            Number(produto.id_item) !== Number(item.id_item)
+    );
+
+    atualizarMoedas();
+    salvarItens();
+    mostrarItens();
 }
 
-// Inicialização
+// Inicialização.
 async function iniciarCantina() {
-    try {
-        if (!areaItens || !campoMoedas) {
-            throw new Error("Não foi possível localizar os elementos do HTML.");
-        }
-
-        prepararToken();
-
-        mostrarMensagem("Carregando cantina...");
-
-        await carregarMoedas();
-        await carregarLoja();
-
-    } catch (erro) {
-        console.error("Erro ao iniciar cantina:", erro);
-        mostrarMensagem(erro.message);
+    if (!areaItens || !campoMoedas) {
+        console.error("Elementos da cantina não encontrados.");
+        return;
     }
+
+    atualizarMoedas();
+
+    try {
+        await buscarProdutos();
+    } catch (erro) {
+        console.error("Erro na cantina:", erro);
+
+        areaItens.replaceChildren();
+
+        const mensagemErro = document.createElement("p");
+        mensagemErro.className = "mensagem-vazia";
+        mensagemErro.textContent = erro.message;
+
+        areaItens.appendChild(mensagemErro);
+    }
+}
+
+function resetarCantina() {
+    moedas = 100;
+
+    localStorage.removeItem(CHAVE_ITENS);
+    localStorage.setItem(CHAVE_MOEDAS, "100");
+
+    itensDisponiveis = [];
+
+    atualizarMoedas();
+    buscarProdutos();
 }
 
 iniciarCantina();

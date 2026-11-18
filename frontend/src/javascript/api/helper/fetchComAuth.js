@@ -3,7 +3,6 @@ export async function fetchComAuth(url, options = {}) {
     const idSave = localStorage.getItem("idSave");
 
     const headers = {
-        "Content-Type": "application/json",
         ...options.headers
     };
 
@@ -11,10 +10,10 @@ export async function fetchComAuth(url, options = {}) {
         headers.Authorization = `Bearer ${token}`;
     }
 
-    if(idSave){
+    if (idSave) {
         headers["x-save-id"] = idSave;
     }
-     
+
     const resposta = await fetch(url, {
         ...options,
         headers

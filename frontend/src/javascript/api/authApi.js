@@ -1,15 +1,15 @@
 import API_URL from "./api.js";
 
 export const authApi = {
-    async login(email, senha){
-        const resposta = await fetch(`${API_URL}/auth/login`,{
-            method:"POST",
+    async login(email, senha) {
+        const resposta = await fetch(`${API_URL}/auth/login`, {
+            method: "POST",
 
-            headers:{
-                "Content-Type":"application/json"
+            headers: {
+                "Content-Type": "application/json"
             },
 
-            body:JSON.stringify({
+            body: JSON.stringify({
                 email,
                 senha
             })
@@ -17,8 +17,8 @@ export const authApi = {
 
         const json = await resposta.json();
 
-        if(!resposta.ok){
-            throw new Error(json.mensagem);
+        if (!resposta.ok || json.sucesso === false) {
+            throw new Error(json.mensagem || "Erro ao fazer login.");
         }
 
         localStorage.setItem("token", json.data.tokenAcesso);
@@ -27,15 +27,16 @@ export const authApi = {
 
         return json;
     },
-    async cadastro(nome,email,senha){
-        const resposta = await fetch(`${API_URL}/auth/cadastro`,{
-            method:"POST",
 
-            headers:{
-                "Content-Type":"application/json"
+    async cadastro(nome, email, senha) {
+        const resposta = await fetch(`${API_URL}/auth/cadastro`, {
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
             },
 
-            body:JSON.stringify({
+            body: JSON.stringify({
                 nome,
                 email,
                 senha
@@ -44,13 +45,14 @@ export const authApi = {
 
         const json = await resposta.json();
 
-        if(!resposta.ok){
+        if (!resposta.ok) {
             throw new Error(json.mensagem);
         }
 
         return json.data;
     },
-    logout(){
+
+    logout() {
         localStorage.removeItem("token");
         localStorage.removeItem("tokenRefresh");
         localStorage.removeItem("usuario");
