@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Operação Salve a GATEC - História</title>
+  <link rel="stylesheet" href="src/styles/reset.css">
+  <link rel="stylesheet" href="src/styles/style.css">
+</head>
+<body id="bodyHistoria">
+
+  <!-- Controles superiores -->
+  <div class="barraSuperior">
+    <button id="btSom" class="btnTopo" title="Ativar/Desativar Som">🔊 Som</button>
+    <button id="btPular" class="btnTopo">Pular História ⏭</button>
+  </div>
+
+  <!-- Quadrado centralizado -->
+  <main class="caixaHistoria">
+    
+    <!-- Cabeçalho da cena (Imagem + Nome/Título) -->
+    <div id="cabecalhoCena" class="cabecalhoCena">
+      <img id="imgCena" src="" alt="Personagem ou Cenário" class="retrato-cena">
+      <span id="tituloCena" class="titulo-cena"></span>
+    </div>
+
+    <!-- Texto da história -->
+    <div class="areaTexto">
+      <p id="textoHistoria"></p>
+    </div>
+    
+    <div class="controles">
+      <button id="btContinuar" class="btnContinuar">Continuar</button>
+    </div>
+  </main>
+
+  <script src="src/javascript/historia.js"></script>
+</body>
+</html>

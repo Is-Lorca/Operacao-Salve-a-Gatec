@@ -155,7 +155,7 @@ document.getElementById("criarNovo").addEventListener("click", async () => {
 
         localStorage.setItem("idSave", idSaveCriado);
         sessionStorage.setItem("saveAtual", idSaveCriado);
-        window.location.href = "selecaoMateria.html";
+        window.location.href = "historia.html";
     } catch (erro) {
         alert(erro.message);
     }

@@ -6,7 +6,6 @@
     font-style: normal;
 } */
 
-
 /* modern_dos */
 /* @font-face {
     font-family: "DOS";
@@ -26,14 +25,14 @@
 /* PixelOper (com bold) */
 @font-face {
     font-family: "PixelOper";
-    src: url('../fonts/pixel_operator/PixelOperator8.ttf') format('truetype');
+    src: url("../fonts/pixel_operator/PixelOperator8.ttf") format("truetype");
     font-weight: 400;
     font-style: normal;
 }
 
 @font-face {
     font-family: "PixelOper";
-    src: url('../fonts/pixel_operator/PixelOperator8-Bold.ttf') format('truetype');
+    src: url("../fonts/pixel_operator/PixelOperator8-Bold.ttf") format("truetype");
     font-weight: 700;
     font-style: normal;
 }
@@ -62,8 +61,9 @@ header {
     margin: 0.8rem;
     flex-direction: column;
 }
+
 /* Acessando */
-#nomeAcesso{
+#nomeAcesso {
     display: flex;
     text-align: center;
     line-height: 2.3rem;
@@ -71,12 +71,12 @@ header {
     font-size: 50px;
 }
 
-.btnAcessando{
+.btnAcessando {
     font-family: "Tiny5", sans-serif;
     font-size: 30px;
     width: 100%;
     height: 65px;
-    color:rgb(23, 23, 23);
+    color: rgb(23, 23, 23);
     background-color: #832dff;
     border-color: #832dff;
     border-radius: 20px;
@@ -85,7 +85,7 @@ header {
     transition: background-color 0.2s ease;
 }
 
-.btnAcessando:hover{
+.btnAcessando:hover {
     background-color: #fbcc4d;
     border-color: #fbcc4d;
 }
@@ -104,7 +104,7 @@ header {
     border-radius: 20px;
     margin: 3% auto;
     background-color: rgb(24, 16, 46);
-    box-sizing: border-box; 
+    box-sizing: border-box;
 }
 
 #tituloAc {
@@ -122,7 +122,7 @@ header {
     padding: 8%;
     padding-bottom: 3%;
     padding-top: 3%;
-    box-sizing: border-box; 
+    box-sizing: border-box;
 }
 
 form div {
@@ -139,19 +139,19 @@ input {
     background-color: rgb(0, 2, 26);
     border: solid 2px rgb(68, 0, 255);
     border-radius: 20px;
-    padding:  10px 15px;
+    padding: 10px 15px;
     color: rgb(255, 255, 255);
     font-size: 17px;
     margin-top: 7px;
-    box-sizing: border-box; 
+    box-sizing: border-box;
 }
- 
+
 #btnEntrar {
     font-family: "Tiny5", sans-serif;
     font-size: 25px;
     width: 100%;
     height: 50px;
-    color:rgb(23, 23, 23);
+    color: rgb(23, 23, 23);
     background-color: rgb(131, 45, 255);
     border-color: rgb(131, 45, 255);
     border-radius: 20px;
@@ -164,7 +164,6 @@ input {
     background-color: rgb(251, 204, 77);
     border-color: rgb(251, 204, 77);
 }
-
 
 #resultado {
     text-align: center;
@@ -184,8 +183,8 @@ input {
     flex-direction: column;
     z-index: 2;
     cursor: pointer;
-    
 }
+
 #botaoAudio img {
     max-width: 100%;
     max-height: 100%;
@@ -239,7 +238,7 @@ picture {
 .botaoHome {
     font-family: "Tiny5", sans-serif;
     font-size: 1.4rem;
-    
+
     width: 15rem;
     height: 3.5rem;
     background-color: transparent;
@@ -283,42 +282,162 @@ picture img {
     border-color: rgb(252, 252, 252);
 }
 
-.hidden{
-    display:none !important;
+.hidden {
+    display: none !important;
 }
 
-#overlay{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.7);
-    z-index:99;
+#overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 99;
 }
 
-.modal{
-    position:fixed;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%);
-    background:#081326;
-    border:2px dashed white;
-    border-radius:10px;
-    width:420px;
-    padding:20px;
-    z-index:100;
-    display:flex;
-    flex-direction:column;
-    gap:15px;
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #081326;
+    border: 2px dashed white;
+    border-radius: 10px;
+    width: 420px;
+    padding: 20px;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
-.modal input{
-    height:45px;
-    padding:10px;
-    font-size:18px;
+.modal input {
+    height: 45px;
+    padding: 10px;
+    font-size: 18px;
 }
 
-.botoesModal{
-    display:flex;
-    justify-content:space-between;
+.botoesModal {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Historia */
+.barraSuperior {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    display: flex;
+    gap: 12px;
+    display: flex;
+    flex-direction: column;
+}
+
+#imgCena {
+    width: 150px;
+}
+
+.btnTopo {
+    background-color: transparent;
+    color: rgb(240, 248, 255);
+    border: 2px dashed rgb(240, 248, 255);
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: "PixelOper", sans-serif;
+    font-size: 0.95rem;
+    transition: 0.2s;
+}
+
+.btnTopo:hover {
+    background-color: rgb(0, 0, 0);
+    color: rgb(185, 185, 185);
+    border-color: rgb(185, 185, 185);
+}
+
+.caixaHistoria {
+    width: 90%;
+    max-width: 760px;
+    min-height: 400px;
+    background-color: rgb(0, 2, 19);
+    border: 5px dashed rgb(240, 248, 255);
+    border-radius: 16px;
+    padding: 36px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+    margin-top: 30px;
+}
+
+.cabecalhoCena {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #5f6266;
+}
+
+.retratoCena {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px dashed rgb(240, 248, 255);
+    background-color: rgb(10, 11, 15);
+}
+
+.tituloCena {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.areaTexto {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+}
+
+#textoHistoria {
+    width: 100%;
+    font-size: 1.18rem;
+    line-height: 1.7;
+    white-space: pre-line;
+    transition: all 0.2s ease;
+}
+
+#textoHistoria.textoImpacto {
+    font-size: 2.2rem;
+    font-weight: bold;
+    text-align: center;
+    color: rgb(255, 255, 255);
+    letter-spacing: 1px;
+}
+
+.controles {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 24px;
+}
+
+.btnContinuar {
+    background-color: transparent;
+    color: rgb(255, 255, 255);
+    border: 2px dashed;
+    padding: 12px 26px;
+    border-radius: 8px;
+    font-family: "PixelOper", sans-serif;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btnContinuar:hover {
+    background-color: rgb(4, 1, 35);
+    transform: scale(1.1);
 }
 
 /* DESCONTINUADO */
@@ -336,7 +455,6 @@ picture img {
     width: 100%;
     display: inline-flex;
     position: relative;
-
 }
 
 .escolhaPersona,
@@ -352,7 +470,7 @@ picture img {
 }
 
 #botaoComLinha {
-    border-left: .30rem dashed rgba(240, 248, 255, 0.6);
+    border-left: 0.3rem dashed rgba(240, 248, 255, 0.6);
 }
 
 .formatPersona {
@@ -378,8 +496,7 @@ picture img {
     font-family: "PixelOper", sans-serif;
     font-weight: 400;
     /* letter-spacing: 0.1rem; */
-    line-height: 1.7rem
-    
+    line-height: 1.7rem;
 }
 
 .tituloInfo {
@@ -407,7 +524,7 @@ picture img {
 
 .botaoMateria {
     margin: 0.5rem;
-    
+
     width: 15rem;
     height: 5rem;
 
@@ -426,7 +543,7 @@ picture img {
     transition: 0.3s;
 }
 
-.botaoMateria:hover{
+.botaoMateria:hover {
     transform: scale(1.1);
 }
 
@@ -478,7 +595,6 @@ picture img {
     bottom: 0;
     transform: translate(-46%, -18%);
 }
-
 
 #caixadialogo {
     font-size: 1.2rem;
@@ -616,7 +732,6 @@ picture img {
     }
 
     #selecPersonas {
-
         display: flex;
 
         flex-direction: column;
@@ -628,31 +743,27 @@ picture img {
 
     .escolhaPersona,
     .linkEscolha {
-
         width: 95%;
 
         max-width: 400px;
     }
 
     .imagemSelec {
-
         width: 100%;
 
         max-width: 250px;
     }
 
     .dadosPersona {
-
         font-size: 1rem;
 
         line-height: 1.8rem;
     }
 
     #botaoComLinha {
-
         border-left: none;
 
-        border-top: .25rem dashed rgba(240, 248, 255, .6);
+        border-top: 0.25rem dashed rgba(240, 248, 255, 0.6);
 
         padding-top: 2rem;
     }
@@ -696,7 +807,6 @@ picture img {
 
 /* telas ainda menores */
 @media (max-width: 480px) {
-
     #tituloSelectPers {
         font-size: 1.7rem;
     }
@@ -706,7 +816,7 @@ picture img {
     }
 
     .dadosPersona {
-        font-size: .9rem;
+        font-size: 0.9rem;
         line-height: 1.5rem;
     }
 
