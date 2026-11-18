@@ -1,16 +1,16 @@
-// erro aqui, migo: era pra ser a api da cantina (que se chama loja), 
-// voce ta puxando a api do endereço
-// era pra ser:
-// import { lojaApi } from './api/lojaApi.js';
-import API_URL from "./api/api.js"; 
 
-// Elementos da página
+import { lojaApi } from "./api/lojaApi.js";
+import { fetchComAuth } from "./api/helper/fetchComAuth.js";
+import API_URL from "./api/api.js";
+
+// Elementos do HTML
 const areaItens = document.getElementById("itens");
 const campoMoedas = document.querySelector("#campoMoeda h2");
 
-// Mensagem de carregamento e erros
 let mensagem = document.getElementById("mensagemCantina");
+let lojaAtual = null;
 
+// Cria uma área para mensagens sem modificar o HTML
 if (!mensagem && areaItens) {
     mensagem = document.createElement("p");
     mensagem.id = "mensagemCantina";
@@ -18,10 +18,14 @@ if (!mensagem && areaItens) {
     areaItens.parentElement.insertBefore(mensagem, areaItens);
 }
 
-let lojaAtual = null;
+function mostrarMensagem(texto) {
+    if (mensagem) {
+        mensagem.textContent = texto;
+    }
+}
 
-// Recupera o token salvo pelo login
-function obterToken() {
+// Recupera o token que o login já salvou
+function prepararToken() {
     let token = localStorage.getItem("token");
 
     if (!token || token === "undefined" || token === "null") {
@@ -36,63 +40,35 @@ function obterToken() {
                 localStorage.setItem("token", token);
             }
         } catch (erro) {
-            console.error("Erro ao recuperar o token:", erro);
+            console.error("Erro ao recuperar token:", erro);
         }
     }
 
     if (!token) {
         throw new Error("Token não encontrado. Faça login novamente.");
     }
-
-    return token;
 }
 
-// Função responsável pela comunicação com o backend
-async function chamarApi(caminho, opcoes = {}) {
-    const token = obterToken();
-    const idSave = localStorage.getItem("idSave");
-
-    if (!idSave) {
-        throw new Error("Nenhum save selecionado.");
-    }
-
-    const resposta = await fetch(`${API_URL}${caminho}`, {
-        ...opcoes,
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-            "x-save-id": idSave,
-            ...opcoes.headers
-        }
-    });
-
-    // Evita tentar interpretar uma página HTML como JSON
-    const texto = await resposta.text();
-
-    let json;
-
-    try {
-        json = JSON.parse(texto);
-    } catch {
+// Trata o formato de resposta utilizado pelo backend
+function obterDados(resposta) {
+    if (!resposta || resposta.sucesso === false) {
         throw new Error(
-            `O servidor retornou uma resposta inválida (HTTP ${resposta.status}).`
+            resposta?.mensagem ||
+            resposta?.error ||
+            "Não foi possível consultar o servidor."
         );
     }
 
-    if (!resposta.ok || json.sucesso === false) {
-        throw new Error(
-            json.mensagem ||
-            json.error ||
-            "Não foi possível realizar a operação."
-        );
-    }
-
-    return json.data;
+    return resposta.data ?? resposta;
 }
 
-// Busca as moedas do jogador
+// Busca o saldo do jogador
 async function carregarMoedas() {
-    const jogador = await chamarApi("/jogador");
+    const resposta = await fetchComAuth(
+        `${API_URL}/jogador`
+    );
+
+    const jogador = obterDados(resposta);
 
     if (!jogador) {
         throw new Error("Jogador não encontrado.");
@@ -104,14 +80,15 @@ async function carregarMoedas() {
 
 // Busca a loja do save
 async function carregarLoja() {
-    lojaAtual = await chamarApi("/loja");
+    const resposta = await lojaApi.buscarPorSave();
+
+    lojaAtual = obterDados(resposta);
 
     if (!lojaAtual || !lojaAtual.id_loja) {
-        throw new Error("Não foi possível encontrar a loja deste save.");
+        throw new Error("Não foi possível encontrar a loja.");
     }
 
-    // Não abre a loja automaticamente.
-    // Respeita o funcionamento definido pelo backend.
+    // Respeita a abertura controlada pelo backend
     if (!lojaAtual.aberta) {
         areaItens.replaceChildren();
         mostrarMensagem("A cantina está fechada no momento.");
@@ -121,28 +98,18 @@ async function carregarLoja() {
     await carregarItens();
 }
 
-// Busca os produtos disponíveis na loja
+// Busca os produtos da loja
 async function carregarItens() {
-    try {
-        const itens = await chamarApi(
-            `/loja/itens/${lojaAtual.id_loja}`
-        );
+    const resposta = await lojaApi.buscarItensLoja(
+        lojaAtual.id_loja
+    );
 
-        mostrarItens(itens);
+    const itens = obterDados(resposta);
 
-    } catch (erro) {
-        areaItens.replaceChildren();
-
-        if (erro.message.toLowerCase().includes("não possui itens")) {
-            mostrarMensagem("Não existem itens disponíveis na cantina.");
-            return;
-        }
-
-        throw erro;
-    }
+    mostrarItens(itens);
 }
 
-// Cria o espaço visual de cada produto
+// Cria os cards com os dados recebidos do banco
 function criarCard(registro) {
     const item = registro.item || registro;
 
@@ -161,9 +128,7 @@ function criarCard(registro) {
     informacoes.className = "infoItem";
 
     const imagem = document.createElement("img");
-    imagem.alt = item.nome
-        ? `Imagem de ${item.nome}`
-        : "Imagem do item";
+    imagem.alt = `Imagem de ${item.nome || "item"}`;
 
     if (item.imagem) {
         imagem.src = item.imagem;
@@ -174,7 +139,7 @@ function criarCard(registro) {
 
     const descricao = document.createElement("p");
     descricao.textContent =
-        item.descricao || "Descrição indisponível.";
+        item.descricao || "Sem descrição.";
 
     const preco = document.createElement("span");
     preco.textContent = `${registro.preco} moedas`;
@@ -194,12 +159,12 @@ function criarCard(registro) {
     return card;
 }
 
-// Preenche a área de produtos com os dados do banco
+// Coloca os produtos na tela
 function mostrarItens(itens) {
     areaItens.replaceChildren();
 
     if (!Array.isArray(itens) || itens.length === 0) {
-        mostrarMensagem("Não existem produtos disponíveis.");
+        mostrarMensagem("Não existem itens disponíveis.");
         return;
     }
 
@@ -210,27 +175,27 @@ function mostrarItens(itens) {
     mostrarMensagem("Bem-vindo(a) à cantina!");
 }
 
-// Realiza a compra do produto
+// Compra utilizando a lojaApi
 async function comprarItem(idItem, botao) {
     botao.disabled = true;
     botao.textContent = "Comprando...";
 
     try {
-        await chamarApi(
-            `/loja/${lojaAtual.id_loja}/comprar/${idItem}`,
-            {
-                method: "POST"
-            }
+        const resposta = await lojaApi.comprarItem(
+            lojaAtual.id_loja,
+            idItem
         );
+
+        obterDados(resposta);
 
         mostrarMensagem("Compra realizada com sucesso!");
 
-        // Consulta novamente os dados atualizados no banco
+        // Atualiza o saldo e os produtos consultando o backend
         await carregarMoedas();
         await carregarItens();
 
     } catch (erro) {
-        console.error("Erro ao comprar:", erro);
+        console.error("Erro na compra:", erro);
 
         mostrarMensagem(erro.message);
 
@@ -239,14 +204,14 @@ async function comprarItem(idItem, botao) {
     }
 }
 
-// Inicializa a cantina
+// Inicialização
 async function iniciarCantina() {
     try {
         if (!areaItens || !campoMoedas) {
-            throw new Error(
-                "Não foi possível localizar a área dos itens ou das moedas no HTML."
-            );
+            throw new Error("Não foi possível localizar os elementos do HTML.");
         }
+
+        prepararToken();
 
         mostrarMensagem("Carregando cantina...");
 
@@ -254,7 +219,7 @@ async function iniciarCantina() {
         await carregarLoja();
 
     } catch (erro) {
-        console.error("Erro ao iniciar a cantina:", erro);
+        console.error("Erro ao iniciar cantina:", erro);
         mostrarMensagem(erro.message);
     }
 }

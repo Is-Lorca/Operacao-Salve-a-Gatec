@@ -1,4 +1,4 @@
-import { fetchComAuth } from "./fetchAuth.js";
+import { fetchComAuth } from "./helper/fetchComAuth.js";
 
 import API_URL from "./api.js";
 
@@ -46,4 +46,12 @@ export const lojaApi = {
             }
         );
     },
+    async comprarItem(idLoja, idItem) {
+        return await fetchComAuth(
+            `${API_URL}/loja/${idLoja}/comprar/${idItem}`,
+            {
+                method: "POST"
+            }
+        );
+    }
 }
