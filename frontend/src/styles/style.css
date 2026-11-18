@@ -260,11 +260,13 @@ picture {
     cursor: default;
 }
 
-#home:has(#botaoInicio:hover) picture {
+#home:has(#botaoInicio:hover) picture,
+#home:has(#botaoContinuar:hover:not(:disabled)) picture {
     opacity: 1;
 }
 
-#home:has(#botaoInicio:hover) #nomeJogo{
+#home:has(#botaoInicio:hover) #nomeJogo,
+#home:has(#botaoContinuar:hover:not(:disabled)) #nomeJogo {
     filter: opacity(0);
 }
 

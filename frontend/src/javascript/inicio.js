@@ -56,9 +56,11 @@ async function carregarSaves() {
         if (saves.length === 0) {
             botaoContinuar.disabled = true;
             botaoContinuar.style.opacity = "0.5";
+            botaoContinuar.style.cursor = "not-allowed";
         } else {
             botaoContinuar.disabled = false;
             botaoContinuar.style.opacity = "1";
+            botaoContinuar.style.cursor = "pointer";
         }
     } catch (erro) {
         console.error("Erro ao carregar saves:", erro);
