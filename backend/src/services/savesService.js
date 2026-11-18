@@ -1,13 +1,21 @@
 const validacao = require('../utils/validacoes');
 const savesModel = require('../models/savesModel');
+const jogadorModel = require('../models/jogadoresModel');
 
 class SaveService {
     // criar
-    async criarNovoJogo(nome, idUser){
-        validacao.validarNome(nome);
+    async criarNovoJogo(nomeSave, nomeJogador, idUser){
+        validacao.validarNome(nomeSave);
         const idValido = validacao.validarId(idUser);
 
-        return await savesModel.criar({nome_save: nome, id_usuario: idValido});
+        const save = await savesModel.criar({nome_save: nomeSave, id_usuario: idValido});
+
+        const jogador = await jogadorModel.criar({nome: nomeJogador, id_save: save.id_save});
+
+        return{
+            save,
+            jogador
+        };
     }
     // buscar
     async carregarTodos(idUser){

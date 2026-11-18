@@ -59,7 +59,7 @@ class JogadorModel {
         if(novosDados.dinheiro !== undefined){
             dadosAtualizar.dinheiro = novosDados.dinheiro;
         }
-        if(novosDados.id_materia_atual){
+        if(novosDados.id_materia_atual !== undefined){
             dadosAtualizar.id_materia_atual = novosDados.id_materia_atual;
         }
         if(novosDados.id_checkpoint){

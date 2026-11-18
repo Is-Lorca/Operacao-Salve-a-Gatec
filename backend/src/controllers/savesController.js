@@ -4,11 +4,11 @@ const savesService = require('../services/savesService');
 class SaveController {
     async criarNovoJogo(req, res){
         try{
-            const {nome_save} = req.body;
+            const {nome_save, nome_jogador} = req.body;
 
             const idUsuario = req.usuarioLogado.id_usuario;
 
-            const novoSave = await savesService.criarNovoJogo(nome_save, idUsuario);
+            const novoSave = await savesService.criarNovoJogo(nome_save, nome_jogador, idUsuario);
 
             return res.status(201).json(respostaApi(true,"Save criado.", novoSave));    
         }

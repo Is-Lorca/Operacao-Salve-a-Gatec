@@ -62,13 +62,13 @@ class AtividadesService{
         if (atividadeExistente) {
             switch (atividadeExistente.status) {
                 case "EM_ANDAMENTO":
-                    const questoes = await atividadesModel.buscarQuestoes(
+                    const questoes = await atividadesModel.buscarQuestoesAtividade(
                         atividadeExistente.id_atividade);
                     return {
                         ...atividadeExistente,
                         questoes
                     };
-                case "APROVADA":
+                case "CONCLUIDA":
                     throw new Error("Essa atividade já foi concluída.");
                 case "REPROVADA":
                     break;
@@ -298,7 +298,7 @@ class AtividadesService{
                 throw new Error("Nenhuma atividade encontrada.");
             }
 
-            if(ultimaAtividade.status === "APROVADA"){
+            if(ultimaAtividade.status === "CONCLUIDA"){
                 throw new Error("Essa atividade já foi concluída.");
 
             }

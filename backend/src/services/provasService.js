@@ -2,6 +2,7 @@ const provaFinalModel = require('../models/provasModel');
 const atividadesModel = require('../models/atividadesModel');
 const qaModel = require('../models/questoesAlternativasModel');
 const validacoes = require('../utils/validacoes');
+const materiasModel = require('../models/materiasModel');
 
 class ProvasService {
     calcularMedia(notas) {
@@ -53,8 +54,11 @@ class ProvasService {
     async buscarQuestoesCompletas(listaQuestoes) {
         return await qaModel.buscarVariasQA(listaQuestoes);
     }
-    async gerarProva(idSave, materias) {
+    async gerarProva(idSave) {
         idSave = validacoes.validarId(idSave);
+
+        const materias = await materiasModel.buscarMaterias();
+        materias.sort((a, b) => a.ordem - b.ordem);
 
         // Verifica se já existe prova
         const provaExistente = await provaFinalModel.buscarProvaPorSave(idSave);

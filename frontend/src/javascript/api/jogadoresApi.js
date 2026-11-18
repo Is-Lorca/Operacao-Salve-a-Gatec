@@ -3,6 +3,7 @@ import { fetchComAuth } from "./helper/fetchComAuth";
 import API_URL from "./api.js";
 
 export const jogadorApi = {
+    // chame criarNovoJogo do save, ele faz o jogador tambem!
     async criarJogador(dados) {
         const resposta = await fetchComAuth(`${API_URL}/jogadores`,
             {
