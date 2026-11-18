@@ -16,7 +16,7 @@ router.get("/", provasController.buscarProva);
 // Busca questões da prova
 router.get("/:idProva/questoes", provasController.buscarQuestoes);
 // Registra resposta de uma questão
-router.put("/:idProva/questao/:idQuestao", provasController.responderQuestao);
+router.put("/:idProva/questao", provasController.responderQuestao);
 // Corrige e finaliza prova
 router.put("/:idProva/finalizar", provasController.finalizarProva);
 

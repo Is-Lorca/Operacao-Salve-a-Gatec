@@ -146,13 +146,13 @@ class InventarioService {
             throw new Error("Jogador não possui dinheiro suficiente.");
         }
 
-        await this.adicionarItem(jogadorValido, itemValido);
-
         await jogadorService.atualizar(jogadorValido,
             {
                 dinheiro: jogador.dinheiro - preco
             }
         );
+
+        await this.adicionarItem(jogadorValido, itemValido);
 
         return {
             mensagem:"Item comprado com sucesso.",

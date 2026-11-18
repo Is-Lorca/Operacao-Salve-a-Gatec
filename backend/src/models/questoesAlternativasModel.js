@@ -104,12 +104,25 @@ class QAModel {
         return questoes.slice(0, quantidade);
     }
     // recebe várias questões e devolve todas completas
-    async buscarVariasQA(questoes){
+    async buscarVariasQA(idsQuestoes){
         const resultado = [];
 
-        // cada questao dentro de questoes
-        for(const questao of questoes){
-            const alternativas = await this.buscarAlternativas(questao.id_questao);
+        for(const idQuestao of idsQuestoes){
+            const { data: questao, error } = await supabase
+                .from('questao')
+                .select(`
+                    id_questao,
+                    enunciado,
+                    tipo
+                `)
+                .eq('id_questao', idQuestao)
+                .single();
+
+            if(error){
+                throw error;
+            }
+
+            const alternativas = await this.buscarAlternativas(idQuestao);
 
             resultado.push({
                 ...questao,

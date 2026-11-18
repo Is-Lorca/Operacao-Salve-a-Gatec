@@ -21,10 +21,9 @@ formCadastro.addEventListener("submit", async(event) => {
 
         const resposta = await authApi.cadastro(nome, email, senha);
 
-        resultado.innerText = `Cadastro realizado com sucesso!\nSeja bem-vindo(a) 
-        ${resposta.nome}`;
+        resultado.innerText = `Cadastro realizado com sucesso!\nSeja bem-vindo(a) ${resposta.nome}`;
 
-        setTimeout(()=>{window.location.href = "./index.html";}, 2000);
+        setTimeout(()=>{window.location.href = "./inicio.html";}, 2000);
 
     } 
     catch(error){

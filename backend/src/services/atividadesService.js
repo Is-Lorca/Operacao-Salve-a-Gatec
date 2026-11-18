@@ -2,6 +2,8 @@ const validacoes = require('../utils/validacoes');
 
 const qaModel = require('../models/questoesAlternativasModel');
 const atividadesModel = require('../models/atividadesModel');
+const materiasModel = require('../models/materiasModel');
+const jogadoresService = require('./jogadoresService');
 
 class AtividadesService{
     // os métodos abaixo não possuem async pois não mexem diretamente com o BD, existem para auxiliar
@@ -61,13 +63,13 @@ class AtividadesService{
         if (atividadeExistente) {
             switch (atividadeExistente.status) {
                 case "EM_ANDAMENTO":
-                    const questoes = await atividadesModel.buscarQuestoes(
+                    const questoes = await atividadesModel.buscarQuestoesAtividade(
                         atividadeExistente.id_atividade);
                     return {
                         ...atividadeExistente,
                         questoes
                     };
-                case "APROVADA":
+                case "CONCLUIDA":
                     throw new Error("Essa atividade já foi concluída.");
                 case "REPROVADA":
                     break;
@@ -170,9 +172,10 @@ class AtividadesService{
             throw new Error(`Erro ao registrar resposta: ${erro.message}`);
         }
     }
-    async corrigirAtividade(idAtividade) {
+    async corrigirAtividade(idAtividade, idSave) {
         const idAValido = validacoes.validarId(idAtividade);
-        
+        const idSValido = validacoes.validarId(idSave);
+
         try {
             const atividade = await atividadesModel.buscarAtividade(idAValido);
 
@@ -214,9 +217,16 @@ class AtividadesService{
             }
 
             // define se o jogador foi aprovado ou reprovado.
-            const status = nota >= 6 ? 'APROVADA' : 'REPROVADA';
+            const status = nota >= 6 ? 'CONCLUIDA' : 'REPROVADA';
 
             await atividadesModel.finalizarAtividade(idAValido, {nota, status});
+            
+            if(status === "CONCLUIDA"){
+                const jogador = await jogadoresService.buscarPorSave(idSValido);
+
+                await jogadoresService.atualizar(jogador.id_jogador, {dinheiro: jogador.dinheiro + 
+                    moedasGanhar});
+            }
 
             const podeRefazer = nota < 6;
 
@@ -255,11 +265,15 @@ class AtividadesService{
 
             const questoes = await qaModel.buscarVariasQA(idsQuestoes);
 
-            return questoes.map((questao, index) => ({
-                ...questao,
-                ordem: questoesSalvas[index].ordem,
-                acertou: questoesSalvas[index].acertou
-            }));
+            return questoesSalvas.map(qSalva => {
+                const questao = questoes.find(q => q.id_questao === qSalva.id_questao);
+
+                return {
+                    ...questao,
+                    ordem: qSalva.ordem,
+                    acertou: qSalva.acertou
+                }
+            });
 
         } catch (erro) {
             throw new Error(`Erro ao buscar questões: ${erro.message}`);
@@ -282,8 +296,8 @@ class AtividadesService{
                 questoes
             };
         } 
-        catch(erro){
-            throw new Error(`Erro ao buscar atividade completa: ${erro.message}`);
+        catch(error){
+            throw new Error(`Erro ao buscar atividade completa: ${error.message}`);
         }
     }
     async refazerAtividade(idSave, idMateria){
@@ -297,7 +311,7 @@ class AtividadesService{
                 throw new Error("Nenhuma atividade encontrada.");
             }
 
-            if(ultimaAtividade.status === "APROVADA"){
+            if(ultimaAtividade.status === "CONCLUIDA"){
                 throw new Error("Essa atividade já foi concluída.");
 
             }
@@ -344,14 +358,17 @@ class AtividadesService{
                 return false;
             }
 
-            return atividade.status === "APROVADA";
+            return atividade.status === "CONCLUIDA";
         } 
         catch(erro){
             throw new Error(`Erro ao verificar matéria concluída: ${erro.message}`);
         }
     }
-    async buscarProgressoMaterias(idSave, materias){
+    async buscarProgressoMaterias(idSave){
         const idSValido = validacoes.validarId(idSave);
+
+        const materias = await materiasModel.buscarMaterias();
+        materias.sort((a, b) => a.ordem - b.ordem);
 
         try {
             const atividades = await atividadesModel.buscarTodasAtividadesSave(idSValido);
@@ -380,7 +397,7 @@ class AtividadesService{
                 if(atividadeMateria){
                     nota = atividadeMateria.nota;
                     status = atividadeMateria.status;
-                    if(atividadeMateria.status === "APROVADA"){
+                    if(atividadeMateria.status === "CONCLUIDA" && atividadeMateria.nota >= 6){
                         ultimaAprovada = true;
                     }
                     else {
@@ -408,8 +425,11 @@ class AtividadesService{
             throw new Error(`Erro ao buscar progresso das matérias: ${erro.message}`);
         }
     }
-    async verificarLiberacaoProva(idSave, materias){
+    async verificarLiberacaoProva(idSave){
         const idSValido = validacoes.validarId(idSave);
+
+        const materias = await materiasModel.buscarMaterias();
+        materias.sort((a, b) => a.ordem - b.ordem);
 
         try {
             const atividades = await atividadesModel.buscarTodasAtividadesSave(idSValido);
@@ -418,7 +438,7 @@ class AtividadesService{
                     const atividade = atividades.filter(item =>item.id_materia === materia.id_materia).sort(
                         (a,b)=> b.id_atividade - a.id_atividade)[0];
 
-                    return (atividade && atividade.status === "APROVADA");
+                    return (atividade && atividade.status === "CONCLUIDA");
                 });
 
             return {

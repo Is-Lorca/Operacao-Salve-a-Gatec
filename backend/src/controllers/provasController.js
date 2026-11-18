@@ -6,9 +6,7 @@ class ProvasController {
         try {
             const idSave = req.save.id_save;
 
-            const materias = req.body.materias;
-
-            const prova = await provasService.gerarProva(idSave, materias);
+            const prova = await provasService.gerarProva(idSave);
 
             return res.status(201).json(respostaApi(true, "Prova final gerada com sucesso.", prova));
         } 
@@ -42,15 +40,11 @@ class ProvasController {
     }
     async responderQuestao(req, res) {
         try {
-            const { idProva, idQuestao } = req.params;
+            const { idProva } = req.params;
 
-            const { acertou } = req.body;
+            const { idQuestao, acertou } = req.body;
 
-            const resposta = await provasService.registrarResposta(
-                idProva,
-                idQuestao,
-                acertou,
-            );
+            const resposta = await provasService.registrarResposta(idProva, idQuestao, acertou);
 
             return res.status(200).json(respostaApi(true, "Resposta registrada.", resposta));
         } 

@@ -22,7 +22,13 @@ class ProvasModel{
     async buscarProva(idProva){
         const {data, error} = await supabase
             .from('prova_final')
-            .select(`id_save, nota, realizada`)
+            .select(`
+                id_prova,
+                id_save,
+                nota,
+                realizada,
+                resultado
+            `)
             .eq('id_prova', idProva)
             .single()
             
@@ -106,18 +112,19 @@ class ProvasModel{
     async finalizarProva(idProva, dados){
         const dadosAtualizar = {
             nota: dados.nota,
-            realizada: true
+            realizada: true,
+            resultado: dados.resultado
         }
 
         const {data, error} = await supabase
             .from('prova_final')
             .update(dadosAtualizar)
             .eq('id_prova', idProva)
+            .select()
+            .single()
 
         if(error){
-            console.error(
-                `Erro ao finalizar prova de ID ${idProva}: `, 
-                error.message);
+            console.error(`Erro ao finalizar prova de ID ${idProva}: `,  error.message);
             throw error;
         }
 

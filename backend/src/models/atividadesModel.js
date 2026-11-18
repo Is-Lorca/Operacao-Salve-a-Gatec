@@ -61,8 +61,9 @@ class AtividadesModel{
             .limit(1)
             .single();
 
+        // "JSON object requested, multiple (or no) rows returned"
         if(error && error.code !== 'PGRST116'){
-            console.error(`Erro ao encontrar atividade do save ${idSave}: `,error.message);
+            console.error(`Erro ao encontrar atividade do save ${idSave}: `, error.message);
             throw error;
         }
 
@@ -140,9 +141,7 @@ class AtividadesModel{
             .eq('id_atividade', idAtividade)
 
         if(error){
-            console.error(
-                `Erro ao finalizar atividade de ID ${idAtividade}: `, 
-                error.message);
+            console.error(`Erro ao finalizar atividade de ID ${idAtividade}: `, error.message);
             throw error;
         }
 
