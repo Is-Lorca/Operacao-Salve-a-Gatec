@@ -1,5 +1,8 @@
-
-import API_URL from "./api/api.js";
+// erro aqui, migo: era pra ser a api da cantina (que se chama loja), 
+// voce ta puxando a api do endereço
+// era pra ser:
+// import { lojaApi } from './api/lojaApi.js';
+import API_URL from "./api/api.js"; 
 
 // Elementos da página
 const areaItens = document.getElementById("itens");
