@@ -27,6 +27,7 @@ const inventarioRoutes = require('./src/routes/inventariosRoutes');
 const lojaRoutes = require('./src/routes/lojasRoutes');
 const atividadesRoutes = require('./src/routes/atividadesRoutes');
 const provasRoutes = require('./src/routes/provasRoutes');
+const cantinaTesteRoutes = require('./src/routes/cantinaTesteRoutes');
 app.use('/api/materias', materiaRoutes);
 app.use('/api/saves', savesRoutes);
 app.use('/api/usuarios', usuarioRoutes);
@@ -36,6 +37,7 @@ app.use('/api/inventario', inventarioRoutes);
 app.use('/api/loja', lojaRoutes);
 app.use('/api/atividades', atividadesRoutes);
 app.use('/api/prova', provasRoutes);
+app.use('/api/cantina-teste', cantinaTesteRoutes);
 
 // app.get() apenas registra que uma rota existe, não faz a requisição, so quando alguem acessa
 app.get('/api', (req, res) => {

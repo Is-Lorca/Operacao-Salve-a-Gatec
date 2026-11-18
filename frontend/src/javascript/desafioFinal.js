@@ -1,3 +1,4 @@
+
 // PERGUNTAS DO DESAFIO
 const perguntas = [
 
@@ -18,7 +19,6 @@ Qual alternativa apresenta apenas proposições?`,
         ],
 
         respostaCorreta: 2,
-        dificuldade: "Fácil",
         pontos: 1
     },
 
@@ -38,7 +38,6 @@ Qual é a interseção entre A e B?`,
         ],
 
         respostaCorreta: 1,
-        dificuldade: "Fácil",
         pontos: 1
     },
 
@@ -58,7 +57,6 @@ Qual é o resultado de A ∧ ¬B?`,
         ],
 
         respostaCorreta: 0,
-        dificuldade: "Média",
         pontos: 1
     },
 
@@ -75,7 +73,6 @@ Em qual quadrante ele está?`,
         ],
 
         respostaCorreta: 1,
-        dificuldade: "Média",
         pontos: 1
     },
 
@@ -92,7 +89,6 @@ Se a entrada for 4, qual será o resultado?`,
         ],
 
         respostaCorreta: 2,
-        dificuldade: "Média",
         pontos: 1
     },
 
@@ -114,7 +110,6 @@ Qual alternativa representa corretamente essa relação?`,
         ],
 
         respostaCorreta: 1,
-        dificuldade: "Difícil",
         pontos: 1
     },
 
@@ -131,7 +126,6 @@ Qual é o coeficiente angular dessa reta?`,
         ],
 
         respostaCorreta: 1,
-        dificuldade: "Difícil",
         pontos: 1
     },
 
@@ -150,7 +144,6 @@ Essa relação representa uma função?`,
         ],
 
         respostaCorreta: 2,
-        dificuldade: "Difícil",
         pontos: 1
     },
 
@@ -174,7 +167,6 @@ Qual é o conjunto X?`,
         ],
 
         respostaCorreta: 1,
-        dificuldade: "Desafio",
         pontos: 1
     },
 
@@ -199,62 +191,181 @@ Quais afirmações são verdadeiras?`,
         ],
 
         respostaCorreta: 2,
-        dificuldade: "Desafio",
         pontos: 1
     }
 
 ];
 
+
 // VARIÁVEIS DO DESAFIO
 let questaoAtual = 0;
-
 let pontuacao = 0;
-
 let quantidadeAcertos = 0;
-
 let alternativaSelecionada = null;
 
+
 // ELEMENTOS DO HTML
+const telaPrincipal = document.getElementById("telaPrincipal");
 const telaInicial = document.getElementById("telaInicial");
-
 const telaPerguntas = document.getElementById("telaPerguntas");
-
 const telaResultado = document.getElementById("telaResultado");
 
 const botaoIniciar = document.getElementById("botaoIniciar");
-
 const botaoConfirmar = document.getElementById("botaoConfirmar");
-
 const botaoProxima = document.getElementById("botaoProxima");
+const botaoReiniciar = document.getElementById("botaoReiniciar");
 
 const alternativas = document.getElementById("alternativas");
-
 const enunciado = document.getElementById("enunciado");
 
 const progresso = document.getElementById("progresso");
-
 const pontuacaoTela = document.getElementById("pontuacao");
-
 const feedback = document.getElementById("feedback");
 
-const preenchimentoProgresso = document.getElementById("preenchimentoProgresso");
+const preenchimentoProgresso =
+    document.getElementById("preenchimentoProgresso");
+
 
 // INICIAR DESAFIO
 botaoIniciar.addEventListener("click", () => {
 
+    telaPrincipal.hidden = true;
     telaInicial.hidden = true;
-
     telaPerguntas.hidden = false;
+    telaResultado.hidden = true;
 
     mostrarQuestao();
 
 });
 
+
+// MOSTRAR QUESTÃO
+function mostrarQuestao() {
+
+    alternativaSelecionada = null;
+
+    const questao = perguntas[questaoAtual];
+
+    enunciado.textContent = questao.enunciado;
+
+    progresso.textContent =
+        `Questão ${questaoAtual + 1} de ${perguntas.length}`;
+
+    pontuacaoTela.textContent = `Pontos: ${pontuacao}`;
+
+    preenchimentoProgresso.style.width =
+        `${(questaoAtual / perguntas.length) * 100}%`;
+
+    feedback.textContent = "";
+
+    alternativas.innerHTML = "";
+
+    questao.alternativas.forEach((alternativa, indice) => {
+
+        const botao = document.createElement("button");
+
+        botao.textContent = alternativa;
+        botao.classList.add("alternativa");
+
+        botao.addEventListener("click", () => {
+            selecionarAlternativa(indice, botao);
+        });
+
+        alternativas.appendChild(botao);
+
+    });
+
+    botaoConfirmar.hidden = false;
+    botaoConfirmar.disabled = true;
+
+    botaoProxima.hidden = true;
+
+}
+
+
+// SELECIONAR ALTERNATIVA
+function selecionarAlternativa(indice, botaoClicado) {
+
+    alternativaSelecionada = indice;
+
+    const botoes = document.querySelectorAll(".alternativa");
+
+    botoes.forEach((botao) => {
+        botao.classList.remove("selecionada");
+    });
+
+    botaoClicado.classList.add("selecionada");
+
+    botaoConfirmar.disabled = false;
+
+}
+
+
+// CONFIRMAR RESPOSTA
+botaoConfirmar.addEventListener("click", () => {
+
+    if (alternativaSelecionada === null) {
+        return;
+    }
+
+    const questao = perguntas[questaoAtual];
+
+    const acertou =
+        alternativaSelecionada === questao.respostaCorreta;
+
+    if (acertou) {
+
+        pontuacao += questao.pontos;
+        quantidadeAcertos++;
+
+        feedback.textContent =
+            `Resposta correta! +${questao.pontos} ponto.`;
+
+    } else {
+
+        feedback.textContent = "Resposta incorreta!";
+
+    }
+
+    pontuacaoTela.textContent = `Pontos: ${pontuacao}`;
+
+    // Impede trocar a resposta depois da confirmação
+    const botoes = document.querySelectorAll(".alternativa");
+
+    botoes.forEach((botao) => {
+        botao.disabled = true;
+    });
+
+    botaoConfirmar.hidden = true;
+    botaoProxima.hidden = false;
+
+});
+
+
+// PRÓXIMA QUESTÃO
+botaoProxima.addEventListener("click", () => {
+
+    questaoAtual++;
+
+    if (questaoAtual < perguntas.length) {
+
+        mostrarQuestao();
+
+    } else {
+
+        mostrarResultado();
+
+    }
+
+});
+
+
 // MOSTRAR RESULTADO
 function mostrarResultado() {
 
+    telaPrincipal.hidden = true;
+    telaInicial.hidden = true;
     telaPerguntas.hidden = true;
-
     telaResultado.hidden = false;
 
     preenchimentoProgresso.style.width = "100%";
@@ -291,133 +402,9 @@ function mostrarResultado() {
 
 }
 
-// SELECIONAR ALTERNATIVA
-function selecionarAlternativa(indice, botaoClicado) {
-
-    alternativaSelecionada = indice;
-
-    const botoes = document.querySelectorAll(".alternativa");
-
-    botoes.forEach((botao) => {
-
-        botao.classList.remove("selecionada");
-
-    });
-
-    botaoClicado.classList.add("selecionada");
-
-    botaoConfirmar.disabled = false;
-
-}
-
-// MOSTRAR QUESTÃO
-function mostrarQuestao() {
-
-    alternativaSelecionada = null;
-
-    const questao = perguntas[questaoAtual];
-
-    enunciado.textContent = questao.enunciado;
-
-    progresso.textContent =
-        `Questão ${questaoAtual + 1} de ${perguntas.length}`;
-
-    pontuacaoTela.textContent = `Pontos: ${pontuacao}`;
-
-    preenchimentoProgresso.style.width =
-        `${(questaoAtual / perguntas.length) * 100}%`;
-
-    feedback.textContent = "";
-
-    alternativas.innerHTML = "";
-
-    questao.alternativas.forEach((alternativa, indice) => {
-
-        const botao = document.createElement("button");
-
-        botao.textContent = alternativa;
-
-        botao.classList.add("alternativa");
-
-        botao.addEventListener("click", () => {
-            selecionarAlternativa(indice, botao);
-        });
-
-        alternativas.appendChild(botao);
-
-    });
-
-    botaoConfirmar.hidden = false;
-    botaoConfirmar.disabled = true;
-
-    botaoProxima.hidden = true;
-}
-
-// CONFIRMAR RESPOSTA
-botaoConfirmar.addEventListener("click", () => {
-
-    // Impede confirmar sem selecionar uma alternativa
-
-    if (alternativaSelecionada === null) {
-        return;
-    }
-
-    const questao = perguntas[questaoAtual];
-
-    const acertou =
-        alternativaSelecionada === questao.respostaCorreta;
-
-    if (acertou) {
-
-        pontuacao += questao.pontos;
-
-        quantidadeAcertos++;
-
-        feedback.textContent =
-            `Resposta correta! +${questao.pontos} pontos.`;
-
-    } else {
-
-        feedback.textContent = "Resposta incorreta!";
-
-    }
-
-    pontuacaoTela.textContent = `Pontos: ${pontuacao}`;
-
-    // Impede trocar a resposta depois da confirmação
-    const botoes = document.querySelectorAll(".alternativa");
-
-    botoes.forEach((botao) => {
-
-        botao.disabled = true;
-
-    });
-
-    botaoConfirmar.hidden = true;
-
-    botaoProxima.hidden = false;
-
-});
-
-// PRÓXIMA QUESTÃO
-botaoProxima.addEventListener("click", () => {
-
-    questaoAtual++;
-
-    if (questaoAtual < perguntas.length) {
-
-        mostrarQuestao();
-
-    } else {
-
-        mostrarResultado();
-
-    }
-
-});
 
 // REINICIAR DESAFIO
-document.getElementById("botaoReiniciar").addEventListener("click", () => {
+botaoReiniciar.addEventListener("click", () => {
 
     questaoAtual = 0;
     pontuacao = 0;
@@ -425,7 +412,10 @@ document.getElementById("botaoReiniciar").addEventListener("click", () => {
     alternativaSelecionada = null;
 
     telaResultado.hidden = true;
+
+    telaPrincipal.hidden = false;
     telaInicial.hidden = false;
+    telaPerguntas.hidden = true;
 
     pontuacaoTela.textContent = "Pontos: 0";
 
