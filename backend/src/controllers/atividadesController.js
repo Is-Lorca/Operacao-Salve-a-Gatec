@@ -65,7 +65,9 @@ class AtividadesController {
         try {
             const { idAtividade } = req.params;
 
-            const resultado = await atividadesService.corrigirAtividade(idAtividade);
+            const idSave = req.save.id_save;
+
+            const resultado = await atividadesService.corrigirAtividade(idAtividade, idSave);
 
             return res.status(200).json(respostaApi(true, "Atividade corrigida.", resultado));
         } 

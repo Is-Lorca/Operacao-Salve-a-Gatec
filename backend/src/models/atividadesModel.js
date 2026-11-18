@@ -141,9 +141,7 @@ class AtividadesModel{
             .eq('id_atividade', idAtividade)
 
         if(error){
-            console.error(
-                `Erro ao finalizar atividade de ID ${idAtividade}: `, 
-                error.message);
+            console.error(`Erro ao finalizar atividade de ID ${idAtividade}: `, error.message);
             throw error;
         }
 

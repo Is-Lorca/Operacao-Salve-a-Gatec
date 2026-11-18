@@ -62,13 +62,13 @@ class JogadorModel {
         if(novosDados.id_materia_atual !== undefined){
             dadosAtualizar.id_materia_atual = novosDados.id_materia_atual;
         }
-        if(novosDados.id_checkpoint){
+        if(novosDados.id_checkpoint !== undefined){
             dadosAtualizar.id_checkpoint = novosDados.id_checkpoint;
         }
         if(novosDados.primeira_run !== undefined){
             dadosAtualizar.primeira_run = novosDados.primeira_run;
         }
-        if(novosDados.tempo_jogado){
+        if(novosDados.tempo_jogado !== undefined){
             dadosAtualizar.tempo_jogado = novosDados.tempo_jogado;
         }
         if(novosDados.capacidade_inventario !== undefined){

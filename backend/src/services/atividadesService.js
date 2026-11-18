@@ -3,6 +3,7 @@ const validacoes = require('../utils/validacoes');
 const qaModel = require('../models/questoesAlternativasModel');
 const atividadesModel = require('../models/atividadesModel');
 const materiasModel = require('../models/materiasModel');
+const jogadoresService = require('./jogadoresService');
 
 class AtividadesService{
     // os métodos abaixo não possuem async pois não mexem diretamente com o BD, existem para auxiliar
@@ -171,9 +172,10 @@ class AtividadesService{
             throw new Error(`Erro ao registrar resposta: ${erro.message}`);
         }
     }
-    async corrigirAtividade(idAtividade) {
+    async corrigirAtividade(idAtividade, idSave) {
         const idAValido = validacoes.validarId(idAtividade);
-        
+        const idSValido = validacoes.validarId(idSave);
+
         try {
             const atividade = await atividadesModel.buscarAtividade(idAValido);
 
@@ -218,6 +220,13 @@ class AtividadesService{
             const status = nota >= 6 ? 'CONCLUIDA' : 'REPROVADA';
 
             await atividadesModel.finalizarAtividade(idAValido, {nota, status});
+            
+            if(status === "CONCLUIDA"){
+                const jogador = await jogadoresService.buscarPorSave(idSValido);
+
+                await jogadoresService.atualizar(jogador.id_jogador, {dinheiro: jogador.dinheiro + 
+                    moedasGanhar});
+            }
 
             const podeRefazer = nota < 6;
 
@@ -256,11 +265,15 @@ class AtividadesService{
 
             const questoes = await qaModel.buscarVariasQA(idsQuestoes);
 
-            return questoes.map((questao, index) => ({
-                ...questao,
-                ordem: questoesSalvas[index].ordem,
-                acertou: questoesSalvas[index].acertou
-            }));
+            return questoesSalvas.map(qSalva => {
+                const questao = questoes.find(q => q.id_questao === qSalva.id_questao);
+
+                return {
+                    ...questao,
+                    ordem: qSalva.ordem,
+                    acertou: qSalva.acertou
+                }
+            });
 
         } catch (erro) {
             throw new Error(`Erro ao buscar questões: ${erro.message}`);
