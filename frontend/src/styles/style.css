@@ -171,7 +171,7 @@ input {
     line-height: 1.3rem;
 }
 
-/*index, header audio*/
+/*inicio, header audio*/
 #botaoAudio {
     position: fixed;
     top: 1rem;
@@ -257,8 +257,6 @@ picture {
 #botaoContinuar {
     align-items: center;
     justify-content: center;
-    border-color: rgba(240, 248, 255, 0.438);
-    color: rgba(240, 248, 255, 0.438);
     cursor: default;
 }
 
@@ -283,6 +281,45 @@ picture img {
     border-color: rgb(252, 252, 252);
 }
 
+.hidden{
+    display:none !important;
+}
+
+#overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.7);
+    z-index:99;
+}
+
+.modal{
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    background:#081326;
+    border:2px dashed white;
+    border-radius:10px;
+    width:420px;
+    padding:20px;
+    z-index:100;
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+.modal input{
+    height:45px;
+    padding:10px;
+    font-size:18px;
+}
+
+.botoesModal{
+    display:flex;
+    justify-content:space-between;
+}
+
+/* DESCONTINUADO */
 /* Selecao Personagens */
 #tituloSelectPers {
     display: flex;

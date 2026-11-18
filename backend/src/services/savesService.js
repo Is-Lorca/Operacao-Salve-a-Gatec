@@ -8,12 +8,19 @@ class SaveService {
         validacao.validarNome(nomeSave);
         const idValido = validacao.validarId(idUser);
 
+        // 1. criamos save
         const save = await savesModel.criar({nome_save: nomeSave, id_usuario: idValido});
 
+        // 2. criamos jogador ligado ao save
         const jogador = await jogadorModel.criar({nome: nomeJogador, id_save: save.id_save});
 
-        return{
-            save,
+        // 3. atualiza o save com o id_jogador criado
+        const saveAtualizado = await savesModel.atualizarSave(idValido, save.id_save, {
+            id_jogador: jogador.id_jogador
+        });
+
+        return {
+            save: saveAtualizado || save,
             jogador
         };
     }
@@ -22,11 +29,8 @@ class SaveService {
         const idValido = validacao.validarId(idUser);
         const saves = await savesModel.buscarSaves(idValido);
 
-        if(!saves || saves.length === 0){
-            throw new Error("Não há saves a serem carregados.");
-        }
-
-        return saves;
+        // retorna lista vazia e nao da erro 404 quando o usuário não tem saves
+        return saves || [];
     }
     // buscarIdUsuario  
     async carregarSaves(idUser, idSave){

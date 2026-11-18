@@ -1,41 +1,68 @@
 <!doctype html>
-<html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Início</title>
-    <link rel="stylesheet" href="src/styles/reset.css" />
-    <link rel="stylesheet" href="src/styles/style.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Bitcount:wght@100..900&family=Jersey+10&family=Tiny5&display=swap"
-      rel="stylesheet"
-    />
-  </head>
-  <body>
-    <section id="home">
-      <div>
-        <audio id="audio" preload="metadata" autoplay loop="true">
-          <source src="./src/music/Boomin.music.mp3" type="audio/mp3" />
-          <source src="./src/music/Boomin.music.ogg" type="audio/ogg" />
-          <source src="./src/music/Boomin.music.wav" type="audio/wav" />
-          <p>Seu navegador não suporta audio :/</p>
-        </audio>
-        <button id="botaoAudio"> <img id=iconMute src="./src/img/opcoes audio/AudioMute3.png" alt="Ligar audio"></button>
-      </div>
-      <h1 id="nomeJogo">Operação Salve a Gatec</h1>
-      <picture>
-        <source media="(max-width:767px)" srcset="src/imagens/homecel.png" />
-        <img src="src/img/home.png" alt="Tela inicial" />
-      </picture>
-      <div id="botoesHome">
-          <a class="linkBotaoHome" href="selecaoMateria.html">
-            <button class="botaoHome" id="botaoInicio">INICIAR</button>
-          </a>
-            <button class="botaoHome" id="botaoContinuar">CONTINUAR</button>
-      </div>
-    </section>
-    <script src="src/javascript/musica.js"></script>
-  </body>
-</html>
+  <html lang="pt-br">
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Início</title>
+      <link rel="stylesheet" href="src/styles/reset.css" />
+      <link rel="stylesheet" href="src/styles/style.css" />
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Bitcount:wght@100..900&family=Jersey+10&family=Tiny5&display=swap"
+        rel="stylesheet"
+      />
+    </head>
+    <body>
+      <section id="home">
+        <div>
+          <audio id="audio" preload="metadata" autoplay loop="true">
+            <source src="./src/music/Boomin.music.mp3" type="audio/mp3" />
+            <source src="./src/music/Boomin.music.ogg" type="audio/ogg" />
+            <source src="./src/music/Boomin.music.wav" type="audio/wav" />
+            <p>Seu navegador não suporta audio :/</p>
+          </audio>
+          <button id="botaoAudio">
+            <img
+              id="iconMute"
+              src="./src/img/opcoes audio/AudioMute3.png"
+              alt="Ligar audio"
+            />
+          </button>
+        </div>
+
+        <h1 id="nomeJogo">Operação Salve a Gatec</h1>
+        <picture>
+          <source media="(max-width:767px)" srcset="src/imagens/homecel.png" />
+          <img src="src/img/home.png" alt="Tela inicial" />
+        </picture>
+
+        <div id="botoesHome">
+          <button class="botaoHome" id="botaoInicio">NOVO JOGO</button>
+          <button class="botaoHome" id="botaoContinuar">CONTINUAR</button>
+        </div>
+
+        <!-- fundo escuro -->
+        <div id="overlay" class="hidden"></div>
+        <!-- modal Novo Jogo -->
+        <div id="modalNovo" class="modal hidden">
+          <h2>Novo Jogo</h2>
+          <input type="text" id="nomeSave" placeholder="Nome do Save" maxlength="30">
+          <input type="text" id="nomeJogador" placeholder="Nome do Jogador" maxlength="30">
+          <div class="botosModal">
+            <button id="criarNovo">Criar</button>
+            <button id="cancelarNovo">Cancelar</button>
+          </div>
+        </div>
+        <!-- modal Continuar -->
+        <div id="modalContinuar" class="modal hidden">
+          <h2>Escolha um Save</h2>
+          <div id="listaSaves"></div>
+          <button id="fecharContinuar">Fechar</button>
+        </div>
+
+      </section>
+      <script type="module" src="src/javascript/inicio.js"></script>
+      <script src="src/javascript/musica.js"></script>
+    </body>
+  </html>

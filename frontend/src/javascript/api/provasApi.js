@@ -1,4 +1,4 @@
-import { fetchComAuth } from "./fetchAuth.js";
+import { fetchComAuth } from "./helper/fetchComAuth.js";
 import API_URL from "./api.js";
 
 export const provasApi = {

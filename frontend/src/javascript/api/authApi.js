@@ -21,9 +21,9 @@ export const authApi = {
             throw new Error(json.mensagem);
         }
 
-        localStorage.setItem("token", json.token);
+        localStorage.setItem("token", json.data.tokenAcesso);
 
-        localStorage.setItem("usuario", JSON.stringify(json.data));
+        localStorage.setItem("usuario", JSON.stringify(json.data.usuario));
 
         return json;
     },
@@ -52,6 +52,7 @@ export const authApi = {
     },
     logout(){
         localStorage.removeItem("token");
+        localStorage.removeItem("tokenRefresh");
         localStorage.removeItem("usuario");
     }
 };

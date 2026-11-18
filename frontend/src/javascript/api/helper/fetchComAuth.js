@@ -7,7 +7,7 @@ export async function fetchComAuth(url, options = {}) {
         ...options.headers
     };
 
-    if(token){
+    if(token && token !== "undefined"){
         headers.Authorization = `Bearer ${token}`;
     }
 
@@ -19,6 +19,11 @@ export async function fetchComAuth(url, options = {}) {
         ...options,
         headers
     });
+
+    if (!resposta.ok) {
+        const textoErro = await resposta.text();
+        throw new Error(`Erro ${resposta.status}: ${textoErro}`);
+    }
 
     return await resposta.json();
 }

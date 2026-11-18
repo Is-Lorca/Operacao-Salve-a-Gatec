@@ -30,7 +30,14 @@ class SaveModel {
         // apenas mostrará aqueles que possuem propriedade ativo = true
         const {data, error} = await supabase
             .from('save')
-            .select(`id_save, nome_save, data_criacao, ultimo_save`)
+            .select(`
+                id_save, 
+                nome_save, 
+                data_criacao, 
+                ultimo_save,
+                id_jogador,
+                jogador:id_jogador (id_jogador, nome)
+            `)
             .eq('ativo', true)
             .eq('id_usuario', idUser);
 
@@ -58,12 +65,11 @@ class SaveModel {
 
         return data;
     }
-
+    
     async atualizarSave(idUser, idSave, novosDados){
-        // usamos o método que busca pelo ID e verificamos se está ativo no proprio buscarSavesId()
         const registroExistente = await this.buscarSavesId(idUser, idSave);
         if(!registroExistente){
-            return null; // caso ele não exista, ele não atualiza
+            return null;
         }
         
         const dadosAtualizar = {
@@ -73,15 +79,18 @@ class SaveModel {
         if(novosDados.nome_save){
             dadosAtualizar.nome_save = novosDados.nome_save;
         }
+
+        if(novosDados.id_jogador){
+            dadosAtualizar.id_jogador = novosDados.id_jogador;
+        }
         
-        // parte do Supabase
         const {data, error} = await supabase
             .from('save')
             .update(dadosAtualizar)
             .eq('id_usuario', idUser)
             .eq('id_save', idSave)
             .select('*')
-            .maybeSingle()
+            .maybeSingle();
 
         if(error){
             console.error('Erro ao atualizar no Supabase: ', error.message);

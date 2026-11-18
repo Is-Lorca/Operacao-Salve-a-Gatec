@@ -1,74 +1,39 @@
-import { fetchComAuth } from "./helper/fetchComAuth";
-
+import { fetchComAuth } from "./helper/fetchComAuth.js";
 import API_URL from "./api.js";
 
 export const savesApi = {
-    async carregarSaves(idUser){
-        const resposta = await fetchComAuth(`${API_URL}/saves/${idUser}`);
-
-        const json = await resposta.json();
-
-        if(!resposta.ok){
-            throw new Error(json.mensagem);
-        }
-
+    async carregarSaves(){
+        const json = await fetchComAuth(`${API_URL}/saves`);
         return json.data;
     },
-    async criarNovoJogo(nomeSave,idUser){
-        const resposta = await fetchComAuth(`${API_URL}/saves`,{
+    async criarNovoJogo(nomeSave, nomeJogador){
+        const json = await fetchComAuth(`${API_URL}/saves`,{
             method:"POST",
-
             body:JSON.stringify({
-                nome_save:nomeSave,
-                id_usuario:idUser
+                nome_save: nomeSave,
+                nome_jogador: nomeJogador
             })
         });
-
-        const json = await resposta.json();
-
-        if(!resposta.ok){
-            throw new Error(json.mensagem);
-        }
-
+        
         return json.data;
     },
-    async carregarJogo(idUser,idSave){
-        const resposta = await fetchComAuth(`${API_URL}/saves/${idUser}/${idSave}`);
-
-        const json = await resposta.json();
-
-        if(!resposta.ok){
-            throw new Error(json.mensagem);
-        }
-
+    async carregarJogo(idSave){
+        const json = await fetchComAuth(`${API_URL}/saves/${idSave}`);
         return json.data;
     },
-    async atualizarSave(idUser,idSave,novosDados){
-        const resposta = await fetchComAuth(`${API_URL}/saves/${idUser}/${idSave}`,{
+    async atualizarSave(idSave, novosDados){
+        const json = await fetchComAuth(`${API_URL}/saves/${idSave}`,{
             method:"PUT",
-
             body:JSON.stringify(novosDados)
         });
-
-        const json = await resposta.json();
-
-        if(!resposta.ok){
-            throw new Error(json.mensagem);
-        }
-
+        
         return json.data;
     },
-    async deletarSave(idUser,idSave){
-        const resposta = await fetchComAuth(`${API_URL}/saves/${idUser}/${idSave}`,{
+    async deletarSave(idSave){
+        const json = await fetchComAuth(`${API_URL}/saves/${idSave}`,{
             method:"DELETE"
         });
-
-        const json = await resposta.json();
-
-        if(!resposta.ok){
-            throw new Error(json.mensagem);
-        }
-
+        
         return json.data;
     }
 };
