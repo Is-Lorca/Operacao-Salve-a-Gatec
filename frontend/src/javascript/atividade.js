@@ -1,7 +1,9 @@
 
+import { atividadesApi } from "./api/atividadesApi.js";
+
 // 1. ELEMENTOS DO HTML
 
-
+const rotuloFase = document.getElementById("rotulo-fase");
 const textoEnunciado = document.getElementById("texto-enunciado");
 const areaRespostas = document.getElementById("area-respostas");
 const contadorQuestao = document.getElementById("contador-questao");
@@ -17,97 +19,165 @@ const barraProgresso = document.getElementById("barra-progresso");
 const preenchimentoProgresso = document.getElementById("preenchimento-progresso");
 
 
+// 2. MATÉRIAS
+// O escolhaMateria.js guarda no localStorage o tema da materia (tipo "proposicao"),
+// a API trabalha com o id numerico (id_materia).
+// lembrar d conferir se os ids tao certo
 
-// 2. QUESTÕES DE TESTE
-
-
-const questoes = [
-    {
-        enunciado: "Qual das alternativas representa uma proposição verdadeira?",
-        dica: "Pense em uma igualdade matemática que esteja correta.",
-        alternativas: [
-            { texto: "2 + 2 = 5", correta: false },
-            { texto: "2 + 2 = 4", correta: true },
-            { texto: "3 + 1 = 8", correta: false },
-            { texto: "5 - 2 = 1", correta: false }
-        ]
-    },
-    {
-        enunciado: "Qual alternativa representa uma proposição falsa?",
-        dica: "Uma proposição falsa é uma afirmação que não corresponde à realidade.",
-        alternativas: [
-            { texto: "O Sol é uma estrela.", correta: false },
-            { texto: "A água é formada por hidrogênio e oxigênio.", correta: false },
-            { texto: "10 é menor que 3.", correta: true },
-            { texto: "O número 2 é par.", correta: false }
-        ]
-    },
-    {
-        enunciado: "Qual destas frases NÃO é uma proposição?",
-        dica: "Uma proposição precisa ser uma afirmação que possa ser verdadeira ou falsa.",
-        alternativas: [
-            { texto: "O Brasil fica na América do Sul.", correta: false },
-            { texto: "Feche a porta!", correta: true },
-            { texto: "5 é maior que 2.", correta: false },
-            { texto: "A Terra gira em torno do Sol.", correta: false }
-        ]
-    },
-    {
-        enunciado: "Se P é verdadeira e Q é falsa, qual é o resultado de P E Q?",
-        dica: "Na conjunção (E), as duas proposições precisam ser verdadeiras.",
-        alternativas: [
-            { texto: "Verdadeiro", correta: false },
-            { texto: "Falso", correta: true },
-            { texto: "Indeterminado", correta: false },
-            { texto: "Nenhuma das alternativas", correta: false }
-        ]
-    },
-    {
-        enunciado: "Qual é o resultado da negação de uma proposição verdadeira?",
-        dica: "A negação inverte o valor lógico da proposição.",
-        alternativas: [
-            { texto: "Verdadeiro", correta: false },
-            { texto: "Falso", correta: true },
-            { texto: "Continua verdadeira", correta: false },
-            { texto: "Não possui valor lógico", correta: false }
-        ]
-    },
-    {
-        enunciado: "Na disjunção (OU), quando o resultado é falso?",
-        dica: "Basta uma das proposições ser verdadeira para a disjunção ser verdadeira.",
-        alternativas: [
-            { texto: "Quando as duas são verdadeiras.", correta: false },
-            { texto: "Quando apenas uma é verdadeira.", correta: false },
-            { texto: "Quando as duas são falsas.", correta: true },
-            { texto: "Sempre que existe uma proposição falsa.", correta: false }
-        ]
-    },
-    {
-        enunciado: "Qual alternativa apresenta uma proposição composta?",
-        dica: "Uma proposição composta une duas ou mais proposições usando conectivos lógicos.",
-        alternativas: [
-            { texto: "O número 8 é par.", correta: false },
-            { texto: "Hoje é segunda-feira.", correta: false },
-            { texto: "Está chovendo e está frio.", correta: true },
-            { texto: "Abra o caderno.", correta: false }
-        ]
-    }
-];
-
+const MATERIAS = {
+    proposicao:      { id: 1, nome: "Proposição" },
+    tabelaVerdade:   { id: 2, nome: "Tabela Verdade" },
+    conjuntos:       { id: 3, nome: "Conjuntos" },
+    planoCartesiano: { id: 4, nome: "Plano Cartesiano" },
+    relacaoBinaria:  { id: 5, nome: "Relação Binária" },
+    funcoes:         { id: 6, nome: "Funções" },
+    equacaoReta:     { id: 7, nome: "Equação de uma Reta" }
+};
 
 
 // 3. VARIÁVEIS DE CONTROLE
 
+let materiaAtual = null;
+let idAtividade = null;
+let questoes = [];
 
 let questaoAtual = 0;
 let respostaSelecionada = null;
 let respostaVerificada = false;
-let acertos = 0;
+
+// Define o que o botão principal faz depois que a atividade termina ou dá erro:
+// null |  "sair"
+let acaoFinal = null;
+
+// Evita cliques duplicados enquanto espera o servidor
+let ocupado = false;
 
 
+// 4. FUNÇÕES AUXILIARES
 
-// 4. MOSTRAR QUESTÃO
+// Todas as rotas respondem { sucesso, mensagem, data }.
+// Erros do middleware de login vêm como { error }.
+function extrairDados(resposta) {
 
+    if (!resposta || resposta.sucesso === false || resposta.error) {
+        throw new Error(
+            resposta?.mensagem ||
+            resposta?.error ||
+            "Não foi possível falar com o servidor."
+        );
+    }
+
+    return resposta.data;
+}
+
+function definirBotao(texto, desabilitado = false) {
+    rotuloBotao.textContent = texto;
+    botaoResponder.disabled = desabilitado;
+}
+
+// fetchComAuth lança "Erro 400: {json}". Aqui pegamos só o campo "mensagem".
+function limparMensagem(mensagem) {
+
+    const inicio = mensagem.indexOf("{");
+
+    if (inicio === -1) {
+        return mensagem;
+    }
+
+    try {
+        const json = JSON.parse(mensagem.slice(inicio));
+        return json.mensagem || json.error || mensagem;
+    } catch {
+        return mensagem;
+    }
+}
+
+function mostrarErro(mensagem) {
+
+    mensagem = limparMensagem(mensagem);
+
+    textoEnunciado.textContent = `Ops! ${mensagem}`;
+    areaRespostas.replaceChildren();
+    areaDica.classList.add("oculto");
+
+    acaoFinal = "recarregar";
+    definirBotao("Tentar de novo");
+}
+
+
+// 5. CARREGAR ATIVIDADE (API)
+// gerar() cria a atividade, ou retoma a que está EM_ANDAMENTO.
+// Depois buscarQuestoes() traz enunciado + alternativas + "acertou" de cada questão.
+
+async function carregarAtividade() {
+
+    ocupado = true;
+    acaoFinal = null;
+
+    questoes = [];
+    questaoAtual = 0;
+    respostaSelecionada = null;
+    respostaVerificada = false;
+
+    textoEnunciado.textContent = "Carregando questões...";
+    areaRespostas.replaceChildren();
+    areaDica.classList.add("oculto");
+    definirBotao("Aguarde", true);
+
+    try {
+
+        materiaAtual = MATERIAS[localStorage.getItem("materia")];
+
+        if (!materiaAtual) {
+            throw new Error("Nenhuma matéria selecionada. Volte e escolha uma matéria.");
+        }
+
+        rotuloFase.textContent = `Fase ${materiaAtual.id}`;
+
+        const atividade = extrairDados(await atividadesApi.gerar(materiaAtual.id));
+        idAtividade = atividade.id_atividade;
+
+        questoes = extrairDados(await atividadesApi.buscarQuestoes(idAtividade));
+
+        // Se o jogador saiu no meio, continua da primeira questão sem resposta
+        questaoAtual = questoes.findIndex(q => q.acertou === null || q.acertou === undefined);
+
+        if (questaoAtual === -1) {
+            // Respondeu tudo, mas ainda não foi corrigida
+            questaoAtual = questoes.length;
+            await finalizarAtividade();
+            return;
+        }
+
+        mostrarQuestao();
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        // Matéria já aprovada: não é um erro de verdade, só avisamos e voltamos
+        if (limparMensagem(erro.message).includes("já foi concluída")) {
+
+            textoEnunciado.textContent = "Você já concluiu esta matéria! Escolha outra para continuar.";
+            areaRespostas.replaceChildren();
+            areaDica.classList.add("oculto");
+
+            acaoFinal = "sair";
+            definirBotao("Voltar");
+
+        } else {
+            mostrarErro(erro.message);
+        }
+
+    } finally {
+
+        ocupado = false;
+
+    }
+}
+
+
+// 6. MOSTRAR QUESTÃO
 
 function mostrarQuestao() {
 
@@ -118,17 +188,20 @@ function mostrarQuestao() {
     contadorQuestao.textContent =
         `Questão ${questaoAtual + 1}/${questoes.length}`;
 
-    textoDica.textContent = questao.dica;
+    // A API pode não enviar dica; nesse caso mostramos um aviso
+    textoDica.textContent = questao.dica || "Esta questão não tem dica.";
 
     areaDica.classList.add("oculto");
 
-    areaRespostas.innerHTML = "";
+    areaRespostas.replaceChildren();
+
+    // menos de 4 alternativas (ex.: V/F): agrupa as opções no meio
+    areaRespostas.classList.toggle("poucas-alternativas", questao.alternativas.length < 4);
 
     respostaSelecionada = null;
     respostaVerificada = false;
 
-    rotuloBotao.textContent = "Dica";
-    botaoResponder.disabled = false;
+    definirBotao("Dica");
 
     questao.alternativas.forEach((alternativa, indice) => {
 
@@ -139,15 +212,16 @@ function mostrarQuestao() {
         botao.setAttribute("role", "radio");
         botao.setAttribute("aria-checked", "false");
 
-        botao.innerHTML = `
-            <span class="letra-alternativa">
-                ${String.fromCharCode(65 + indice)}
-            </span>
+        const letra = document.createElement("span");
+        letra.className = "letra-alternativa";
+        letra.textContent = String.fromCharCode(65 + indice);
 
-            <span class="texto-alternativa">
-                ${alternativa.texto}
-            </span>
-        `;
+        // textContent (e não innerHTML) para o texto do banco nunca virar HTML
+        const texto = document.createElement("span");
+        texto.className = "texto-alternativa";
+        texto.textContent = alternativa.texto;
+
+        botao.append(letra, texto);
 
         botao.addEventListener("click", () => {
             selecionarAlternativa(botao, indice);
@@ -161,19 +235,15 @@ function mostrarQuestao() {
 }
 
 
-
-// 5. SELECIONAR ALTERNATIVA
-
+// 7. SELECIONAR ALTERNATIVA
 
 function selecionarAlternativa(botaoClicado, indice) {
 
-    if (respostaVerificada) {
+    if (respostaVerificada || ocupado) {
         return;
     }
 
-    const botoes = areaRespostas.querySelectorAll(".alternativa");
-
-    botoes.forEach(botao => {
+    areaRespostas.querySelectorAll(".alternativa").forEach(botao => {
 
         botao.classList.remove("selecionada");
         botao.setAttribute("aria-checked", "false");
@@ -189,34 +259,48 @@ function selecionarAlternativa(botaoClicado, indice) {
 }
 
 
-
-// 6. MOSTRAR DICA
-
+// 8. MOSTRAR DICA
 
 function mostrarDica() {
-
     areaDica.classList.remove("oculto");
-
 }
 
 
+// 9. VERIFICAR RESPOSTA
+// O front vê qual alternativa tem "correta: true", pinta a tela
+// e avisa o back-end se o jogador acertou ou não.
 
-// 7. VERIFICAR RESPOSTA
-
-
-function verificarResposta() {
+async function verificarResposta() {
 
     const questao = questoes[questaoAtual];
+    const acertou = questao.alternativas[respostaSelecionada].correta === true;
 
-    const botoes = areaRespostas.querySelectorAll(".alternativa");
+    ocupado = true;
+    definirBotao("Enviando...", true);
 
-    const acertou = questao.alternativas[respostaSelecionada].correta;
+    try {
 
-    if (acertou) {
-        acertos++;
+        extrairDados(await atividadesApi.registrarResposta(idAtividade, {
+            idQuestao: questao.id_questao,
+            acertou
+        }));
+
+    } catch (erro) {
+
+        console.error(erro);
+
+        // Mantém a questão na tela para o jogador tentar de novo
+        textoDica.textContent = `Não foi possível salvar sua resposta: ${erro.message}`;
+        areaDica.classList.remove("oculto");
+
+        definirBotao("Responder");
+        ocupado = false;
+        return;
     }
 
-    botoes.forEach((botao, indice) => {
+    questao.acertou = acertou;
+
+    areaRespostas.querySelectorAll(".alternativa").forEach((botao, indice) => {
 
         botao.disabled = true;
 
@@ -232,89 +316,148 @@ function verificarResposta() {
 
     respostaVerificada = true;
 
-    rotuloBotao.textContent = "Próxima";
-
+    definirBotao("Próxima");
+    ocupado = false;
 }
 
 
-// 8. PRÓXIMA QUESTÃO
+// 10. PRÓXIMA QUESTÃO
 
-
-function proximaQuestao() {
+async function proximaQuestao() {
 
     questaoAtual++;
 
     if (questaoAtual < questoes.length) {
-
         mostrarQuestao();
-
     } else {
-
-        finalizarAtividade();
-
+        await finalizarAtividade();
     }
-
 }
 
 
+// 11. FINALIZAR ATIVIDADE
+// O back-end corrige: a questão 7 vale 4 pontos, as outras 1 ponto (nota máxima 10).
+// Nota 6 ou mais = CONCLUIDA e o jogador recebe as moedas.
 
-// 9. FINALIZAR ATIVIDADE
+async function finalizarAtividade() {
 
-
-function finalizarAtividade() {
+    ocupado = true;
 
     const total = questoes.length;
-    const nota = Math.round((acertos / total) * 100);
 
-    contadorQuestao.textContent =
-        `Questão ${total}/${total}`;
-
-    textoEnunciado.textContent =
-        `Atividade concluída! Você acertou ${acertos} de ${total} questões. Nota: ${nota}%.`;
-
-    areaRespostas.innerHTML = "";
+    contadorQuestao.textContent = `Questão ${total}/${total}`;
+    textoEnunciado.textContent = "Corrigindo atividade...";
+    areaRespostas.replaceChildren();
     areaDica.classList.add("oculto");
+    definirBotao("Aguarde", true);
 
     textoProgresso.textContent = "Progresso: 100%";
     preenchimentoProgresso.style.width = "100%";
     barraProgresso.setAttribute("aria-valuenow", 100);
 
-    rotuloBotao.textContent = "Concluído";
-    botaoResponder.disabled = true;
+    try {
 
+        const resultado = extrairDados(await atividadesApi.corrigir(idAtividade));
+
+        const aprovado = resultado.status === "CONCLUIDA";
+
+        if (aprovado) {
+            textoEnunciado.textContent =
+                `Atividade concluída! Você acertou ${resultado.acertos} de ${resultado.totalQuestoes} ` +
+                `questões. Nota: ${resultado.nota}/10. Você ganhou ${resultado.moedasGanhar} moedas!`;
+
+            acaoFinal = "sair";
+            definirBotao("Continuar");
+        } else {
+            textoEnunciado.textContent =
+                `Você acertou ${resultado.acertos} de ${resultado.totalQuestoes} questões. ` +
+                `Nota: ${resultado.nota}/10. Você precisa de 6 para passar. Tente de novo!`;
+
+            acaoFinal = "refazer";
+            definirBotao("Refazer");
+        }
+
+    } catch (erro) {
+
+        console.error(erro);
+        mostrarErro(erro.message);
+
+    } finally {
+
+        ocupado = false;
+
+    }
 }
 
 
+// 12. REFAZER ATIVIDADE (quando reprovado)
 
-// 10. ATUALIZAR PROGRESSO
+async function refazerAtividade() {
+
+    ocupado = true;
+    acaoFinal = null;
+
+    textoEnunciado.textContent = "Preparando nova tentativa...";
+    definirBotao("Aguarde", true);
+
+    try {
+
+        extrairDados(await atividadesApi.refazer(materiaAtual.id));
+
+    } catch (erro) {
+
+        console.error(erro);
+        ocupado = false;
+        mostrarErro(erro.message);
+        return;
+    }
+
+    // carregarAtividade() pega a nova tentativa (EM_ANDAMENTO) e mostra as questões
+    await carregarAtividade();
+}
+
+
+// 13. ATUALIZAR PROGRESSO
 
 function atualizarProgresso() {
 
     const progresso = (questaoAtual / questoes.length) * 100;
 
-    textoProgresso.textContent =
-        `Progresso: ${Math.round(progresso)}%`;
+    textoProgresso.textContent = `Progresso: ${Math.round(progresso)}%`;
 
-    preenchimentoProgresso.style.width =
-        `${progresso}%`;
+    preenchimentoProgresso.style.width = `${progresso}%`;
 
-    barraProgresso.setAttribute(
-        "aria-valuenow",
-        progresso
-    );
-
+    barraProgresso.setAttribute("aria-valuenow", progresso);
 }
 
 
+// 14. BOTÃO PRINCIPAL
 
-// 11. BOTÃO PRINCIPAL
+botaoResponder.addEventListener("click", async () => {
 
+    if (ocupado) {
+        return;
+    }
 
-botaoResponder.addEventListener("click", () => {
+    // Botões que aparecem no fim da atividade ou depois de um erro
+    if (acaoFinal === "recarregar") {
+        await carregarAtividade();
+        return;
+    }
+
+    if (acaoFinal === "refazer") {
+        await refazerAtividade();
+        return;
+    }
+
+    if (acaoFinal === "sair") {
+        window.location.href = "selecaoMateria.html";
+        return;
+    }
 
     // Se já respondeu, passa para a próxima questão
     if (respostaVerificada) {
-        proximaQuestao();
+        await proximaQuestao();
         return;
     }
 
@@ -325,13 +468,12 @@ botaoResponder.addEventListener("click", () => {
     }
 
     // Se selecionou, verifica a resposta
-    verificarResposta();
+    await verificarResposta();
 
 });
 
 
+// 15. INICIAR ATIVIDADE
 
-// 12. INICIAR ATIVIDADE
+carregarAtividade();
 
-
-mostrarQuestao();

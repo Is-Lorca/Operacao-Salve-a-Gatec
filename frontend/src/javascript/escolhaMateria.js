@@ -9,7 +9,7 @@ botoesMateria.forEach(botao => {
 
         localStorage.setItem("materia", materia);
 
-        window.location.href = "draPeixoto.html";
+        window.location.href = "atividade.html";
 
     });
 

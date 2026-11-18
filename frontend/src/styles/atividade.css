@@ -11,9 +11,8 @@
   --borda-clara:   #a78bfa;                 /* brilho interno da borda */
   --borda-escura:    #3b1a78;                 /* sombra da borda */
   --cor-texto:           #f3ecff;
-  --cor-estrela:           #f6a93b;
-  --cor-acerto:        #4ade80;
-  --cor-erro:          #f87171;
+  --cor-acerto:        #b1f39d;
+  --cor-erro:          #ff4a4a;
   --fonte-pixel: "Pixelify Sans", "Press Start 2P", "Courier New", monospace;
 }
 
@@ -74,7 +73,7 @@ button { font-family: inherit; color: inherit; cursor: pointer; }
 }
 
 /* 
-   TOPO: botão home + "Fase 1 - Questão 1/10 "
+   TOPO: botão home + "Fase 1 - Questão 1/7 "
 */
 #barra-topo {
   left: 4.4%;
@@ -167,9 +166,7 @@ button { font-family: inherit; color: inherit; cursor: pointer; }
   line-height: 1.3;
 }
 
-/* 
-   ÁREA DE RESPOSTAS
-    */
+/* ÁREA DE RESPOSTAS */
 #area-respostas {
   left: 25.8%;
   top: 39.6%;
@@ -178,6 +175,13 @@ button { font-family: inherit; color: inherit; cursor: pointer; }
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+/* Só quando a questão tem menos de 4 alternativas (ex.: Verdadeiro/Falso):
+   agrupa as opções no meio, com o mesmo tamanho e o mesmo espaço de antes */
+#area-respostas.poucas-alternativas {
+  justify-content: center;
+  gap: 0.7cqw;
 }
 
 .alternativa {
@@ -275,9 +279,7 @@ button { font-family: inherit; color: inherit; cursor: pointer; }
   filter: grayscale(0.7) brightness(0.7);
 }
 
-/* ---------------------------------------------------------
-   PROGRESSO
-   --------------------------------------------------------- */
+/* PROGRESSO*/
 #area-progresso {
   left: 3.6%;
   top: 88.6%;
