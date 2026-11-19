@@ -119,14 +119,16 @@ function mostrarErro(mensagem) {
 
 // Busca a loja do save. Se ela ainda não existir (404), cria.
 async function obterLoja() {
-
     try {
 
         return extrairDados(await lojaApi.buscarPorSave());
 
-    } catch (erro) {
+    } 
+    catch (erro) {
 
-        if (!erro.message.includes("404")) {
+        const msg = erro?.message || "";
+
+        if (!msg.includes("404") && !msg.includes("Loja não encontrada")) {
             throw erro;
         }
 
