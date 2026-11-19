@@ -14,7 +14,7 @@ class AuthService {
             id_usuario: usuario.id_usuario,
             email: usuario.email
         };
-
+        // mudar tokenAcesso para 15min
         const tokenAcesso = jwt.sign(payload, JWT_SECRET, {expiresIn: "7d"});
         const tokenRefresh = jwt.sign(payload, JWT_REFRESH_SECRET, {expiresIn: "7d"});
 
