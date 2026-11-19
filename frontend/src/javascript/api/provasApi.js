@@ -1,37 +1,67 @@
-import { fetchComAuth } from "./helper/fetchComAuth.js";
-import API_URL from "./api.js";
+
+import { fetchComAuth } from './helper/fetchComAuth.js';
+import API_URL from './api.js';
+
+const PROVA_URL = `${API_URL}/prova`;
 
 export const provasApi = {
-    // Gerar ou continuar prova
+
+    // Gera uma prova ou recupera uma prova ainda não finalizada
     async gerarProva() {
-        return await fetchComAuth(`${API_URL}/provas`, {
-            method: "POST",
+
+        return await fetchComAuth(PROVA_URL, {
+            method: 'POST'
         });
     },
-    // Buscar prova pelo save
+
+
+    // Busca a prova do save selecionado
     async buscarProva() {
-        return await fetchComAuth(`${API_URL}/provas`, {
-            method: "GET",
+
+        return await fetchComAuth(PROVA_URL, {
+            method: 'GET'
         });
     },
-    // Buscar questões da prova
+
+
+    // Busca as questões de uma prova
     async buscarQuestoes(idProva) {
-        return await fetchComAuth(`${API_URL}/provas/${idProva}/questoes`, {
-            method: "GET",
-        });
+
+        return await fetchComAuth(
+            `${PROVA_URL}/${idProva}/questoes`,
+            {
+                method: 'GET'
+            }
+        );
     },
-    // Responder questão
-    async responderQuestao(idProva, idQuestao, resposta) {
-        return await fetchComAuth(`${API_URL}/provas/${idProva}/questao/${idQuestao}`,
-        {
-            method: "PUT",
-            body: JSON.stringify(resposta),
-        });
+
+
+    // Registra a resposta de uma questão
+    async responderQuestao(idProva, idQuestao, acertou) {
+
+        return await fetchComAuth(
+            `${PROVA_URL}/${idProva}/questao`,
+            {
+                method: 'PUT',
+
+                body: JSON.stringify({
+                    idQuestao: idQuestao,
+                    acertou: acertou
+                })
+            }
+        );
     },
-    // Finalizar prova
+
+
+    // Finaliza a prova e recebe o resultado calculado pelo backend
     async finalizarProva(idProva) {
-        return await fetchComAuth(`${API_URL}/provas/${idProva}/finalizar`, {
-            method: "PUT",
-        });
-    },
+
+        return await fetchComAuth(
+            `${PROVA_URL}/${idProva}/finalizar`,
+            {
+                method: 'PUT'
+            }
+        );
+    }
+
 };

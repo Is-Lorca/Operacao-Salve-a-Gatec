@@ -1,7 +1,7 @@
 import { atividadesApi } from "./api/atividadesApi.js";
-// >>> NOVO 1/5: importar a API da loja (cantina)
+// >>> cantina 1/5: importar a API da loja (cantina)
 import { lojaApi } from "./api/lojaApi.js";
-// <<< FIM NOVO 1/5
+// 
 
 // 1. ELEMENTOS DO HTML
 
@@ -51,10 +51,10 @@ let respostaVerificada = false;
 // null |  "sair"
 let acaoFinal = null;
 
-// >>> NOVO 2/5: guarda para qual página o botão "Continuar" vai levar
+// Cantina 2/5: guarda para qual página o botão "Continuar" vai levar
 // (a Dra. Peixoto, ou a seleção de matérias se algo der errado)
 let destinoFinal = "selecaoMateria.html";
-// <<< FIM NOVO 2/5
+// 
 
 // Evita cliques duplicados enquanto espera o servidor
 let ocupado = false;
@@ -112,7 +112,7 @@ function mostrarErro(mensagem) {
 }
 
 
-// >>> NOVO 3/5: funções que sorteiam a cantina e dizem para onde ir
+//  Cantina 3/5: funções que sorteiam a cantina e dizem para onde ir
 // Depois que o jogador passa na atividade, o back-end sorteia se a cantina abre
 // (50% de chance; na 4ª vez seguida fechada ela abre obrigatoriamente).
 
@@ -163,10 +163,10 @@ async function verificarCantina() {
         return "selecaoMateria.html";
     }
 }
-// <<< FIM NOVO 3/5
+// 
 
 
-// 5. CARREGAR ATIVIDADE (API)
+// 5 CARREGAR ATIVIDADE (API)
 // gerar() cria a atividade, ou retoma a que está EM_ANDAMENTO.
 // Depois buscarQuestoes() traz enunciado + alternativas + "acertou" de cada questão.
 
@@ -219,6 +219,15 @@ async function carregarAtividade() {
         // Matéria já aprovada: não é um erro de verdade, só avisamos e voltamos
         if (limparMensagem(erro.message).includes("já foi concluída")) {
 
+            // fase - garante que a matéria conste como concluída na tela de seleção
+            const chave = `concluidas_${localStorage.getItem("idSave")}`; 
+            const concluidas = JSON.parse(localStorage.getItem(chave) || "[]");
+            const materia = localStorage.getItem("materia"); 
+            if (!concluidas.includes(materia)) { 
+                concluidas.push(materia); 
+                localStorage.setItem(chave, JSON.stringify(concluidas)); 
+            } //
+
             textoEnunciado.textContent = "Você já concluiu esta matéria! Escolha outra para continuar.";
             areaRespostas.replaceChildren();
             areaDica.classList.add("oculto");
@@ -238,7 +247,7 @@ async function carregarAtividade() {
 }
 
 
-// 6. MOSTRAR QUESTÃO
+// 6 MOSTRAR QUESTÃO
 
 function mostrarQuestao() {
 
@@ -296,7 +305,7 @@ function mostrarQuestao() {
 }
 
 
-// 7. SELECIONAR ALTERNATIVA
+// 7 SELECIONAR ALTERNATIVA
 
 function selecionarAlternativa(botaoClicado, indice) {
 
@@ -320,14 +329,14 @@ function selecionarAlternativa(botaoClicado, indice) {
 }
 
 
-// 8. MOSTRAR DICA
+// 8 MOSTRAR DICA
 
 function mostrarDica() {
     areaDica.classList.remove("oculto");
 }
 
 
-// 9. VERIFICAR RESPOSTA
+// 9 VERIFICAR RESPOSTA
 // O front vê qual alternativa tem "correta: true", pinta a tela
 // e avisa o back-end se o jogador acertou ou não.
 
@@ -382,7 +391,7 @@ async function verificarResposta() {
 }
 
 
-// 10. PRÓXIMA QUESTÃO
+// 10 PRÓXIMA QUESTÃO
 
 async function proximaQuestao() {
     calculadoraTravada = false; 
@@ -396,7 +405,7 @@ async function proximaQuestao() {
 }
 
 
-// 11. FINALIZAR ATIVIDADE
+// 11 FINALIZAR ATIVIDADE
 // O back-end corrige: a questão 7 vale 4 pontos, as outras 1 ponto (nota máxima 10).
 // Nota 6 ou mais = CONCLUIDA e o jogador recebe as moedas.
 
@@ -423,17 +432,36 @@ async function finalizarAtividade() {
         const aprovado = resultado.status === "CONCLUIDA";
 
         if (aprovado) {
+            // fase - salva a matéria como concluída para liberar a próxima
+            const chave = `concluidas_${localStorage.getItem("idSave")}`; 
+            const concluidas = JSON.parse(localStorage.getItem(chave) || "[]"); 
+            if (!concluidas.includes(materia)) { 
+                concluidas.push(materia); 
+                localStorage.setItem(chave, JSON.stringify(concluidas)); 
+            } 
             textoEnunciado.textContent =
                 `Atividade concluída! Você acertou ${resultado.acertos} de ${resultado.totalQuestoes} ` +
                 `questões. Nota: ${resultado.nota}/10. Você ganhou ${resultado.moedasGanhar} moedas!`;
 
-            // >>> NOVO 4/5: aqui sorteamos a cantina (antes era: acaoFinal = "sair")
+            // Cantina 4/5: sorteamos a cantina (antes era: acaoFinal = "sair")
             definirBotao("Aguarde", true);
             destinoFinal = await verificarCantina();
 
             acaoFinal = "cantina";
             definirBotao("Continuar");
-            // <<< FIM NOVO 4/5
+
+            // prova - confere se liberou o desafio final
+            try { 
+                const liberacao = extrairDados(await atividadesApi.verificarLiberacaoProva()); // chamando
+                if (liberacao.liberada) { 
+                    textoEnunciado.textContent += " Você concluiu todas as matérias! O Desafio Final foi liberado!"; // prova
+                    acaoFinal = "prova"; 
+                    definirBotao("Ir para o Desafio Final"); 
+                } 
+            } catch (erro) { 
+                console.error(erro); //
+            } 
+            // 
         } else {
             textoEnunciado.textContent =
                 `Você acertou ${resultado.acertos} de ${resultado.totalQuestoes} questões. ` +
@@ -510,6 +538,10 @@ botaoResponder.addEventListener("click", async () => {
         await carregarAtividade();
         return;
     }
+     if (acaoFinal === "prova") { // prova
+        window.location.href = "desafioFinal.html"; 
+        return; 
+    } 
 
     if (acaoFinal === "refazer") {
         await refazerAtividade();
@@ -521,13 +553,13 @@ botaoResponder.addEventListener("click", async () => {
         return;
     }
 
-    // >>> NOVO 5/5: ao clicar em "Continuar", vai para a Dra. Peixoto
+    // cantina 5/5: ao clicar em "Continuar", vai para a Dra. Peixoto
     // (destinoFinal já foi definido pelo verificarCantina)
     if (acaoFinal === "cantina") {
         window.location.href = destinoFinal;
         return;
     }
-    // <<< FIM NOVO 5/5
+    // 
 
     // Se já respondeu, passa para a próxima questão
     if (respostaVerificada) {
