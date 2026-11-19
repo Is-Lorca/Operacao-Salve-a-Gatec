@@ -1,4 +1,3 @@
-
 import { atividadesApi } from "./api/atividadesApi.js";
 
 // 1. ELEMENTOS DO HTML

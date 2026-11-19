@@ -126,7 +126,7 @@ class AtividadesService{
             idsQuestoesOrdenados);
         
         // retorna atividade completa
-        await this.montarQA(idsQuestoesOrdenados);
+        const questoesComAlternativas = await this.montarQA(idsQuestoesOrdenados);
 
         return {
             ...atividade, 
