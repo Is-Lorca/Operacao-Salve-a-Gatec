@@ -472,7 +472,8 @@ async function finalizarAtividade() {
 
             definirBotao("Aguarde", true);
             const urlCantina = await verificarCantina();
-            destinoFinal = `${urlCantina}&retorno=atividade`;
+            const separador = urlCantina.includes("?") ? "&" : "?";
+            destinoFinal = `${urlCantina}${separador}&retorno=atividade`;
 
             acaoFinal = "cantina";
             definirBotao("Continuar");
