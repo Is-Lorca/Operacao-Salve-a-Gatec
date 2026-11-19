@@ -1,7 +1,16 @@
 async function carregarDialogo() {
-  const materia = localStorage.getItem("materia");
+  // >>> NOVO 1/3: ler o que a atividade.js avisou pelo endereço da página
+  // Exemplo: draPeixoto.html?cena=cantina&aberta=true
+  const parametros = new URLSearchParams(window.location.search);
+  const cena = parametros.get("cena"); // "cantina", ou null nos diálogos normais
+  //
 
-  const personagem = localStorage.getItem("personagem");
+  // >>> NOVO 1/3 (continuação): se for a cena da cantina, usa o cantina.json da Peixoto.
+  // Se não for, funciona exatamente como antes (matéria e personagem do localStorage).
+  const materia = cena || localStorage.getItem("materia");
+
+  const personagem = cena ? "peixoto" : localStorage.getItem("personagem");
+  // 
 
   const resposta = await fetch(`src/dialogos/${personagem}/${materia}.json`); // adicionar var de personagem
 
@@ -14,7 +23,20 @@ async function carregarDialogo() {
 
   document.getElementById("tituloMateria").textContent = dialogo.titulo;
 
-  mostrarDialogo(dialogo.inicio);
+  // >>> NOVO 2/3: escolher qual fala começa (antes era só: mostrarDialogo(dialogo.inicio);)
+  let inicio = dialogo.inicio;
+
+  // Só o cantina.json tem "inicios". Os diálogos de matéria não têm,
+  // então continuam usando o "inicio" normal.
+  if (dialogo.inicios) {
+    inicio =
+      parametros.get("aberta") === "true"
+        ? dialogo.inicios.aberta // cantina aberta
+        : dialogo.inicios.fechada; // cantina fechada (ou sem aviso nenhum)
+  }
+
+  mostrarDialogo(inicio);
+  //
 }
 
 function mostrarDialogo(chave) {
@@ -42,6 +64,14 @@ function mostrarDialogo(chave) {
       window.location.href = "selecaoMateria.html";
       return;
     }
+
+    // >>> NOVO 3/3: nova ação, para o botão levar à cantina
+    if (no.acao1 === "irCantina") {
+      window.location.href = "cantina.html";
+      return;
+    }
+    
+
     mostrarDialogo(no.proximo1);
   };
 

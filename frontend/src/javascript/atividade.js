@@ -1,4 +1,7 @@
 import { atividadesApi } from "./api/atividadesApi.js";
+// >>> NOVO 1/5: importar a API da loja (cantina)
+import { lojaApi } from "./api/lojaApi.js";
+// <<< FIM NOVO 1/5
 
 // 1. ELEMENTOS DO HTML
 
@@ -47,6 +50,11 @@ let respostaVerificada = false;
 // Define o que o botão principal faz depois que a atividade termina ou dá erro:
 // null |  "sair"
 let acaoFinal = null;
+
+// >>> NOVO 2/5: guarda para qual página o botão "Continuar" vai levar
+// (a Dra. Peixoto, ou a seleção de matérias se algo der errado)
+let destinoFinal = "selecaoMateria.html";
+// <<< FIM NOVO 2/5
 
 // Evita cliques duplicados enquanto espera o servidor
 let ocupado = false;
@@ -102,6 +110,60 @@ function mostrarErro(mensagem) {
     acaoFinal = "recarregar";
     definirBotao("Tentar de novo");
 }
+
+
+// >>> NOVO 3/5: funções que sorteiam a cantina e dizem para onde ir
+// Depois que o jogador passa na atividade, o back-end sorteia se a cantina abre
+// (50% de chance; na 4ª vez seguida fechada ela abre obrigatoriamente).
+
+// Busca a loja do save. Se ela ainda não existir (404), cria.
+async function obterLoja() {
+
+    try {
+
+        return extrairDados(await lojaApi.buscarPorSave());
+
+    } catch (erro) {
+
+        if (!erro.message.includes("404")) {
+            throw erro;
+        }
+
+        return extrairDados(await lojaApi.criar());
+    }
+}
+
+// Devolve o endereço da próxima página. Nunca lança erro:
+// se algo falhar, o jogador vai para a seleção de matérias e não fica preso.
+async function verificarCantina() {
+
+    try {
+
+        const loja = await obterLoja();
+
+        let aberta;
+
+        if (loja.aberta) {
+            // Já estava aberta de antes: não sorteia de novo
+            aberta = true;
+        } else {
+            const resultado = extrairDados(await lojaApi.verificarGeracao(loja.id_loja));
+
+            // Fechada: { aberta: false, mensagem }
+            // Aberta:  { loja: { aberta: true }, itens }
+            aberta = resultado.aberta !== false && resultado.loja?.aberta === true;
+        }
+
+        // O "?aberta=true/false" é como avisamos a Dra. Peixoto do resultado
+        return `draPeixoto.html?cena=cantina&aberta=${aberta}`;
+
+    } catch (erro) {
+
+        console.error("Não foi possível verificar a cantina:", erro);
+        return "selecaoMateria.html";
+    }
+}
+// <<< FIM NOVO 3/5
 
 
 // 5. CARREGAR ATIVIDADE (API)
@@ -365,8 +427,13 @@ async function finalizarAtividade() {
                 `Atividade concluída! Você acertou ${resultado.acertos} de ${resultado.totalQuestoes} ` +
                 `questões. Nota: ${resultado.nota}/10. Você ganhou ${resultado.moedasGanhar} moedas!`;
 
-            acaoFinal = "sair";
+            // >>> NOVO 4/5: aqui sorteamos a cantina (antes era: acaoFinal = "sair")
+            definirBotao("Aguarde", true);
+            destinoFinal = await verificarCantina();
+
+            acaoFinal = "cantina";
             definirBotao("Continuar");
+            // <<< FIM NOVO 4/5
         } else {
             textoEnunciado.textContent =
                 `Você acertou ${resultado.acertos} de ${resultado.totalQuestoes} questões. ` +
@@ -453,6 +520,14 @@ botaoResponder.addEventListener("click", async () => {
         window.location.href = "selecaoMateria.html";
         return;
     }
+
+    // >>> NOVO 5/5: ao clicar em "Continuar", vai para a Dra. Peixoto
+    // (destinoFinal já foi definido pelo verificarCantina)
+    if (acaoFinal === "cantina") {
+        window.location.href = destinoFinal;
+        return;
+    }
+    // <<< FIM NOVO 5/5
 
     // Se já respondeu, passa para a próxima questão
     if (respostaVerificada) {

@@ -1,0 +1,28 @@
+{
+    "titulo": "Intervalo",
+    "personagem": "peixoto",
+    "inicio": "cantinaFechada",
+    "inicios": {
+        "aberta": "cantinaAberta",
+        "fechada": "cantinaFechada"
+    },
+    "dialogos": {
+        "cantinaAberta": {
+            "texto": "Parabéns pelo seu resultado! Você viu que a cantina está aberta hoje? Aproveite o intervalo!",
+            "opcao1": "Ir para a cantina",
+            "proximo1": null,
+            "acao1": "irCantina",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "cantinaFechada": {
+            "texto": "Parabéns pelo seu resultado! Mas infelizmente a cantina está fechada hoje. Vamos seguir com as matérias!",
+            "opcao1": "Escolher matéria",
+            "proximo1": null,
+            "acao1": "voltarMaterias",
+            "opcao2": null,
+            "proximo2": null
+        }
+    }
+}
