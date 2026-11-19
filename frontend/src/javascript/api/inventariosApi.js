@@ -21,12 +21,14 @@ export const inventarioApi = {
 
         return json.data;
     },
-    async usarItem(idItem) {
-        const json = await fetchComAuth(`${API_URL}/inventario/item/${idItem}/usar`,
-            {
-                method: "POST",
-            });
-
+    async usarItem(idItem, dadosContexto = {}) {
+        const json = await fetchComAuth(`${API_URL}/inventario/item/${idItem}/usar`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(dadosContexto),
+        });
         return json.data;
     },
     async removerItem(idInventario) {

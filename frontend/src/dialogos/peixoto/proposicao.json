@@ -1,0 +1,111 @@
+{
+  "titulo": "Proposição",
+  "personagem": "peixoto",
+  "inicio": "inicio",
+  "dialogos": {
+    "inicio": {
+      "texto": "Bom dia, alunos! Me chamo Marilia Curie Peixoto, mas podem me chamar de Dra Peixoto, serei a professora de Catemática de vocês. Desejo boas-vindas à Gatec.",
+      "opcao1": "Próximo",
+      "proximo1": "logica",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "logica": {
+      "texto": "Iniciaremos com o conceito de proposição: são frases que precisamos conseguir classificar como verdadeiras ou falsas.",
+      "opcao1": "Próximo",
+      "proximo1": "proposicao",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "proposicao": {
+      "texto": "O que não podemos julgar se é verdadeiro ou falso, não é uma proposição, ou seja: perguntas, ordens e pedidos, desejos, etc, não podem ser chamadas de proposições",
+      "opcao1": "Entendi!",
+      "proximo1": "sera",
+      "opcao2": "Se matemática com letra é difícil então matemática com frase é impossível",
+      "proximo2": "pensamento"
+    },
+
+    "sera": {
+      "texto": "Será? Continuando...",
+      "opcao1": "Próximo",
+      "proximo1": "pergunta1",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "pensamento": {
+      "texto": "Sua afirmativa é falsa, mas seu pensamento é lógico! Vamos Continuar..",
+      "opcao1": "Próximo",
+      "proximo1": "pergunta1",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "pergunta1": {
+      "texto": "Com base no que expliquei, a frase “A educação é acessível se e somente se não houver barreira financeira.” é uma proposição?",
+      "opcao1": "Sim",
+      "proximo1": "proposicaoEducacaoCorreto",
+      "opcao2": "Não",
+      "proximo2": "proposicaoEducacaoErrado"
+    },
+
+    "proposicaoEducacaoCorreto": {
+      "texto": "Correto! É proposição porque é declarativa, tem valor de verdade determinável",
+      "opcao1": "Próximo",
+      "proximo1": "proposicaoGatec",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "proposicaoEducacaoErrado": {
+      "texto": "Errado… é proposição porque conseguimos julgar se é verdadeiro ou falso.",
+      "opcao1": "Próximo",
+      "proximo1": "proposicaoGatec",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "proposicaoGatec": {
+      "texto": "Agora, “A Gatec é pública e isso é gratuito”, é uma proposição?",
+      "opcao1": "Com certeza! é proposição",
+      "proximo1": "proposicaoGatecErrado",
+      "opcao2": "A frase não é proposição e a Gatec é pública!",
+      "proximo2": "proposicaoGatecCorreto"
+    },
+
+    "proposicaoGatecCorreto": {
+      "texto": "Isso mesmo! Você acertou e fez uma ótima observação, a Gatec é pública, porém a frase não é uma proposição pois \"Isso\" não diz a que se refere, não dá para dizer se \"isso é gratuito\" é verdade ou mentira",
+      "opcao1": "Consegui entender direitinho o que é verdadeiro e falso!",
+      "proximo1": "encerramento",
+      "opcao2": "Então \"eu odeio Matemática\" também é proposição?",
+      "proximo2": "opiniaoResposta"
+    },
+
+    "proposicaoGatecErrado": {
+      "texto": "Errado!!! não é uma proposição pois \"Isso\" não diz a que se refere, não dá para dizer se \"isso é gratuito\" é verdade ou mentira.",
+      "opcao1": "Consegui entender direitinho o que é verdadeiro e falso!",
+      "proximo1": "encerramento",
+      "opcao2": "Então \"eu odeio Matemática\" também é proposição?",
+      "proximo2": "opiniaoResposta"
+    },
+
+    "opiniaoResposta": {
+      "texto": "Se é opinião, então não. Mas fico feliz que já estejam pensando como bons lógicos! Essa base vai acompanhar vocês em toda a matéria.",
+      "opcao1": "Próximo",
+      "proximo1": "encerramento",
+      "opcao2": null,
+      "proximo2": null
+    },
+
+    "encerramento": {
+      "texto": "Bom alunos, por hoje é só! Nos vemos na próxima semana ou nos corredores. Até mais!",
+      "opcao1": "RETURN",
+      "proximo1": null,
+      "acao1": "voltarMaterias",
+      "opcao2": null,
+      "proximo2": null
+    }
+  }
+}

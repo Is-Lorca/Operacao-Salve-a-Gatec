@@ -1,0 +1,232 @@
+{
+    "titulo": "Produto Cartesiano",
+    "personagem": "peixoto",
+    "inicio": "inicio",
+    "dialogos": {
+        "inicio": {
+            "texto": "Bom dia, alunos! Como já trabalhamos bastante com conjuntos, agora vamos usar esses conjuntos de uma maneira um pouco diferente.",
+            "opcao1": "Próximo",
+            "proximo1": "definicao",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "definicao": {
+            "texto": "O produto cartesiano é uma operação feita entre dois conjuntos, formando pares ordenados.",
+            "opcao1": "Próximo",
+            "proximo1": "paresOrdenados",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "paresOrdenados": {
+            "texto": "Em cada par, o primeiro elemento vem do primeiro conjunto e o segundo elemento vem do segundo conjunto.",
+            "opcao1": "Próximo",
+            "proximo1": "exemplo",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "exemplo": {
+            "texto": "Por exemplo, se temos A = {1, 2} e B = {a, b}, podemos formar pares usando um elemento de A e depois um elemento de B.",
+            "opcao1": "Próximo",
+            "proximo1": "resultado",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "resultado": {
+            "texto": "Assim, temos: A × B = {(1,a), (1,b), (2,a), (2,b)}. Perceba que a ordem importa: (1,a) não é a mesma coisa que (a,1).",
+            "opcao1": "Próximo",
+            "proximo1": "ordem",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "ordem": {
+            "texto": "Por isso, no produto cartesiano, precisamos prestar atenção em qual conjunto fornece cada posição do par.",
+            "opcao1": "Próximo",
+            "proximo1": "perguntaOrdem",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "perguntaOrdem": {
+            "texto": "Agora tente: se A = {1, 2} e B = {a, b}, qual destas opções representa corretamente A × B?",
+            "opcao1": "{(1,a), (1,b), (2,a), (2,b)}",
+            "proximo1": "ordemCorreto",
+            "opcao2": "{(a,1), (b,1), (a,2), (b,2)}",
+            "proximo2": "ordemErrado"
+        },
+
+        "ordemCorreto": {
+            "texto": "Muito bem, querido! Você manteve a ordem correta, com os elementos de A primeiro e os de B depois.",
+            "opcao1": "Próximo",
+            "proximo1": "conjuntoVazio",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "ordemErrado": {
+            "texto": "Errado, preste atenção: no produto A × B, os elementos de A precisam aparecer na primeira posição.",
+            "opcao1": "Próximo",
+            "proximo1": "conjuntoVazio",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "conjuntoVazio": {
+            "texto": "Existem ainda propriedades que precisamos conhecer no produto cartesiano, por exemplo, quando ele envolve o conjunto vazio.",
+            "opcao1": "Próximo",
+            "proximo1": "vazioPares",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+
+        "vazioPares": {
+            "texto": "Se um dos conjuntos não possui nenhum elemento, não temos como formar pares.",
+            "opcao1": "Próximo",
+            "proximo1": "vazioExemplo",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "vazioExemplo": {
+            "texto": "Por isso, quando A = {1, 2, 3} e usamos o conjunto vazio, temos: A × ∅ = ∅. Em outras palavras, se um dos conjuntos estiver vazio, o produto cartesiano também estará vazio.",
+            "opcao1": "Próximo",
+            "proximo1": "perguntaVazio",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "perguntaVazio": {
+            "texto": "Agora tente: se A = {1, 2}, então A × ∅ é um conjunto vazio?",
+            "opcao1": "Sim",
+            "proximo1": "vazioCorreto",
+            "opcao2": "Não",
+            "proximo2": "vazioErrado"
+        },
+
+        "vazioCorreto": {
+            "texto": "Muito bem, querido! Sem elementos em um dos conjuntos, não é possível formar nenhum par.",
+            "opcao1": "Próximo",
+            "proximo1": "distributividadeUniao",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "vazioErrado": {
+            "texto": "Preste atenção: como o segundo conjunto não possui elementos, nenhum par pode ser formado.",
+            "opcao1": "Próximo",
+            "proximo1": "distributividadeUniao",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "distributividadeUniao": {
+            "texto": "Uma outra propriedade que é importante aprender é que o produto cartesiano pode ser distribuído sobre a união de conjuntos.",
+            "opcao1": "Próximo",
+            "proximo1": "explicacaoUniao",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "explicacaoUniao": {
+            "texto": "Isso significa que podemos fazer primeiro a união de B com C e depois o produto com A, ou fazer os dois produtos separadamente e depois unir os resultados. A representação é: A × (B ∪ C) = (A × B) ∪ (A × C).",
+            "opcao1": "Próximo",
+            "proximo1": "exemploUniao",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "exemploUniao": {
+            "texto": "Por exemplo, se A = {1}, B = {2} e C = {3}, temos: A × (B ∪ C) = {(1,2), (1,3)}.",
+            "opcao1": "Próximo",
+            "proximo1": "perguntaUniao",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "perguntaUniao": {
+            "texto": "Agora tente: essa igualdade está correta? A × (B ∪ C) = (A × B) ∪ (A × C)",
+            "opcao1": "Sim",
+            "proximo1": "uniaoCorreto",
+            "opcao2": "Não",
+            "proximo2": "uniaoErrado"
+        },
+
+        "uniaoCorreto": {
+            "texto": "Muito bem, querido! O produto cartesiano pode ser distribuído sobre a união dessa maneira.",
+            "opcao1": "Próximo",
+            "proximo1": "interseccao",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "uniaoErrado": {
+            "texto": "Preste atenção: essa igualdade é justamente a propriedade de distributividade sobre a união.",
+            "opcao1": "Próximo",
+            "proximo1": "interseccao",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "interseccao": {
+            "texto": "O mesmo princípio também aparece quando trabalhamos com a intersecção. Nesse caso, temos: A × (B ∩ C) = (A × B) ∩ (A × C).",
+            "opcao1": "Próximo",
+            "proximo1": "exemploInterseccao",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "exemploInterseccao": {
+            "texto": "Por exemplo, se B = {2, 3} e C = {3, 4}, então: B ∩ C = {3}. Se A = {1}, então: A × (B ∩ C) = {(1,3)}.",
+            "opcao1": "Próximo",
+            "proximo1": "explicacaoInterseccao",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "explicacaoInterseccao": {
+            "texto": "Portanto, o produto cartesiano também é distributivo sobre a intersecção.",
+            "opcao1": "Próximo",
+            "proximo1": "perguntaInterseccao",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "perguntaInterseccao": {
+            "texto": "Agora tente: se B = {2, 4, 6}, C = {3, 6, 9} e A = {5}, então A × (B ∩ C) =",
+            "opcao1": "{(2, 9)}",
+            "proximo1": "interseccaoErrado",
+            "opcao2": "{(5, 6)}",
+            "proximo2": "interseccaoCorreto"
+        },
+
+        "interseccaoErrado": {
+            "texto": "Hmm, não dessa vez. A resposta é {(5, 6)}, porque o 5 é valor de A e o 6 é o número que aparece tanto em B quanto em C.",
+            "opcao1": "Próximo",
+            "proximo1": "encerramento",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "interseccaoCorreto": {
+            "texto": "Muito bem! Parece que você está entendendo o conteúdo.",
+            "opcao1": "Próximo",
+            "proximo1": "encerramento",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "encerramento": {
+            "texto": "Bom, alunos, por hoje é só! Nos vemos na próxima semana ou nos corredores. Até mais!",
+            "opcao1": "RETURN",
+            "proximo1": null,
+            "acao1": "voltarMaterias",
+            "opcao2": null,
+            "proximo2": null
+        }
+    }
+}

@@ -1,5 +1,6 @@
 const respostaApi = require("../utils/respostaApi");
 const inventarioService = require("../services/inventariosService");
+const questoesService = require("../services/questoesService");
 
 class InventariosController {
     async buscarPorId(req, res) {
@@ -43,10 +44,30 @@ class InventariosController {
     async usarItem(req, res) {
         try {
             const idJogador = req.jogador.id_jogador;
-            
-            const {idItem} = req.params;
+            const { idItem } = req.params;
 
-            const resultado = await inventarioService.usarItem(idJogador, idItem);
+            // Recebe dados opcionais da tela (caso o jogador esteja em uma atividade ou prova)
+            const { idQuestao, idAtividade, idProva, iaEmRecarga } = req.body || {};
+
+            const dadosContexto = {};
+
+            // Se veio idQuestao, busca a questão completa no banco (com resposta, dica, dificuldade)
+            if (idQuestao) {
+                dadosContexto.questao = await questoesService.buscarPorId(idQuestao);
+            }
+
+            if (idAtividade) {
+                dadosContexto.atividade = { id_atividade: idAtividade };
+            }
+
+            if (idProva) {
+                dadosContexto.prova = { 
+                    id_prova: idProva,
+                    ia_em_recarga: Boolean(iaEmRecarga)
+                };
+            }
+
+            const resultado = await inventarioService.usarItem(idJogador, idItem, dadosContexto);
 
             return res.status(200).json(respostaApi(true, "Item utilizado.", resultado));
         } 

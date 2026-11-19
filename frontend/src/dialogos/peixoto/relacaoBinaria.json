@@ -1,0 +1,303 @@
+{
+    "titulo": "Relação Binária",
+    "personagem": "peixoto",
+    "inicio": "inicio",
+    "dialogos": {
+        "inicio": {
+            "texto": "Bom dia, alunos! Hoje vamos usar tudo o que aprendemos sobre produto cartesiano para entender um novo conceito: relação binária.",
+            "opcao1": "Próximo",
+            "proximo1": "produtoCartesiano",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "produtoCartesiano": {
+            "texto": "Imagine que temos dois conjuntos, A = {2, 3, 4} e B = {2, 3, 4, 5, 6}. Podemos formar o produto cartesiano A × B, criando todos os pares possíveis entre os elementos dos dois conjuntos.",
+            "opcao1": "Próximo",
+            "proximo1": "selecaoPares",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "selecaoPares": {
+            "texto": "Mas e se quisermos selecionar somente alguns desses pares, seguindo uma determinada regra?",
+            "opcao1": "Próximo",
+            "proximo1": "relacaoBinaria",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "relacaoBinaria": {
+            "texto": "É justamente aí que aparece a relação binária.",
+            "opcao1": "Próximo",
+            "proximo1": "definicao",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "definicao": {
+            "texto": "Uma relação binária de A em B é um subconjunto de A × B, ou seja, ela contém apenas alguns dos pares que podem ser formados entre A e B.",
+            "opcao1": "Próximo",
+            "proximo1": "exemploDivisor",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "exemploDivisor": {
+            "texto": "Por exemplo, podemos escolher somente os pares em que x é divisor de y.",
+            "opcao1": "Próximo",
+            "proximo1": "resultadoDivisor",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "resultadoDivisor": {
+            "texto": "Nesse caso, teremos: R = {(2,2), (2,4), (2,6), (3,3), (3,6), (4,4)}",
+            "opcao1": "Próximo",
+            "proximo1": "pertencimento",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "pertencimento": {
+            "texto": "Perceba que todos esses pares pertencem a A × B, mas nem todos os pares de A × B pertencem à relação R.",
+            "opcao1": "Próximo",
+            "proximo1": "perguntaRelacao",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "perguntaRelacao": {
+            "texto": "Agora tente: R = {(1,3), (2,5)}, sabendo que A = {1,2} e B = {3,4}, pode ser uma relação binária de A em B?",
+            "opcao1": "Verdadeira",
+            "proximo1": "relacaoErrado",
+            "opcao2": "Falsa",
+            "proximo2": "relacaoCorreto"
+        },
+
+        "relacaoErrado": {
+            "texto": "Não, querido: o par (2,5) não pertence a A × B, pois 5 não pertence ao conjunto B.",
+            "opcao1": "Próximo",
+            "proximo1": "notacaoRelacao",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "relacaoCorreto": {
+            "texto": "Muito bem! Como 5 não pertence a B, o par (2,5) não pertence a A × B.",
+            "opcao1": "Próximo",
+            "proximo1": "notacaoRelacao",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "notacaoRelacao": {
+            "texto": "Quando um par (x, y) pertence à relação R, podemos escrever de uma maneira mais curta: xRy.",
+            "opcao1": "Próximo",
+            "proximo1": "exemploNotacao",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "exemploNotacao": {
+            "texto": "Por exemplo, se (2,4) ∈ R, podemos escrever: 2R4.",
+            "opcao1": "Próximo",
+            "proximo1": "significadoNotacao",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "significadoNotacao": {
+            "texto": "Isso significa simplesmente que 2 está relacionado com 4 pela relação R.",
+            "opcao1": "Próximo",
+            "proximo1": "perguntaNotacao",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "perguntaNotacao": {
+            "texto": "Agora tente: se (3,6) ∉ R, podemos escrever 3R6?",
+            "opcao1": "Verdadeira",
+            "proximo1": "notacaoErrado",
+            "opcao2": "Falsa",
+            "proximo2": "notacaoCorreto"
+        },
+
+        "notacaoErrado": {
+            "texto": "Não, não: a escrita 3R6 indica que o par (3,6) pertence à relação.",
+            "opcao1": "Próximo",
+            "proximo1": "dominio",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "notacaoCorreto": {
+            "texto": "Muito bem! Como (3,6) não pertence a R, não podemos escrever 3R6.",
+            "opcao1": "Próximo",
+            "proximo1": "dominio",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "dominio": {
+            "texto": "Agora precisamos descobrir quais elementos realmente aparecem em uma relação.",
+            "opcao1": "Próximo",
+            "proximo1": "definicaoDominio",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "definicaoDominio": {
+            "texto": "O domínio de R é formado por todos os primeiros elementos dos pares ordenados que pertencem à relação.",
+            "opcao1": "Próximo",
+            "proximo1": "exemploDominio",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "exemploDominio": {
+            "texto": "Por exemplo, se R = {(1,2), (2,4), (3,6)}, os primeiros elementos são 1, 2 e 3. Portanto, D(R) = {1, 2, 3}.",
+            "opcao1": "Próximo",
+            "proximo1": "perguntaDominio",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "perguntaDominio": {
+            "texto": "Agora tente: qual é o domínio da relação R = {(1,5), (4,6), (9,7)}?",
+            "opcao1": "D(R) = {1,4,9}",
+            "proximo1": "dominioCorreto",
+            "opcao2": "D(R) = {5,6,7}",
+            "proximo2": "dominioErrado"
+        },
+
+        "dominioCorreto": {
+            "texto": "Muito bem, querido! O domínio é formado pelos primeiros elementos de cada par.",
+            "opcao1": "Próximo",
+            "proximo1": "imagem",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "dominioErrado": {
+            "texto": "Não exatamente: esses são os segundos elementos dos pares, portanto formam a imagem.",
+            "opcao1": "Próximo",
+            "proximo1": "imagem",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "imagem": {
+            "texto": "Se o domínio olha para os primeiros elementos, a imagem olha para os segundos.",
+            "opcao1": "Próximo",
+            "proximo1": "definicaoImagem",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "definicaoImagem": {
+            "texto": "A imagem de R é formada por todos os segundos elementos dos pares que pertencem à relação.",
+            "opcao1": "Próximo",
+            "proximo1": "exemploImagem",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "exemploImagem": {
+            "texto": "Por exemplo: R = {(1,2), (2,4), (3,6)}. Os segundos elementos são 2, 4 e 6. Portanto: Im(R) = {2,4,6}.",
+            "opcao1": "Próximo",
+            "proximo1": "perguntaImagem",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "perguntaImagem": {
+            "texto": "Agora tente: na relação R = {(1,2), (2,4), (3,6)}, a imagem é {1,2,3}?",
+            "opcao1": "Verdadeira",
+            "proximo1": "imagemErrado",
+            "opcao2": "Falsa",
+            "proximo2": "imagemCorreto"
+        },
+
+        "imagemErrado": {
+            "texto": "Hmm, não: {1,2,3} são os primeiros elementos e, portanto, formam o domínio.",
+            "opcao1": "Próximo",
+            "proximo1": "relacaoInversa",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "imagemCorreto": {
+            "texto": "Muito bem! A imagem é formada pelos segundos elementos, que são {2,4,6}.",
+            "opcao1": "Próximo",
+            "proximo1": "relacaoInversa",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "relacaoInversa": {
+            "texto": "Existe ainda uma última ideia importante: a relação inversa.",
+            "opcao1": "Próximo",
+            "proximo1": "definicaoInversa",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "definicaoInversa": {
+            "texto": "Para encontrar a relação inversa, basta inverter a ordem dos elementos de cada par.",
+            "opcao1": "Próximo",
+            "proximo1": "exemploInversa",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "exemploInversa": {
+            "texto": "Por exemplo, se R = {(1,2), (2,4), (3,6)}, então sua relação inversa será R⁻¹ = {(2,1), (4,2), (6,3)}.",
+            "opcao1": "Próximo",
+            "proximo1": "explicacaoInversa",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "explicacaoInversa": {
+            "texto": "Perceba que cada par simplesmente teve sua ordem invertida: (1,2) virou (2,1).",
+            "opcao1": "Próximo",
+            "proximo1": "perguntaInversa",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "perguntaInversa": {
+            "texto": "Agora tente: se R = {(1,3), (2,4)}, então R⁻¹ = {(3,1), (4,2)}?",
+            "opcao1": "Verdadeira",
+            "proximo1": "inversaCorreto",
+            "opcao2": "Falsa",
+            "proximo2": "inversaErrado"
+        },
+
+        "inversaCorreto": {
+            "texto": "Muito bem, querido! Você apenas inverteu a posição dos elementos de cada par.",
+            "opcao1": "Próximo",
+            "proximo1": "encerramento",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "inversaErrado": {
+            "texto": "Preste atenção: para encontrar a relação inversa, basta trocar a ordem dos elementos de cada par.",
+            "opcao1": "Próximo",
+            "proximo1": "encerramento",
+            "opcao2": null,
+            "proximo2": null
+        },
+
+        "encerramento": {
+            "texto": "Bom, alunos, por hoje é só! Nos vemos na próxima semana ou nos corredores. Até mais!",
+            "opcao1": "RETURN",
+            "proximo1": null,
+            "acao1": "voltarMaterias",
+            "opcao2": null,
+            "proximo2": null
+        }
+    }
+}

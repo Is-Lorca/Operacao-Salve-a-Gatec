@@ -66,41 +66,60 @@ class InventarioService {
 
         return await inventarioModel.criar(novoItem);
     }
-    async usarItem(idJogador, idItem) {
+    async usarItem(idJogador, idItem, dadosContexto = {}) {
         const jogadorValido = validacoes.validarId(idJogador);
         const itemValido = validacoes.validarId(idItem);
 
         const itemInventario = await inventarioModel.buscarItem(jogadorValido, itemValido);
-        if(!itemInventario){
+        if (!itemInventario) {
             throw new Error("Jogador não possui esse item.");
         }
-        
-        // Contexto padrão enviado para os efeitos. Colocamos somente IDs e informações
-        // necessárias para aquele efeito. -> MUITO IMPORTANTE
+
+        const detalhesItem = itemInventario.item;
+
         const contexto = {
             id_jogador: jogadorValido,
             jogador: await jogadorService.buscarPorId(jogadorValido),
             item: {
                 id_item: itemInventario.id_item,
-                nome: itemInventario.item.nome,
-                efeito: itemInventario.item.efeito
+                nome: detalhesItem.nome,
+                efeito: detalhesItem.efeito,
+                tipo: detalhesItem.tipo
             },
-
-            // Futuramente serão preenchidos
-            // quando chegar nesses módulos
-            atividade: null,
-            prova: null,
-            questao: null
+            atividade: dadosContexto.atividade || null,
+            prova: dadosContexto.prova || null,
+            questao: dadosContexto.questao || null
         };
-        // Executa efeito do item
-        const resultado = await efeitosService.executar(itemInventario.item.efeito, contexto);
 
-        if(!resultado.sucesso){
+        // executa efeito do item
+        const resultado = await efeitosService.executar(detalhesItem.efeito, contexto);
+
+        if (!resultado.sucesso) {
             throw new Error(resultado.mensagem || "Não foi possível usar o item.");
         }
 
-        let novosUsos = itemInventario.usos_restantes - 1;
-        if(novosUsos <= 0){
+        // Se for EQUIPAMENTO (Mochila Expandida) -> Aplica o bônus permanente e remove do inventário
+        if (detalhesItem.tipo === "EQUIPAMENTO") {
+            await inventarioModel.excluir(itemInventario.id_inventario);
+
+            return {
+                mensagem: "Equipamento utilizado e aplicado permanentemente.",
+                efeito: resultado
+            };
+        }
+
+        // USO INFINITO COM RECARGA (ex: IA do Plutônio se estiver com usos = -1 no banco)
+        if (detalhesItem.usos === -1) {
+            return {
+                mensagem: "Item utilizado.",
+                efeito: resultado
+            };
+        }
+
+        // 3. CONSUMÍVEIS PADRÃO
+        const novosUsos = itemInventario.usos_restantes - 1;
+
+        if (novosUsos <= 0) {
             await inventarioModel.excluir(itemInventario.id_inventario);
 
             return {
@@ -109,11 +128,13 @@ class InventarioService {
             };
         }
 
-        await inventarioModel.atualizar(itemInventario.id_inventario,
-            {
-                usos_restantes: novosUsos
-            }
-        );
+        const usosPorUnidade = detalhesItem.usos > 0 ? detalhesItem.usos : 1;
+        const novaQuantidade = Math.ceil(novosUsos / usosPorUnidade);
+
+        await inventarioModel.atualizar(itemInventario.id_inventario, {
+            usos_restantes: novosUsos,
+            quantidade: novaQuantidade
+        });
 
         return {
             mensagem: "Item utilizado.",
