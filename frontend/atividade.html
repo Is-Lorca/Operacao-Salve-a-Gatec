@@ -11,15 +11,36 @@
   <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="src/styles/atividade.css">
+  <link rel="stylesheet" href="src/styles/mochila.css">
 </head>
 <body>
+<!-- Componente da Mochila / Inventário -->
+    <div class="hud-inventario" id="hudInventario">
+        <button type="button" class="mochila-trigger" aria-label="Abrir Inventário">
+            🎒
+        </button>
 
+        <div class="mochila-drawer">
+            <div class="mochila-header">
+                <span>Inventário</span>
+                <span id="mochilaCapacidade">0/3</span>
+            </div>
+            <!-- slots -->
+            <div class="mochila-slots" id="mochilaSlots"></div>
+            <!-- detalhes dos itens -->
+            <div class="mochila-tooltip" id="mochilaTooltip" hidden>
+                <strong id="tooltipNome"></strong>
+                <p id="tooltipDesc"></p>
+                <small id="tooltipMeta"></small>
+            </div>
+        </div>
+    </div>
   <!-- Área principal da atividade -->
   <main id="palco">
-
+    
     <!-- Cenário de fundo -->
     <img id="cenario" src="src/img/Estudos.png" draggable="false">
-
+    
     <!-- Cabeçalho -->
     <header id="barra-topo">
       <button id="botao-inicio" type="button" aria-label="Voltar ao início">
@@ -88,6 +109,7 @@
       </div>
     </footer>
    <script type="module" src="src/javascript/atividade.js"></script>
+   <script type="module" src="src/javascript/mochila.js"></script>
   </main>
 </body>
  </html>

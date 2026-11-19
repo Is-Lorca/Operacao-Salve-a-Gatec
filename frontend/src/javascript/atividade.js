@@ -13,6 +13,7 @@ const contadorQuestao = document.getElementById("contador-questao");
 const areaDica = document.getElementById("area-dica");
 const textoDica = document.getElementById("texto-dica");
 
+const botaoInicio = document.getElementById("botao-inicio");
 const botaoResponder = document.getElementById("botao-responder");
 const rotuloBotao = document.getElementById("rotulo-botao-responder");
 
@@ -576,6 +577,11 @@ botaoResponder.addEventListener("click", async () => {
     // Se selecionou, verifica a resposta
     await verificarResposta();
 
+});
+
+// Caminho pro inicio
+botaoInicio.addEventListener("click", () => {
+    window.location.href = "selecaoMateria.html";
 });
 
 // 14.5 INTEGRAÇÃO COM A MOCHILA (INVENTÁRIO)
