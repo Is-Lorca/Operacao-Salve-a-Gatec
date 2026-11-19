@@ -231,7 +231,7 @@
       "texto": "Bom alunos, isso é tudo! Nos vemos na próxima semana. Até mais!",
       "opcao1": "RETURN",
       "proximo1": null,
-      "acao1": "voltarMaterias",
+      "acao1": "irAtividade",
       "opcao2": null,
       "proximo2": null
     }
