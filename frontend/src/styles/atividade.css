@@ -177,7 +177,7 @@ button { font-family: inherit; color: inherit; cursor: pointer; }
   justify-content: space-between;
 }
 
-/* Só quando a questão tem menos de 4 alternativas (ex.: Verdadeiro/Falso):
+/* Só quando a questão tem menos de 4 alternativas (tipo Verdadeiro/Falso):
    agrupa as opções no meio, com o mesmo tamanho e o mesmo espaço de antes */
 #area-respostas.poucas-alternativas {
   justify-content: center;

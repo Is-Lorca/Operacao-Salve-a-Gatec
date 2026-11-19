@@ -841,3 +841,13 @@ picture img {
         font-size: 16px;
     }
 }
+    /* fase- matéria bloqueada */
+.botaoMateria.bloqueada {
+    opacity: 0.4;          /* mais apagado */
+    filter: grayscale(1);  /* cinza */
+    cursor: not-allowed;   /* cursor de "proibido" */
+}
+
+.botaoMateria.bloqueada:hover {
+    transform: none;       /*fase- tira o zoom do mouse quando bloqueada */
+}
