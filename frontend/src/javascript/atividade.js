@@ -395,7 +395,7 @@ async function verificarResposta() {
 // 10 PRÓXIMA QUESTÃO
 
 async function proximaQuestao() {
-    calculadoraTravada = false; 
+
     questaoAtual++;
 
     if (questaoAtual < questoes.length) {
@@ -579,6 +579,7 @@ botaoResponder.addEventListener("click", async () => {
 
 });
 
+<<<<<<< Updated upstream
 // Caminho pro inicio
 botaoInicio.addEventListener("click", () => {
     window.location.href = "selecaoMateria.html";
@@ -670,6 +671,8 @@ window.addEventListener("itemUsado", async (evento) => {
         definirBotao("Dica");
     }
 });
+=======
+>>>>>>> Stashed changes
 
 // 15. INICIAR ATIVIDADE
 

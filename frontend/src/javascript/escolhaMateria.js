@@ -26,7 +26,7 @@ botoesMateria.forEach((botao, indice) => {
 
         localStorage.setItem("materia", materia);
 
-       window.location.href = "draPeixoto.html?aula=true";
+        window.location.href = "atividade.html";
 
     });
 

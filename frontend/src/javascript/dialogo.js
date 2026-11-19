@@ -1,30 +1,18 @@
-
 async function carregarDialogo() {
   // >>> NOVO 1/3: ler o que a atividade.js avisou pelo endereço da página
   // Exemplo: draPeixoto.html?cena=cantina&aberta=true
   const parametros = new URLSearchParams(window.location.search);
   const cena = parametros.get("cena"); // "cantina", ou null nos diálogos normais
-
-  // NOVO: identificar se estamos carregando uma aula
-  const aula = parametros.get("aula") === "true";
   //
 
   // >>> NOVO 1/3 (continuação): se for a cena da cantina, usa o cantina.json da Peixoto.
   // Se não for, funciona exatamente como antes (matéria e personagem do localStorage).
   const materia = cena || localStorage.getItem("materia");
 
-  // NOVO: nas aulas, a personagem será sempre a Peixoto
-  const personagem = (cena || aula)
-    ? "peixoto"
-    : localStorage.getItem("personagem");
-  //
+  const personagem = cena ? "peixoto" : localStorage.getItem("personagem");
+  // 
 
-  // NOVO: ajustar o nome do arquivo da matéria, caso necessário
-  const arquivoMateria = materia === "planoCartesiano"
-    ? "produtoCartesiano"
-    : materia;
-
-  const resposta = await fetch(`src/dialogos/${personagem}/${arquivoMateria}.json`); // adicionar var de personagem
+  const resposta = await fetch(`src/dialogos/${personagem}/${materia}.json`); // adicionar var de personagem
 
   if (!resposta.ok) {
     console.error("Não foi possível carregar o diálogo.");
@@ -69,11 +57,9 @@ function mostrarDialogo(chave) {
 
   // dialogo.inicio.opção1 -> abre dialogo -> pega inicio -> pega opcao1
   bt1.textContent = no.opcao1;
-
   // quando bt1 apertado = mostrarDialogo(logica) e para a animação anterior
   bt1.onclick = (evento) => {
     evento.stopPropagation();
-
     if (no.acao1 === "voltarMaterias") {
       window.location.href = "selecaoMateria.html";
       return;
@@ -84,12 +70,7 @@ function mostrarDialogo(chave) {
       window.location.href = "cantina.html";
       return;
     }
-
-    // NOVO: depois de terminar a aula, vai para a atividade
-    if (no.acao1 === "irAtividade") {
-      window.location.href = "atividade.html";
-      return;
-    }
+    
 
     mostrarDialogo(no.proximo1);
   };
@@ -130,7 +111,6 @@ function escrever(texto) {
       tela.removeEventListener("click", falaCompleta);
     }
   }
-
   clearTimeout(escrever.timer);
   elemento.textContent = "";
   fala = texto;

@@ -8,7 +8,7 @@
     },
     "dialogos": {
         "cantinaAberta": {
-            "texto": "Parabéns pelo seu resultado! Você viu que a cantina está aberta hoje? Aproveite o intervalo!",
+            "texto": "Parabéns pelo seu resultado! Você viu que a cantina está aberta hoje. Aproveite o intervalo!",
             "opcao1": "Ir para a cantina",
             "proximo1": null,
             "acao1": "irCantina",
