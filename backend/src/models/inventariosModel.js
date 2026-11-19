@@ -41,6 +41,7 @@ class InventariosModel{
             .from('inventario')
             .select(`*, item(nome, descricao, imagem, efeito, raridade)`)
             .eq('id_jogador', idJogador)
+            .order('id_inventario', { ascending: true });
 
         if(error){
             console.error(`Erro ao buscar inventário do jogador de ID ${idJogador}: `, error.message);

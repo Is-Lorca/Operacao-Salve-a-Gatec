@@ -6,6 +6,7 @@
     <title>Seleção de Materia</title>
     <link rel="stylesheet" href="src/styles/reset.css" />
     <link rel="stylesheet" href="src/styles/style.css" />
+    <link rel="stylesheet" href="src/styles/mochila.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -38,7 +39,29 @@
         <button data-materia="equacaoReta" class="botaoMateria">
             Equação de uma Reta
         </button>
-        <script src="src/javascript/escolhaMateria.js"></script>
     </section>
+    <!-- Componente da Mochila / Inventário -->
+    <div class="hud-inventario" id="hudInventario">
+        <button type="button" class="mochila-trigger" aria-label="Abrir Inventário">
+            🎒
+        </button>
+
+        <div class="mochila-drawer">
+            <div class="mochila-header">
+                <span>Inventário</span>
+                <span id="mochilaCapacidade">0/3</span>
+            </div>
+            <!-- slots -->
+            <div class="mochila-slots" id="mochilaSlots"></div>
+            <!-- detalhes dos itens -->
+            <div class="mochila-tooltip" id="mochilaTooltip" hidden>
+                <strong id="tooltipNome"></strong>
+                <p id="tooltipDesc"></p>
+                <small id="tooltipMeta"></small>
+            </div>
+        </div>
+    </div>
+    <script src="src/javascript/escolhaMateria.js"></script>
+    <script type="module" src="src/javascript/mochila.js"></script>
   </body>
 </html>

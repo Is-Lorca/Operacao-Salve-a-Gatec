@@ -1,0 +1,177 @@
+/* Posicionado no meio vertical da tela, no canto esquerdo */
+.hud-inventario {
+  position: fixed;
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%); /* Centraliza exatamente no meio vertical */
+  display: flex;
+  flex-direction: column; /* Faz a abinha abrir para baixo do botão */
+  align-items: flex-start;
+  z-index: 999;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Ícone da mochilinha */
+.mochila-trigger {
+  width: 54px;
+  height: 54px;
+  border-radius: 14px;
+  border: 2px solid #4a4e69;
+  background: #1e1e2f;
+  color: #fff;
+  font-size: 26px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s ease, border-color 0.2s ease, border-radius 0.2s ease;
+  z-index: 2;
+}
+
+/* Arredonda só em cima quando a gaveta abre embaixo */
+.hud-inventario:hover .mochila-trigger {
+  border-color: #9a8c98;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+/* Abinha vertical fechada por padrão */
+.mochila-drawer {
+  position: relative;
+  background: #1e1e2f;
+  border: 2px solid #4a4e69;
+  border-top: none; /* Encaixa direto embaixo do botão */
+  border-radius: 0 12px 14px 14px;
+  padding: 10px;
+  box-shadow: 6px 6px 16px rgba(0, 0, 0, 0.45);
+  
+  /* Animação de abrir para BAIXO */
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+  transition: max-height 0.35s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.25s ease;
+}
+
+/* Abre para baixo ao passar o mouse */
+.hud-inventario:hover .mochila-drawer {
+  max-height: 480px; /* Altura suficiente para até 6 slots empilhados */
+  opacity: 1;
+  overflow: visible; /* Permite o tooltip aparecer para o lado direito */
+  pointer-events: auto;
+}
+
+.mochila-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #c9ada7;
+  margin-bottom: 8px;
+  white-space: nowrap;
+}
+
+/* Grade vertical dos slots (empilhados um abaixo do outro) */
+.mochila-slots {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Slot Vazio */
+.slot-item {
+  width: 54px;
+  height: 54px;
+  border-radius: 10px;
+  background: rgba(15, 15, 26, 0.7);
+  border: 2px dashed #3d405b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex-shrink: 0;
+  transition: transform 0.15s ease;
+}
+
+/* Slot Preenchido */
+.slot-item.ocupado {
+  border-style: solid;
+  background: #2a2a40;
+  cursor: pointer;
+}
+
+.slot-item.ocupado:hover {
+  transform: translateX(3px); /* Leve destaque para a direita no hover */
+}
+
+/* Cores por Raridade */
+.slot-item.COMUM { border-color: #8d99ae; }
+.slot-item.RARO { border-color: #3a86ff; box-shadow: inset 0 0 8px rgba(58, 134, 255, 0.25); }
+.slot-item.LENDARIO { border-color: #ffbe0b; box-shadow: inset 0 0 10px rgba(255, 190, 11, 0.35); }
+
+.slot-item img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+}
+
+/* Badges de quantidade e usos */
+.slot-qtd {
+  position: absolute;
+  bottom: 2px;
+  right: 4px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  font-size: 10px;
+  font-weight: bold;
+  padding: 1px 4px;
+  border-radius: 4px;
+}
+
+.slot-usos {
+  position: absolute;
+  top: 2px;
+  left: 4px;
+  color: #ffd166;
+  font-size: 10px;
+  font-weight: bold;
+  text-shadow: 0 1px 2px #000;
+}
+
+/* Tooltip agora abre para a DIREITA da gaveta vertical (para não cortar na borda da tela) */
+.mochila-tooltip {
+  position: absolute;
+  top: 0;
+  left: calc(100% + 10px);
+  width: 230px;
+  background: #141422;
+  border: 1px solid #4a4e69;
+  border-radius: 8px;
+  padding: 10px;
+  color: #f2e9e4;
+  font-size: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.mochila-tooltip strong {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 4px;
+  color: #ffbe0b;
+}
+
+.mochila-tooltip p {
+  margin: 0 0 6px 0;
+  color: #ccc;
+  line-height: 1.3;
+}
+
+.mochila-tooltip small {
+  color: #9a8c98;
+}

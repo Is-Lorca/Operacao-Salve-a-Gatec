@@ -6,11 +6,9 @@ const authMiddleware = require("../middlewares/authMiddleware");
 const saveMiddleware = require('../middlewares/saveMiddleware');
 
 router.use(authMiddleware);
-
-router.get("/me", jogadorController.buscarPorId);
-
 router.use(saveMiddleware);
 
+router.get("/me", jogadorController.buscarPorId);
 router.get("/", jogadorController.buscarPorSave);
 router.post("/", jogadorController.criar);
 router.patch("/", jogadorController.atualizar);
