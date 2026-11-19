@@ -1,62 +1,120 @@
+
 const supabase = require('../config/supabase');
 
-// niveis de questões facil: 1-2, medio: 3-4, dificil: 5-7
+// Níveis das questões:
+// Fácil: 1 e 2
+// Médio: 3 e 4
+// Difícil: 5, 6 e 7
+
 class QAModel {
-    // busca questões de uma matéria
+
+    // Busca todas as questões de uma matéria
     async buscarQuestoesMateria(idMateria) {
+
         const { data, error } = await supabase
             .from('questao')
-            .select(`id_questao, enunciado, tipo, nivel, dica`)
+            .select(`
+                id_questao,
+                id_materia,
+                enunciado,
+                tipo,
+                nivel,
+                dica
+            `)
             .eq('id_materia', idMateria);
 
-        if(error){
-            console.error(`Erro ao buscar questões da matéria ${idMateria}: `, error.message);
+        if (error) {
+            console.error(
+                `Erro ao buscar questões da matéria ${idMateria}:`,
+                error.message
+            );
+
             throw error;
         }
 
         return data;
     }
-    // busca questões filtrando por níveis
-    // exemplo: níveis [1,2]
+
+
+    // Busca questões de uma matéria por nível
     async buscarQuestoesNivel(idMateria, niveis) {
+
         const { data, error } = await supabase
             .from('questao')
-            .select(`id_questao, enunciado, tipo, nivel, dica`)
+            .select(`
+                id_questao,
+                id_materia,
+                enunciado,
+                tipo,
+                nivel,
+                dica
+            `)
             .eq('id_materia', idMateria)
             .in('nivel', niveis);
 
-        if(error){
-            console.error(`Erro ao buscar questões por nível: `, error.message);
+        if (error) {
+            console.error(
+                'Erro ao buscar questões por nível:',
+                error.message
+            );
+
             throw error;
         }
 
         return data;
     }
-    // busca alternativas de uma questão específica
+
+
+    // Busca as alternativas de uma questão
     async buscarAlternativas(idQuestao) {
+
         const { data, error } = await supabase
             .from('alternativa')
-            .select(`id_alternativa, texto, correta`)
-            .eq('id_questao', idQuestao);
+            .select(`
+                id_alternativa,
+                id_questao,
+                texto,
+                correta
+            `)
+            .eq('id_questao', idQuestao)
+            .order('id_alternativa');
 
-        if(error){
-            console.error(`Erro ao buscar alternativas da questão ${idQuestao}: `, error.message);
+        if (error) {
+            console.error(
+                `Erro ao buscar alternativas da questão ${idQuestao}:`,
+                error.message
+            );
+
             throw error;
         }
 
         return data;
     }
-    // retorna uma questão completa
-    // questão + alternativas
+
+
+    // Busca uma questão completa:
+    // enunciado + alternativas
     async buscarQA(idQuestao) {
+
         const { data, error } = await supabase
             .from('questao')
-            .select(`id_questao, enunciado, tipo, nivel, dica`)
+            .select(`
+                id_questao,
+                id_materia,
+                enunciado,
+                tipo,
+                nivel,
+                dica
+            `)
             .eq('id_questao', idQuestao)
             .single();
 
-        if(error){
-            console.error(`Erro ao buscar questão ${idQuestao}: `, error.message);
+        if (error) {
+            console.error(
+                `Erro ao buscar questão ${idQuestao}:`,
+                error.message
+            );
+
             throw error;
         }
 
@@ -67,58 +125,92 @@ class QAModel {
             alternativas
         };
     }
-    // busca questões aleatórias com filtros
+
+
+    // Busca questões aleatórias com filtros
     async buscarQuestoesAleatorias(filtros) {
-        // coloca os filtros dentro de variaveis "exatas"
-        const {idMateria, niveis, quantidade, idIgnorados = []} = filtros;
+
+        const {
+            idMateria,
+            niveis,
+            quantidade,
+            idIgnorados = []
+        } = filtros;
 
         let query = supabase
             .from('questao')
-            .select(`id_questao, enunciado, tipo, nivel, dica`);
-        // filtra matéria se existir
-        if(idMateria){
+            .select(`
+                id_questao,
+                id_materia,
+                enunciado,
+                tipo,
+                nivel,
+                dica
+            `);
+
+        if (idMateria) {
             query = query.eq('id_materia', idMateria);
         }
-        // filtra níveis
-        if(niveis && niveis.length > 0){
+
+        if (niveis && niveis.length > 0) {
             query = query.in('nivel', niveis);
         }
+
         const { data, error } = await query;
 
-        if(error){
-            console.error("Erro ao buscar questões aleatórias: ", error.message);
+        if (error) {
+            console.error(
+                'Erro ao buscar questões aleatórias:',
+                error.message
+            );
+
             throw error;
         }
 
         let questoes = data;
 
-        // remove questões que devem ser ignoradas
-        if(idIgnorados.length > 0){
-            questoes = questoes.filter(questao => !idIgnorados.includes(questao.id_questao));
+        if (idIgnorados.length > 0) {
+            const idsIgnorados = new Set(
+                idIgnorados.map(Number)
+            );
+
+            questoes = questoes.filter(
+                questao => !idsIgnorados.has(Number(questao.id_questao))
+            );
         }
 
-        // embaralha questões
         questoes.sort(() => Math.random() - 0.5);
 
-        // retorna somente a quantidade necessária
         return questoes.slice(0, quantidade);
     }
-    // recebe várias questões e devolve todas completas
-    async buscarVariasQA(idsQuestoes){
+
+
+    // Busca várias questões completas pelos seus IDs
+    async buscarVariasQA(idsQuestoes) {
+
         const resultado = [];
 
-        for(const idQuestao of idsQuestoes){
+        for (const idQuestao of idsQuestoes) {
+
             const { data: questao, error } = await supabase
                 .from('questao')
                 .select(`
                     id_questao,
+                    id_materia,
                     enunciado,
-                    tipo
+                    tipo,
+                    nivel,
+                    dica
                 `)
                 .eq('id_questao', idQuestao)
                 .single();
 
-            if(error){
+            if (error) {
+                console.error(
+                    `Erro ao buscar questão ${idQuestao}:`,
+                    error.message
+                );
+
                 throw error;
             }
 
@@ -132,9 +224,13 @@ class QAModel {
 
         return resultado;
     }
-    async refazerAtividade(idSave, idMateria){
+
+
+    // Refaz uma atividade
+    async refazerAtividade(idSave, idMateria) {
         return await this.gerarAtividade(idSave, idMateria);
     }
+
 }
 
 module.exports = new QAModel();

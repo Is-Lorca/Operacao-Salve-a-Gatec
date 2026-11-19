@@ -1,27 +1,30 @@
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Desafio Final</title>
+
     <link rel="stylesheet" href="src/styles/reset.css">
     <link rel="stylesheet" href="src/styles/mochila.css">
     <link rel="stylesheet" href="src/styles/desafioFinal.css">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <link
         href="https://fonts.googleapis.com/css2?family=Bitcount:wght@100..900&family=Jersey+10&family=Tiny5&display=swap"
         rel="stylesheet">
 </head>
 
 <body>
-    <header>
-        <h1 id="tituloDesafio">Desafio Final</h1>
-    </header>
 
+    <!-- TELA PRINCIPAL -->
     <section id="telaPrincipal">
-        
+
         <div id="janelaPersona">
 
             <figure id="imagemfundo">
@@ -36,7 +39,7 @@
 
     </section>
 
-
+    <!-- TELA INICIAL -->
     <section id="telaInicial">
 
         <div id="caixadialogo">
@@ -59,21 +62,23 @@
 
     </section>
 
-
+    <!-- TELA DAS PERGUNTAS -->
     <section id="telaPerguntas" hidden>
 
         <header id="cabecalhoProva">
 
-            <span id="progresso">Questão 1 de 10</span>
+            <span id="progresso">
+                Questão 1 de 10
+            </span>
 
-            <span id="pontuacao">Pontos: 0</span>
+            <span id="pontuacao">
+                Pontos: 0
+            </span>
 
         </header>
 
         <div id="barraProgresso">
-
             <div id="preenchimentoProgresso"></div>
-
         </div>
 
         <div id="areaQuestao">
@@ -96,30 +101,40 @@
 
     </section>
 
-    <!-- Componente da Mochila / Inventário -->
-        <div class="hud-inventario" id="hudInventario">
-            <button type="button" class="mochila-trigger" aria-label="Abrir Inventário">
-                🎒
-            </button>
+    <!-- COMPONENTE DA MOCHILA / INVENTÁRIO -->
+    <div class="hud-inventario" id="hudInventario">
 
-            <div class="mochila-drawer">
-                <div class="mochila-header">
-                    <span>Inventário</span>
-                    <span id="mochilaCapacidade">0/3</span>
-                </div>
-                <!-- slots -->
-                <div class="mochila-slots" id="mochilaSlots"></div>
-                <!-- detalhes dos itens -->
-                <div class="mochila-tooltip" id="mochilaTooltip" hidden>
-                    <strong id="tooltipNome"></strong>
-                    <p id="tooltipDesc"></p>
-                    <small id="tooltipMeta"></small>
-                </div>
+        <button type="button" class="mochila-trigger" aria-label="Abrir Inventário">
+            🎒
+        </button>
+
+        <div class="mochila-drawer">
+
+            <div class="mochila-header">
+                <span>Inventário</span>
+                <span id="mochilaCapacidade">0/3</span>
             </div>
+
+            <!-- SLOTS -->
+            <div class="mochila-slots" id="mochilaSlots"></div>
+
+            <!-- DETALHES DOS ITENS -->
+            <div class="mochila-tooltip" id="mochilaTooltip" hidden>
+                <strong id="tooltipNome"></strong>
+                <p id="tooltipDesc"></p>
+                <small id="tooltipMeta"></small>
+            </div>
+
         </div>
+
+    </div>
+
+    <!-- TELA DO RESULTADO -->
     <section id="telaResultado" hidden>
 
-        <h1 id="tituloResultado">Resultado Final</h1>
+        <h1 id="tituloResultado">
+            Resultado Final
+        </h1>
 
         <p id="quantidadeAcertos"></p>
 
@@ -128,13 +143,15 @@
         <h2 id="classificacao"></h2>
 
         <button id="botaoReiniciar">
-            Jogar novamente
+            Voltar
         </button>
 
     </section>
 
-    <script src="src/javascript/desafioFinal.js"></script>
+    <!-- JAVASCRIPT -->
+    <script type="module" src="src/javascript/desafioFinal.js"></script>
     <script type="module" src="src/javascript/mochila.js"></script>
+
 </body>
 
 </html>
