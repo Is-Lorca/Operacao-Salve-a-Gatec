@@ -88,14 +88,14 @@ function mostrarParte(indice) {
   indiceAtual = indice;
   const cena = partesHistoria[indiceAtual];
 
-  // Configura destaque visual para frases de impacto
+  // destaque visual para frases de impacto
   if (cena.impacto) {
     elementoTexto.classList.add("textoImpacto");
   } else {
     elementoTexto.classList.remove("textoImpacto");
   }
 
-  // Configura retrato e título da cena
+  // retrato e título da cena
   if (cena.titulo || cena.imagem) {
     cabecalhoCena.style.display = "flex";
     tituloCena.textContent = cena.titulo;
@@ -111,8 +111,7 @@ function mostrarParte(indice) {
   }
 
   // atualiza botão final
-  btContinuar.textContent =
-    indiceAtual === partesHistoria.length - 1 ? "Começar Missão!" : "Continuar";
+  btContinuar.textContent = indiceAtual === partesHistoria.length - 1 ? "Começar Missão!" : "Continuar";
 
   escrever(cena.texto, cena.impacto ? 55 : 30);
 }
@@ -129,7 +128,7 @@ function escrever(texto, velocidade = 30) {
       const char = fala.charAt(i);
       elementoTexto.textContent += char;
 
-      // Toca o som apenas em letras/números (ignora espaços e quebras de linha)
+      // toca o som apenas em letras/números
       if (char.trim() !== "" && i % 2 === 0) {
         tocarSomTecla();
       }
