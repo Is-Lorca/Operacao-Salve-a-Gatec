@@ -1,6 +1,5 @@
 const respostaApi = require("../utils/respostaApi");
 const inventarioService = require("../services/inventariosService");
-const questoesModel = require("../models/questoesAlternativasModel");
 
 class InventariosController {
     async buscarPorId(req, res) {
@@ -46,18 +45,20 @@ class InventariosController {
             const idJogador = req.jogador.id_jogador;
             const { idItem } = req.params;
 
-            // Recebe dados opcionais da tela (caso o jogador esteja em uma atividade ou prova)
-            const { idQuestao, idAtividade, idProva, iaEmRecarga } = req.body || {};
+            // Agora aceita "questao" enviada diretamente pelo front-end
+            const { questao, idAtividade, idProva, iaEmRecarga } = req.body || {};
 
             const dadosContexto = {};
 
-            // Se veio idQuestao, busca a questão completa no banco (com resposta, dica, dificuldade)
-            if (idQuestao) {
-                dadosContexto.questao = await questoesModel.buscarPorId(idQuestao);
+            if (questao) {
+                dadosContexto.questao = questao;
             }
 
             if (idAtividade) {
-                dadosContexto.atividade = { id_atividade: idAtividade };
+                dadosContexto.atividade = { 
+                    id_atividade: idAtividade,
+                    ia_em_recarga: Boolean(iaEmRecarga)
+                };
             }
 
             if (idProva) {

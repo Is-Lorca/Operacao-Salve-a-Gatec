@@ -95,6 +95,7 @@ async function usarItemPelaMochila(idItem, infoItem) {
                 if (jsonErro.mensagem) mensagemAmigavel = jsonErro.mensagem;
             } catch (_) { }
         }
+        console.error("DETALHE DO ERRO:", erro.message);
         alert(mensagemAmigavel);
     }
 }

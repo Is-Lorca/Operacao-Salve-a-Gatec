@@ -587,14 +587,15 @@ let calculadoraTravada = false;
 window.obterContextoAtual = () => {
     const questao = questoes[questaoAtual];
 
-    // Se não estiver respondendo uma questão ativa, retorna vazio
     if (!idAtividade || !questao || respostaVerificada || acaoFinal !== null) {
         return {};
     }
 
     return {
         idAtividade: idAtividade,
-        idQuestao: questao.id_questao
+        idQuestao: questao.id_questao,
+        questao: questao,
+        iaEmRecarga: calculadoraTravada
     };
 };
 
