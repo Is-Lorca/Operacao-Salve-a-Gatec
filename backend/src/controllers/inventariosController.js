@@ -1,6 +1,6 @@
 const respostaApi = require("../utils/respostaApi");
 const inventarioService = require("../services/inventariosService");
-const questoesService = require("../services/questoesService");
+const questoesModel = require("../models/questoesAlternativasModel");
 
 class InventariosController {
     async buscarPorId(req, res) {
@@ -53,7 +53,7 @@ class InventariosController {
 
             // Se veio idQuestao, busca a questão completa no banco (com resposta, dica, dificuldade)
             if (idQuestao) {
-                dadosContexto.questao = await questoesService.buscarPorId(idQuestao);
+                dadosContexto.questao = await questoesModel.buscarPorId(idQuestao);
             }
 
             if (idAtividade) {
