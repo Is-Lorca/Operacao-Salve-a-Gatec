@@ -47,7 +47,8 @@ function extrairMensagemErro(erro) {
 }
 
 async function carregarJogador() {
-    const jogador = await jogadorApi.buscarPorSave();
+    const resposta = await jogadorApi.buscarPorSave();
+    const jogador = resposta?.data || resposta;
 
     if (!jogador) {
         throw new Error("Jogador deste save não foi encontrado.");
@@ -252,6 +253,25 @@ async function iniciarCantina() {
 
         mostrarMensagem(mensagem);
     }
+}
+
+const linkSair = document.querySelector("#botaoSair a");
+const retorno = new URLSearchParams(window.location.search).get("retorno");
+
+if (linkSair) {
+    linkSair.addEventListener("click", async (evento) => {
+        evento.preventDefault(); 
+
+        try {
+            if (idLojaAtual) {
+                await lojaApi.fecharLoja(idLojaAtual);
+            }
+        } catch (erro) {
+            console.error("Erro ao fechar a cantina ao sair:", erro);
+        } finally {
+            window.location.href = retorno === "atividade" ? "atividade.html" : "selecaoMateria.html";
+        }
+    });
 }
 
 iniciarCantina();

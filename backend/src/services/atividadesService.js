@@ -54,7 +54,7 @@ class AtividadesService{
     async montarQA(listaQuestoes) {
         return await qaModel.buscarVariasQA(listaQuestoes);
     }
-    async gerarAtividade(idSave, idMateria) {
+        async gerarAtividade(idSave, idMateria) {
         const idSValido = validacoes.validarId(idSave);
         const idMValido = validacoes.validarId(idMateria);
 
@@ -77,61 +77,65 @@ class AtividadesService{
         }
         
         const idsIgnorados = await atividadesModel.buscarIdsQuestoesUtilizadas(idSValido);
+        const todasQuestoes = await qaModel.buscarQuestoesNivel(idMValido, [1, 2, 3, 4, 5, 6, 7]);
 
-        let questoesDisponiveis = await qaModel.buscarQuestoesNivel(idMValido,[1, 2, 3, 4, 5, 6, 7]);
+        // 1. Tenta montar a atividade apenas com questões que ainda não foram usadas no save
+        const ineditas = this.removerRepetidas(todasQuestoes, idsIgnorados);
+        let questoesFinais = this.montarSeteQuestoes(ineditas);
 
-        // aqui removemos as questoes que já existem foram usadas no save
-        questoesDisponiveis = this.removerRepetidas(questoesDisponiveis, idsIgnorados);
-
-        if (questoesDisponiveis.length < 7) {
-            questoesDisponiveis = await qaModel.buscarQuestoesNivel(idMValido, [1, 2, 3, 4, 5, 6, 7]);
+        // 2. Se acabou algum nível obrigatório (fácil, médio ou difícil), libera todas as questões da matéria
+        if (!questoesFinais) {
+            questoesFinais = this.montarSeteQuestoes(todasQuestoes);
         }
 
-        const questoesSelecionadas = [];
-
-        // questões 1 a 5: fácil ou médio
-        for (let i = 0; i < 5; i++) {
-            const questao = this.selecionarQuestao(questoesDisponiveis, [1, 2, 3, 4]);
-            if (!questao) {
-                throw new Error(`Não existem questões suficientes para a atividade da matéria ${idMValido}.`);
-            }
-            questoesSelecionadas.push(questao);
+        // 3. Só dá erro se o banco realmente não tiver questões suficientes cadastradas nessa matéria
+        if (!questoesFinais) {
+            throw new Error(`Não existem questões suficientes cadastradas para a matéria ${idMValido}.`);
         }
-
-        // questão 6: obrigatoriamente média
-        const questaoSeis = this.selecionarQuestao(questoesDisponiveis, [3, 4]);
-        if (!questaoSeis) {
-            throw new Error(`Não existe questão de nível médio disponível na matéria ${idMValido}.`);
-        }
-        questoesSelecionadas.push(questaoSeis);
-
-        // questão 7: obrigatoriamente difícil
-        const questaoSete = this.selecionarQuestao(questoesDisponiveis, [5, 6, 7]);
-        if (!questaoSete) {
-            throw new Error(`Não existe questão de nível difícil disponível na matéria ${idMValido}.`);
-        }
-        questoesSelecionadas.push(questaoSete);
-        
-        const primeirasCinco = this.embaralhar(questoesSelecionadas.slice(0, 5));
-
-        const questoesFinais = [
-            ...primeirasCinco,
-            questaoSeis,
-            questaoSete
-        ];
 
         const idsQuestoesOrdenados = questoesFinais.map(q => q.id_questao);
 
-        const atividade = await atividadesModel.criarAtividadeComQuestoes(idSValido, idMValido, 
-            idsQuestoesOrdenados);
+        const atividade = await atividadesModel.criarAtividadeComQuestoes(
+            idSValido,
+            idMValido,
+            idsQuestoesOrdenados
+        );
         
-        // retorna atividade completa
+        // Retorna a atividade completa
         const questoesComAlternativas = await this.montarQA(idsQuestoesOrdenados);
 
         return {
             ...atividade, 
             questoes: questoesComAlternativas
         };
+    }
+
+    montarSeteQuestoes(poolOriginal) {
+        const disponiveis = [...poolOriginal];
+        const selecionadas = [];
+
+        // Questões 1 a 5: fácil ou médio
+        for (let i = 0; i < 5; i++) {
+            const questao = this.selecionarQuestao(disponiveis, [1, 2, 3, 4]);
+            if (!questao) return null;
+            selecionadas.push(questao);
+        }
+
+        // Questão 6: obrigatoriamente média
+        const questaoSeis = this.selecionarQuestao(disponiveis, [3, 4]);
+        if (!questaoSeis) return null;
+
+        // Questão 7: obrigatoriamente difícil
+        const questaoSete = this.selecionarQuestao(disponiveis, [5, 6, 7]);
+        if (!questaoSete) return null;
+
+        const primeirasCinco = this.embaralhar(selecionadas);
+
+        return [
+            ...primeirasCinco,
+            questaoSeis,
+            questaoSete
+        ];
     }
     async registrarResposta(idAtividade, idQuestao, acertou) {
         const idAValido = validacoes.validarId(idAtividade);

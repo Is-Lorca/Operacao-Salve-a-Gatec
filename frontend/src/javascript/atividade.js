@@ -272,7 +272,7 @@ function mostrarQuestao() {
     respostaSelecionada = null;
     respostaVerificada = false;
 
-    definirBotao("Dica");
+    definirBotao("Responder", true);
 
     questao.alternativas.forEach((alternativa, indice) => {
 
@@ -326,7 +326,7 @@ function selecionarAlternativa(botaoClicado, indice) {
 
     respostaSelecionada = indice;
 
-    rotuloBotao.textContent = "Responder";
+    definirBotao("Responder", false);
 }
 
 
@@ -436,6 +436,8 @@ async function finalizarAtividade() {
             // fase - salva a matéria como concluída para liberar a próxima
             const chave = `concluidas_${localStorage.getItem("idSave")}`; 
             const concluidas = JSON.parse(localStorage.getItem(chave) || "[]"); 
+            const materia = localStorage.getItem("materia");
+
             if (!concluidas.includes(materia)) { 
                 concluidas.push(materia); 
                 localStorage.setItem(chave, JSON.stringify(concluidas)); 
@@ -468,8 +470,12 @@ async function finalizarAtividade() {
                 `Você acertou ${resultado.acertos} de ${resultado.totalQuestoes} questões. ` +
                 `Nota: ${resultado.nota}/10. Você precisa de 6 para passar. Tente de novo!`;
 
-            acaoFinal = "refazer";
-            definirBotao("Refazer");
+            definirBotao("Aguarde", true);
+            const urlCantina = await verificarCantina();
+            destinoFinal = `${urlCantina}&retorno=atividade`;
+
+            acaoFinal = "cantina";
+            definirBotao("Continuar");
         }
 
     } catch (erro) {
@@ -568,9 +574,8 @@ botaoResponder.addEventListener("click", async () => {
         return;
     }
 
-    // Se não selecionou alternativa, mostra a dica
+    // Se não selecionou alternativa, nao faz nada
     if (respostaSelecionada === null) {
-        mostrarDica();
         return;
     }
 
@@ -579,7 +584,6 @@ botaoResponder.addEventListener("click", async () => {
 
 });
 
-<<<<<<< Updated upstream
 // Caminho pro inicio
 botaoInicio.addEventListener("click", () => {
     window.location.href = "selecaoMateria.html";
@@ -671,8 +675,6 @@ window.addEventListener("itemUsado", async (evento) => {
         definirBotao("Dica");
     }
 });
-=======
->>>>>>> Stashed changes
 
 // 15. INICIAR ATIVIDADE
 
