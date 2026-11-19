@@ -429,7 +429,6 @@ async function finalizarDesafio() {
 // ==========================================
 // MOSTRAR RESULTADO
 // ==========================================
-
 function mostrarResultado(resultado) {
 
     telaPrincipal.hidden = true;
@@ -439,16 +438,13 @@ function mostrarResultado(resultado) {
 
     preenchimentoProgresso.style.width = '100%';
 
-
     document.getElementById('quantidadeAcertos').textContent =
         `Você acertou ${quantidadeAcertos} de ${perguntas.length} questões!`;
-
 
     document.getElementById('pontuacaoFinal').textContent =
         `Nota da prova: ${resultado.notaProva}/10 | ` +
         `Média das atividades: ${resultado.mediaAtividades} | ` +
         `Média final: ${resultado.mediaFinal}`;
-
 
     const classificacao =
         document.getElementById('classificacao');
@@ -456,8 +452,10 @@ function mostrarResultado(resultado) {
     const tituloResultado =
         document.getElementById('tituloResultado');
 
+    const imagemEnding =
+        document.getElementById('imagemEnding');
 
-    // A decisão é feita pelo backend
+    // GOOD ENDING
     if (resultado.resultado === 'GOOD_ENDING') {
 
         tituloResultado.textContent = 'GOOD ENDING!';
@@ -465,16 +463,48 @@ function mostrarResultado(resultado) {
         classificacao.textContent =
             'Você conseguiu salvar a GATEC!';
 
-    } else {
+        imagemEnding.src = './src/img/goodEnding.jpeg';
+
+        imagemEnding.alt =
+            'Good Ending: a GATEC foi salva!';
+
+    }
+
+    // BAD ENDING
+    else if (resultado.resultado === 'BAD_ENDING') {
 
         tituloResultado.textContent = 'BAD ENDING!';
 
         classificacao.textContent =
             'Mr. Plutônio venceu... A GATEC foi perdida!';
 
+        imagemEnding.src = './src/img/badEnding.jpeg';
+
+        imagemEnding.alt =
+            'Bad Ending: Mr. Plutônio venceu!';
+
     }
 
+    // RESULTADO DESCONHECIDO
+    else {
+
+        console.error(
+            'Resultado desconhecido:',
+            resultado.resultado
+        );
+
+        imagemEnding.hidden = true;
+
+        classificacao.textContent =
+            'Não foi possível identificar o final da prova.';
+
+        return;
+    }
+
+    imagemEnding.hidden = false;
+
 }
+
 
 
 // ==========================================

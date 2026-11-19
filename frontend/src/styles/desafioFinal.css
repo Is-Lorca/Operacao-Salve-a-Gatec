@@ -348,3 +348,23 @@ body {
     margin-top: 20px;
     font-size: 1.4rem;
 }
+
+/* IMAGEM DOS FINAIS */
+#imagemEnding {
+    display: block;
+
+    width: 100%;
+    max-width: 550px;
+
+    height: auto;
+
+    margin: 1.5rem auto;
+
+    object-fit: contain;
+
+    border-radius: 10px;
+}
+
+#imagemEnding[hidden] {
+    display: none !important;
+}
