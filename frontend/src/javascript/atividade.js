@@ -385,7 +385,7 @@ async function verificarResposta() {
 // 10. PRÓXIMA QUESTÃO
 
 async function proximaQuestao() {
-
+    calculadoraTravada = false; 
     questaoAtual++;
 
     if (questaoAtual < questoes.length) {
@@ -546,6 +546,91 @@ botaoResponder.addEventListener("click", async () => {
 
 });
 
+// 14.5 INTEGRAÇÃO COM A MOCHILA (INVENTÁRIO)
+
+// Controla a trava da Calculadora (1 uso -> trava 1 questão -> destrava na próxima)
+let calculadoraTravada = false;
+
+// 1. Informa à mochila o contexto atual da tela
+window.obterContextoAtual = () => {
+    const questao = questoes[questaoAtual];
+
+    // Se não estiver respondendo uma questão ativa, retorna vazio
+    if (!idAtividade || !questao || respostaVerificada || acaoFinal !== null) {
+        return {};
+    }
+
+    return {
+        idAtividade: idAtividade,
+        idQuestao: questao.id_questao
+    };
+};
+
+// 2. Intercepta antes de usar para checar a trava da Calculadora (opcional)
+window.podeUsarItem = (infoItem) => {
+    if (infoItem.efeito === "RESOLVE_QUESTAO_FACIL" && calculadoraTravada) {
+        alert("A Calculadora deu pau! Responda esta questão para ela voltar a funcionar.");
+        return false;
+    }
+    return true;
+};
+
+// 3. Reage na tela de Atividade ao efeito retornado pelo EfeitosService
+window.addEventListener("itemUsado", async (evento) => {
+    // inventarioApi.usarItem retorna { mensagem, efeito: { sucesso, mensagem, ... } }
+    const payload = evento.detail;
+    const efeito = payload?.efeito || payload;
+    const questao = questoes[questaoAtual];
+
+    if (!efeito) return;
+
+    // Avisa o jogador com a mensagem vinda do EfeitosService
+    if (efeito.mensagem) {
+        textoDica.textContent = efeito.mensagem;
+        mostrarDica();
+    }
+
+    if (!questao) return;
+
+    // MOSTRA_DICA -> mostra a dica da questão
+    if (efeito.dica) {
+        textoDica.textContent = efeito.dica;
+        mostrarDica();
+    }
+
+    // RESOLVE_QUESTAO (IA do Plutônio), RESOLVE_QUESTAO_FACIL (Calculadora) ou REVELA_RESPOSTA
+    const altCorreta = efeito.respostaCorreta || efeito.resposta;
+    if (altCorreta) {
+        const idxCorreta = questao.alternativas.findIndex(
+            alt => alt.correta === true || alt.texto === altCorreta.texto
+        );
+
+        if (idxCorreta !== -1) {
+            const botoes = areaRespostas.querySelectorAll(".alternativa");
+            selecionarAlternativa(botoes[idxCorreta], idxCorreta);
+        }
+
+        // Se foi a Calculadora (RESOLVE_QUESTAO_FACIL), trava ela para a próxima questão
+        if (efeito.mensagem && efeito.mensagem.includes("fácil")) {
+            calculadoraTravada = true;
+        }
+    }
+
+    // PULA_QUESTAO -> avança para a próxima questão
+    if (efeito.questaoPulada) {
+        await proximaQuestao();
+    }
+
+    // APAGA_RESPOSTA_SEM_PENALIDADE -> desmarca a alternativa selecionada
+    if (efeito.limparResposta) {
+        respostaSelecionada = null;
+        areaRespostas.querySelectorAll(".alternativa").forEach(botao => {
+            botao.classList.remove("selecionada");
+            botao.setAttribute("aria-checked", "false");
+        });
+        definirBotao("Dica");
+    }
+});
 
 // 15. INICIAR ATIVIDADE
 
